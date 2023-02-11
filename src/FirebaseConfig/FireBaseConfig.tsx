@@ -33,7 +33,4 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
 
-export const auth = initializeAuth(app, {
-    persistence: browserSessionPersistence,
-    popupRedirectResolver: browserPopupRedirectResolver,
-});
+export const auth = getAuth(app);
