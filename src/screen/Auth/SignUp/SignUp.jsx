@@ -1,125 +1,100 @@
-import React, { useContext, useState, useEffect } from "react";
+import React from "react";
+import { SignUpSchema } from "helper/Validation";
 import Button from "../../../components/Button/Button";
-import { Input } from "baseui/input";
-import Card from "../../../components/UI/Card";
-import { NavLink, useNavigate } from "react-router-dom";
-import authContext from "../../../context/AuthContext";
+import Input from 'components/Input/Input';
+import { NavLink } from "react-router-dom";
+import { useFormik } from "formik";
 import "./Signup.css";
 import "../auth.css";
-import { ErrorMessage } from "../../../components/ErrorMessage/ErrorMessage";
+import { ErrorMessage } from "components/ErrorMessage/ErrorMessage";
+import { useAuthContext } from "context/AuthContext/AuthContext";
+
 const SignUp = () => {
-  const navigator = useNavigate();
 
-
-  // useEffect(() => {
-  //   if (isAuth || user?.userToken) {
-  //      navigator("/");
-  //   };
-  // }, []);
-
-
-  // const handlerSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const isEmailVaild = checkBlankUserInput(userEmail);
-  //   const isPassWordVaild = checkBlankUserInput(userPassword);
-  //   const isUserNameBlank = checkBlankUserInput(userName);
-
-  //   if (isEmailVaild) {
-  //     setEmailValidate("Please enter email ");
-  //   }
-  //   if (isPassWordVaild) {
-  //     setPassWordValidate("Please enter password");
-  //   }
-  //   if (isUserNameBlank) {
-  //     setUserNameValidate("please enter user name");
-  //   }
-  //   if (userPassword.trim().length < 6 && userPassword.trim().length > 0) {
-  //     setPassWordValidate("Please enter minimum 6 digit");
-  //     setLoading(false);
-  //     return;
-  //   }
-  //   if (userEmail !== "" && userName !== "" && userPassword.trim().length < 9) {
-  //     setLoading(true);
-  //     const userData = {
-  //       displayName: userName,
-  //       email: userEmail,
-  //       password: userPassword,
-  //       returnSecureToken: true,
-  //     };
-  //     const response = await sendUserData(userData);
-  //     if (response?.data?.idToken) {
-  //       Swal.fire({
-  //         position: "center-center",
-  //         icon: "success",
-  //         title: "Your sign up is successfull",
-  //         showConfirmButton: false,
-  //         timer: 1500,
-  //       }).then(() => {
-  //         onLogin(true);
-  //         setItem("user", {
-  //           userToken: response?.data?.idToken,
-  //           email: response?.data?.email,
-  //           userName: response?.data.displayName,
-  //           userId: response?.data.localId,
-  //         });
-  //         navigator("/");
-  //       });
-  //     }
-  //   }
-  // };
-
+  const { error, onSignUp } = useAuthContext()
+  const formilk = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      profilePicture: "",
+      userName: '',
+      confirmPassword: ""
+    },
+    validationSchema: SignUpSchema,
+    onSubmit: (formValues) => {
+      console.log(formValues);
+      onSignUp(formValues.email, formValues.password)
+    }
+  });
   return (
-    <div className="auth-contain">
-      <div className="logo">
-        <img
-          src="https://management.agreemtechnologies.com/upload/large.png"
-          alt=""
-        />
-      </div>
-      <Card>
-        <form>
-          <label className="form-label">User Name</label>
-          <Input
-            type="text"
-            name="userName"
-            placeholder="Username"
-            overrides={{
-              Input: {
-                style: ({ $theme }) => ({
-                  height: "40px",
-                }),
-              },
-            }}
+    <div className="container-fluid auth">
+      <div className="auth-contain">
+        {!error && formilk.errors.email && formilk.touched.email && <ErrorMessage message={formilk.errors.email} />}
+        {!error && !formilk.errors.email && formilk.errors.password && formilk.touched.password && <ErrorMessage message={formilk.errors.password} />}
+        {!error && !formilk.errors.email && formilk.errors.userName && formilk.touched.userName && <ErrorMessage message={formilk.errors.userName} />}
+        {!error && !formilk.errors.email && formilk.errors.confirmPassword && formilk.touched.confirmPassword && <ErrorMessage message={formilk.errors.confirmPassword} />}
+        {error && <ErrorMessage message={error} />}
+        <div className="logo">
+          <img
+            src="https://www.userlogos.org/files/logos/Mafia_Penguin/2-5.png"
+            alt=""
           />
-          {/* <p style={{ color: "red" }}>{userNameValidate}</p> */}
-          <label className="form-label">Email</label>
-          <Input
-            type="email"
-            name="userEmail"
-            max={8}
-            placeholder="name@example.com"
+        </div>
+        <form onSubmit={formilk.handleSubmit}>
+          <div className="mb-2">
+            <label className="form-label">User Name</label>
+            <Input
+              type="text"
+              name="userName"
+              placeholder="Username"
+              formilk={formilk}
+              value={formilk.values.userName}
+            />
+          </div>
 
-          />
-          {/* <p style={{ color: "red" }}>{emailValidate}</p> */}
-          <label className="form-label">password</label>
-          <Input
-            type="password"
-            name="userPassword"
-            placeholder="Password"
-          />
-          {/* <p style={{ color: "red" }}>{error ? error : passWordValidate}</p> */}
-          <div className="mb-3 button-sign-up">
-            <Button type="submit" classes="form-control authButton">
+          <div className="mb-2">
+            <label className="form-label">Email</label>
+            <Input
+              type="email"
+              name="email"
+              max={8}
+              formilk={formilk}
+              value={formilk.values.email}
+              placeholder="name@example.com"
 
-              "Sign up"
-
+            />
+          </div>
+          <div className="mb-2">
+            <label className="form-label">password</label>
+            <Input
+              type="password"
+              name="password"
+              formilk={formilk}
+              value={formilk.values.password}
+              placeholder="Password"
+            />
+          </div>
+          <div className="mb-2">
+            <label className="form-label">Confirm Password</label>
+            <Input
+              type="password"
+              name="confirmPassword"
+              formilk={formilk}
+              value={formilk.values.confirmPassword}
+              placeholder="Confirm Password"
+            />
+          </div>
+          <div className="mb-2 button-sign-up">
+            <Button type="submit" classes="authButton btn btn-primary">
+              Sign up
             </Button>
           </div>
           <div style={{ textAlign: "center" }}>
             <NavLink to="/auth">Already user</NavLink>
           </div>
         </form>
-      </Card>
+
+      </div>
     </div>
   );
 };

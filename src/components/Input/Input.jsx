@@ -11,7 +11,7 @@ const Input = (props) => {
                 type={type}
                 id={id}
                 autoComplete="off"
-                className={className}
+                className={className + " form-control"}
                 name={name}
                 placeholder={props.placeholder}
                 {...formilk.getFieldProps(name)}

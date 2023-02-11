@@ -50,7 +50,7 @@ const LoginWithOtp = () => {
         },
         validationSchema: VeriflyOtpSchema,
         onSubmit: async (formValues) => {
-            const { isValid, error } = isPhoneNumberAndOtpValid(formValues.otp, "OTP");
+            const { isValid, error } = isPhoneNumberAndOtpValid(formValues.otp, "OTPI");
             if (isValid) {
                 const otp = Number(formValues.otp);
                 try {

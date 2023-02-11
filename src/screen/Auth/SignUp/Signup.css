@@ -1,3 +1,6 @@
 .button-sign-up {
     margin-top: 8px;
 }
+input[type ="file"] {
+    opacity: 0;
+}

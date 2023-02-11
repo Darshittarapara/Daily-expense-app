@@ -40,13 +40,29 @@ export const VeriflyOtpSchema = Yup.object({
         .min(6, "Phone number must be 6 characters")
 })
 
-export const isPhoneNumberAndOtpValid = (value:string, label:string) => {
-  let isValid = true;
-  value.split('').forEach((character:any) => {
-    if(isNaN(character)) {
-        isValid = false
-    }
-  })
-  
-  return {isValid, error : `${label} must be number`}
+export const SignUpSchema = Yup.object({
+    email: Yup.string()
+        .required('Please enter email')
+        .email('Please enter valid email address'),
+    password: Yup.string()
+        .required('Please enter password')
+        .min(5, "Please enter minimum 5 characters")
+        .max(10, "Please enter maximum 10 characters"),
+    confirmPassword: Yup.string()
+        .required('Please enter confirm password')
+        .min(5, "Please enter minimum 5 characters")
+        .max(10, "Please enter maximum 10 characters"),
+    userName: Yup.string()
+        .required("please enter user name")
+})
+
+export const isPhoneNumberAndOtpValid = (value: string, label: string) => {
+    let isValid = true;
+    value.split('').forEach((character: any) => {
+        if (isNaN(character)) {
+            isValid = false
+        }
+    })
+
+    return { isValid, error: `${label} must be number` }
 }

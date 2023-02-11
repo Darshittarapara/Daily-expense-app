@@ -9,6 +9,7 @@ interface authContextProviderValues {
     onLogin: (email: string, password: string) => void,
     isLoading: boolean
     error: string
+    onSignUp: (email: string, password: string) => void
     setError: React.Dispatch<React.SetStateAction<string>>
     setUpRecaptcha: any
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
@@ -48,13 +49,32 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
         recaptchaVerifier.render().then(() => setLoading(false)).catch(() => setLoading(false))
         return signInWithPhoneNumber(auth, number, recaptchaVerifier)
     }
+
+    const signUpHandler = async (email: string, password: string) => {
+
+        setLoading(true);
+        firebase.createUserWithEmailAndPassword(auth, email, password)
+            .then((response) => {
+                
+                firebase.sendEmailVerification(response.user)
+                    .then((res) => {
+                        console.log(res)
+                    })
+
+            }).catch((error) => {
+                const errors = authErrorHandler(new Error(error).message);
+                setError(errors);
+                setLoading(false);
+            })
+    }
     const ctx = {
         onLogin: loginHandler,
         isLoading,
         error,
         setError,
         setUpRecaptcha,
-        setLoading
+        setLoading,
+        onSignUp: signUpHandler
     }
     return <authContext.Provider value={ctx}>
         {props.children}
