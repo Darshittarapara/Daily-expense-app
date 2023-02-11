@@ -1,0 +1,5 @@
+let config = {
+    appName : "Daily expense",
+    baseURL : "https://identitytoolkit.googleapis.com/v1",
+    API_KEY :"AIzaSyC4G9wvfTvRcHhiknlMvGvuwbg7pmy70YI"
+}

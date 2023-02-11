@@ -1,0 +1,20 @@
+.input-container {
+    display: flex;
+padding: 0px ;
+
+}
+.input-container .country-code {
+    width: 60px;
+    margin-left: 0px;
+    background-color: rgb(252, 252, 252);
+}
+.input-container .input-block input {
+    outline: 0px;
+    border:0px;
+    
+}
+.input-container .input-block input:focus {
+    outline: 0px !important;
+    border: 0px !important;
+    box-shadow: none;
+}
