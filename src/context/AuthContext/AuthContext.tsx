@@ -43,6 +43,7 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
     const setUpRecaptcha = (phoneNumber: string) => {
         setLoading(true)
         const number = "+91" + phoneNumber;
+        alert(number)
         const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth)
         recaptchaVerifier.render().then(() => setLoading(false)).catch(() => setLoading(false))
         return signInWithPhoneNumber(auth, number, recaptchaVerifier)

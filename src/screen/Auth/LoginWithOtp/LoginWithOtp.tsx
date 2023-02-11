@@ -15,7 +15,7 @@ import { VeriflyOtpSchema } from "helper/Validation";
 import { setItem } from "helper/Storage";
 
 const LoginWithOtp = () => {
-    const { isLoading, error, setUpRecaptcha, setError, setLoading} = useAuthContext();
+    const { isLoading, error, setUpRecaptcha, setError, setLoading } = useAuthContext();
     const [confirmObj, setConfirmObj] = useState<any>({})
     const navigator = useNavigate();
     const [flag, setFlag] = useState<boolean>(false);
@@ -30,6 +30,7 @@ const LoginWithOtp = () => {
                 setConfirmObj(response)
                 setFlag(true)
             } catch (error) {
+                console.log(error)
                 setError("Please enter valid phone number");
                 setLoading(false)
             }
