@@ -7,8 +7,8 @@ export interface ErrorMessageProps {
     message: string
 }
 export interface SignInWithOtpFormValues {
-    phoneNumber: number
+    phoneNumber: string
 }
 export interface VeriflyOtpFormValues {
-    otp: number
+    otp: string
 }

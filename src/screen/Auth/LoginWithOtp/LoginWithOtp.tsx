@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import Input from '../../../components/Input/Input'
@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import './LoginWithOtp.css';
 import { ErrorMessage } from "../../../components/ErrorMessage/ErrorMessage";
 import { useAuthContext } from "context/AuthContext/AuthContext";
-import { SignInPageWithOtpSchema } from "../../../helper/Validation";
+import { isPhoneNumberAndOtpValid, SignInPageWithOtpSchema } from "../../../helper/Validation";
 import { SignInWithOtpFormValues } from "Modal/Modal";
 import { VeriflyOtpFormValues } from "Modal/Modal";
 import { Fragment } from 'react'
@@ -21,52 +21,64 @@ const LoginWithOtp = () => {
     const [flag, setFlag] = useState<boolean>(false);
     const formilk = useFormik<SignInWithOtpFormValues>({
         initialValues: {
-            phoneNumber: 0,
+            phoneNumber: '',
         },
         validationSchema: SignInPageWithOtpSchema,
         onSubmit: async (formValues) => {
-            try {
-                const response = await setUpRecaptcha(formValues.phoneNumber);
-                setConfirmObj(response)
-                setFlag(true)
-            } catch (error) {
-                console.log(error)
-                setError("Please enter valid phone number");
-                setLoading(false)
+            const { isValid, error } = isPhoneNumberAndOtpValid(formValues.phoneNumber, "Phone number");
+            if (isValid) {
+                try {
+                    const response = await setUpRecaptcha(formValues.phoneNumber);
+                    setConfirmObj(response)
+                    setFlag(true)
+                } catch (error) {
+                    console.log(error)
+                    setError("Please enter valid phone number");
+                    setLoading(false)
+                }
             }
+            else {
+                setError(error);
+            }
+
         }
     });
 
     const veriflyOtpFormilk = useFormik<VeriflyOtpFormValues>({
         initialValues: {
-            otp: 0,
+            otp: '',
         },
         validationSchema: VeriflyOtpSchema,
         onSubmit: async (formValues) => {
-            console.log(formValues.otp)
-            const otp = formValues.otp
-            try {
-                const confrimResponse = await confirmObj.confirm(otp)
-                console.log(confrimResponse);
-                setItem('user', confrimResponse.user)
-                navigator('/');
-            } catch (err: any) {
-                console.log(error)
-                setError("Please enter valid otp number");
+            const { isValid, error } = isPhoneNumberAndOtpValid(formValues.otp, "OTP");
+            if (isValid) {
+                const otp = Number(formValues.otp);
+                try {
+                    const confrimResponse = await confirmObj.confirm(otp)
+                    setItem('user', confrimResponse.user)
+                    navigator('/');
+                } catch (err: any) {
+                    setError("Please enter valid otp number");
+                }
             }
-
+            else {
+                setError(error)
+            }
         }
     });
-    console.log(veriflyOtpFormilk.values.otp)
-    // const { email, password } = formilk.values;
-    // useEffect(() => {
-    //     setError('');
-    // }, [email, password, setError])
+
+    const { phoneNumber } = formilk.values;
+    const { otp } = veriflyOtpFormilk.values;
+    useEffect(() => {
+        setError('');
+    }, [otp, phoneNumber, setError]);
+
     return (
 
         <div className="container-fluid auth">
             <div className="auth-contain">
                 {!error && formilk.errors.phoneNumber && formilk.touched.phoneNumber && <ErrorMessage message={formilk.errors.phoneNumber} />}
+                {!error && veriflyOtpFormilk.errors.otp && veriflyOtpFormilk.touched.otp && <ErrorMessage message={veriflyOtpFormilk.errors.otp} />}
                 {error && <ErrorMessage message={error} />}
                 <div className="logo">
                     <img
@@ -75,15 +87,14 @@ const LoginWithOtp = () => {
                     />
                 </div>
                 {flag ? <Fragment>
-                    {!error && veriflyOtpFormilk.errors.otp && veriflyOtpFormilk.touched.otp && <ErrorMessage message={veriflyOtpFormilk.errors.otp} />}
-                    {error && <ErrorMessage message={error} />}
+
                     <form onSubmit={veriflyOtpFormilk.handleSubmit}>
                         <div className="mb-3">
                             <label className="form-label">Verifly otp</label>
 
                             <div className="input-block">
                                 <Input
-                                    type="number"
+                                    type="text"
                                     id="otp"
                                     className="form-control"
                                     value={veriflyOtpFormilk.values.otp}
@@ -108,7 +119,7 @@ const LoginWithOtp = () => {
                                     <div className="country-code  form-control">+91</div>
                                     <div className="input-block">
                                         <Input
-                                            type="number"
+                                            type="text"
                                             id="phoneNumber"
                                             className="form-control"
                                             value={formilk.values.phoneNumber}

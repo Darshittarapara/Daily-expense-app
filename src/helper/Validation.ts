@@ -39,3 +39,14 @@ export const VeriflyOtpSchema = Yup.object({
         .max(6, "Phone number must be 6 characters")
         .min(6, "Phone number must be 6 characters")
 })
+
+export const isPhoneNumberAndOtpValid = (value:string, label:string) => {
+  let isValid = true;
+  value.split('').forEach((character:any) => {
+    if(isNaN(character)) {
+        isValid = false
+    }
+  })
+  
+  return {isValid, error : `${label} must be number`}
+}
