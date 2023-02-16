@@ -1,0 +1,10 @@
+.auth {
+    background: aliceblue;
+    display: flex;
+    
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    justify-content: center;
+    align-items: flex-start;
+}

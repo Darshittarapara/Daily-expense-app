@@ -49,11 +49,13 @@ export const SignUpSchema = Yup.object({
         .min(5, "Please enter minimum 5 characters")
         .max(10, "Please enter maximum 10 characters"),
     confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password')], 'Confirm password must match with password')
         .required('Please enter confirm password')
         .min(5, "Please enter minimum 5 characters")
         .max(10, "Please enter maximum 10 characters"),
     userName: Yup.string()
         .required("please enter user name")
+        
 })
 
 export const isPhoneNumberAndOtpValid = (value: string, label: string) => {

@@ -5,8 +5,8 @@
 
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics'
-import { getAuth, browserSessionPersistence, initializeAuth, browserPopupRedirectResolver } from 'firebase/auth';
-
+import {  browserSessionPersistence, initializeAuth, browserPopupRedirectResolver } from 'firebase/auth';
+import { getDatabase } from "firebase/database";
 const firebaseConfig = {
     apiKey: "AIzaSyC4G9wvfTvRcHhiknlMvGvuwbg7pmy70YI",
     authDomain: "react-daily-expense-app.firebaseapp.com",
@@ -32,7 +32,7 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
-
+export const db = getDatabase()
 export const auth = initializeAuth(app, {
     persistence: browserSessionPersistence,
     popupRedirectResolver: browserPopupRedirectResolver,

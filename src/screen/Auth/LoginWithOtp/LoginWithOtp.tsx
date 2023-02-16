@@ -6,7 +6,7 @@ import "../auth.css";
 import { useFormik } from "formik";
 import './LoginWithOtp.css';
 import { ErrorMessage } from "../../../components/ErrorMessage/ErrorMessage";
-import { useAuthContext } from "context/AuthContext/AuthContext";
+import { logo, useAuthContext } from "context/AuthContext/AuthContext";
 import { isPhoneNumberAndOtpValid, SignInPageWithOtpSchema } from "../../../helper/Validation";
 import { SignInWithOtpFormValues } from "Modal/Modal";
 import { VeriflyOtpFormValues } from "Modal/Modal";
@@ -75,14 +75,14 @@ const LoginWithOtp = () => {
 
     return (
 
-        <div className="container-fluid auth">
+        <Fragment>
             <div className="auth-contain">
                 {!error && formilk.errors.phoneNumber && formilk.touched.phoneNumber && <ErrorMessage message={formilk.errors.phoneNumber} />}
                 {!error && veriflyOtpFormilk.errors.otp && veriflyOtpFormilk.touched.otp && <ErrorMessage message={veriflyOtpFormilk.errors.otp} />}
                 {error && <ErrorMessage message={error} />}
                 <div className="logo">
                     <img
-                        src="https://www.userlogos.org/files/logos/Mafia_Penguin/2-5.png"
+                        src={logo}
                         alt=""
                     />
                 </div>
@@ -105,8 +105,8 @@ const LoginWithOtp = () => {
                             </div>
                         </div>
                         <div className="mt-3">
-                            <Button disable={false} type="submit" classes="authButton btn btn-primary">
-                                Verifly Otp
+                            <Button disable={isLoading} type="submit" classes="authButton btn btn-primary">
+                                {isLoading ? <div className="spinner-border" role="status" /> : "Send Otp"}
                             </Button>
                         </div>
                     </form>
@@ -150,7 +150,7 @@ const LoginWithOtp = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </Fragment>
 
     );
 };

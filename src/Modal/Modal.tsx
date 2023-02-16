@@ -12,3 +12,10 @@ export interface SignInWithOtpFormValues {
 export interface VeriflyOtpFormValues {
     otp: string
 }
+
+export interface SignUpSubmitPayLoad {
+    email: string
+    password: string,
+    pictureUrl: string
+    displayName: string
+}

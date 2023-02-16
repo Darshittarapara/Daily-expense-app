@@ -3,4 +3,21 @@
 }
 input[type ="file"] {
     opacity: 0;
+    z-index: -1;
+    display: none;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+form .form-image-input {
+    display: flex;
+    margin-bottom: -22px !important;
+    justify-content: center;
+}
+form .form-image-input label img {
+border-radius: 50%;
+height: 100px;
+cursor: pointer;
+width: 140px;
 }

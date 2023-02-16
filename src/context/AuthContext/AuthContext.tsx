@@ -1,15 +1,16 @@
 import React, { useState, useContext } from 'react';
 import * as firebase from 'firebase/auth';
-import { auth } from 'FirebaseConfig/FireBaseConfig';
+import { auth, db } from 'FirebaseConfig/FireBaseConfig';
 import { setItem } from 'helper/Storage';
 import { authErrorHandler } from 'helper/Validation';
-import { useNavigate } from 'react-router-dom';;
+import { useNavigate } from 'react-router-dom'; import { SignUpSubmitPayLoad } from 'Modal/Modal';
+import { ref, set } from 'firebase/database'
 
 interface authContextProviderValues {
     onLogin: (email: string, password: string) => void,
     isLoading: boolean
     error: string
-    onSignUp: (email: string, password: string) => void
+    onSignUp: (payload: SignUpSubmitPayLoad) => void
     setError: React.Dispatch<React.SetStateAction<string>>
     setUpRecaptcha: any
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,7 +19,7 @@ interface authContextProviderValues {
 interface AuthContextProps {
     children: JSX.Element,
 };
-
+export const logo = "https://www.userlogos.org/files/logos/Mafia_Penguin/2-5.png"
 export const authContext = React.createContext({} as authContextProviderValues);
 export const AuthContext: React.FC<AuthContextProps> = (props) => {
     const { RecaptchaVerifier, signInWithPhoneNumber } = firebase
@@ -26,7 +27,6 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
     const [error, setError] = useState<string>("");
     const [isLoading, setLoading] = useState<boolean>(false);
     const loginHandler = async (email: string, password: string) => {
-
         setLoading(true);
         firebase.signInWithEmailAndPassword(auth, email, password)
             .then((response) => {
@@ -49,18 +49,19 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
         recaptchaVerifier.render().then(() => setLoading(false)).catch(() => setLoading(false))
         return signInWithPhoneNumber(auth, number, recaptchaVerifier)
     }
-
-    const signUpHandler = async (email: string, password: string) => {
-
+    console.log(db)
+    const signUpHandler = async (payload: SignUpSubmitPayLoad) => {
         setLoading(true);
-        firebase.createUserWithEmailAndPassword(auth, email, password)
+        firebase.createUserWithEmailAndPassword(auth, payload.email, payload.password)
             .then((response) => {
-                
-                firebase.sendEmailVerification(response.user)
-                    .then((res) => {
-                        console.log(res)
-                    })
-
+                setItem('user', response.user);
+                set(ref(db, 'users/' + response.user.uid), {
+                    displayName: payload.displayName,
+                    photoURL: payload.pictureUrl
+                }).then((response) => {
+                    navigator('/');
+                    setLoading(false);
+                })
             }).catch((error) => {
                 const errors = authErrorHandler(new Error(error).message);
                 setError(errors);

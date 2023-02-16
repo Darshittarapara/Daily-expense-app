@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { SignUpSchema } from "helper/Validation";
 import Button from "../../../components/Button/Button";
 import Input from 'components/Input/Input';
@@ -7,27 +7,58 @@ import { useFormik } from "formik";
 import "./Signup.css";
 import "../auth.css";
 import { ErrorMessage } from "components/ErrorMessage/ErrorMessage";
-import { useAuthContext } from "context/AuthContext/AuthContext";
+import { logo, useAuthContext } from "context/AuthContext/AuthContext";
+const initalUrl = "https://www.nailseatowncouncil.gov.uk/wp-content/uploads/blank-profile-picture-973460_1280.jpg"
 
+interface SignUpFormValue {
+  email: string,
+  password: string,
+  profilePicture: File | string,
+  userName: string,
+  confirmPassword: string
+}
 const SignUp = () => {
-
-  const { error, onSignUp } = useAuthContext()
-  const formilk = useFormik({
+  const [profilePictureUrl, setProfilePicureUrl] = useState<string | null>(initalUrl)
+  const { error, onSignUp, isLoading } = useAuthContext()
+  const formilk = useFormik<SignUpFormValue>({
     initialValues: {
       email: "",
       password: "",
-      profilePicture: "",
+      profilePicture: '',
       userName: '',
       confirmPassword: ""
     },
     validationSchema: SignUpSchema,
     onSubmit: (formValues) => {
-      console.log(formValues);
-      onSignUp(formValues.email, formValues.password)
+      const payload = {
+        email: formValues.email,
+        password: formValues.password,
+        pictureUrl: profilePictureUrl || '',
+        displayName: formValues.userName
+      }
+      onSignUp(payload)
     }
   });
+
+  useEffect(() => {
+    if (formilk.values.profilePicture) {
+      const fileResult: File = formilk.values.profilePicture as File
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        const result = reader.result as string
+        setProfilePicureUrl(result);
+      }
+      reader.readAsDataURL(fileResult)
+    }
+
+  }, [formilk.values.profilePicture])
+
+  const handlerChange = (e: React.BaseSyntheticEvent) => {
+    formilk.setFieldValue('profilePicture', e.target.files[0]);
+  }
+
   return (
-    <div className="container-fluid auth">
+    <Fragment>
       <div className="auth-contain">
         {!error && formilk.errors.email && formilk.touched.email && <ErrorMessage message={formilk.errors.email} />}
         {!error && !formilk.errors.email && formilk.errors.password && formilk.touched.password && <ErrorMessage message={formilk.errors.password} />}
@@ -36,11 +67,33 @@ const SignUp = () => {
         {error && <ErrorMessage message={error} />}
         <div className="logo">
           <img
-            src="https://www.userlogos.org/files/logos/Mafia_Penguin/2-5.png"
+            src={logo}
             alt=""
           />
         </div>
         <form onSubmit={formilk.handleSubmit}>
+          <div className="mb-0 form-image-input">
+            <label className="form-label" htmlFor="profilePicture">
+              <img
+                src={profilePictureUrl || ''}
+                alt=""
+                width={80}
+                height={80}
+              />
+
+            </label>
+
+            <input
+              type="file"
+              id="profilePicture"
+              name="profilePicture"
+              placeholder="profilePicture"
+              onChange={(e) => handlerChange(e)}
+            />
+
+          </div>
+
+          <br></br>
           <div className="mb-2">
             <label className="form-label">User Name</label>
             <Input
@@ -85,7 +138,7 @@ const SignUp = () => {
             />
           </div>
           <div className="mb-2 button-sign-up">
-            <Button type="submit" classes="authButton btn btn-primary">
+            <Button disable={isLoading} type="submit" classes="authButton btn btn-primary">
               Sign up
             </Button>
           </div>
@@ -95,14 +148,8 @@ const SignUp = () => {
         </form>
 
       </div>
-    </div>
+    </Fragment>
   );
 };
 
 export default SignUp;
-// {loading ? (
-//   <div
-//     className="spinner-border text-success"
-//     role="status"
-//   ></div>
-// ) : (

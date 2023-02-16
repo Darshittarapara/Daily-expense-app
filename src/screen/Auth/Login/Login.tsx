@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import Input from '../../../components/Input/Input'
@@ -26,7 +26,7 @@ const Login = () => {
     setError('');
   }, [email, password, setError])
   return (
-    <div className="container-fluid auth">
+    <Fragment>
       <div className="auth-contain">
         {!error && formilk.errors.email && formilk.touched.email && <ErrorMessage message={formilk.errors.email} />}
         {!error && !formilk.errors.email && formilk.errors.password && formilk.touched.password && <ErrorMessage message={formilk.errors.password} />}
@@ -71,7 +71,7 @@ const Login = () => {
             </Button>
           </div>
           <div className="mt-3">
-            <Button disable={isLoading} onClick = {() => navigator("/auth/login-with-otp")} type="submit" classes="authButton btn btn-success">
+            <Button disable={isLoading} onClick={() => navigator("/auth/login-with-otp")} type="submit" classes="authButton btn btn-success">
               Sign In with Otp
             </Button>
           </div>
@@ -81,7 +81,7 @@ const Login = () => {
         </form>
 
       </div>
-    </div>
+    </Fragment>
 
   );
 };
