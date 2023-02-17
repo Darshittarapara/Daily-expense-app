@@ -19,7 +19,7 @@ interface authContextProviderValues {
 interface AuthContextProps {
     children: JSX.Element,
 };
-export const logo = "https://www.userlogos.org/files/logos/Mafia_Penguin/2-5.png"
+export const logo = "https://www.travelperk.com/wp-content/uploads/expensify-logo-1580x232.png"
 export const authContext = React.createContext({} as authContextProviderValues);
 export const AuthContext: React.FC<AuthContextProps> = (props) => {
     const { RecaptchaVerifier, signInWithPhoneNumber } = firebase
