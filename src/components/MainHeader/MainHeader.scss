@@ -93,12 +93,19 @@
 }
 @media screen and (max-width: 540px) {
     .header {
-        padding: 0px;
-
+        padding: 0px 20px !important;
+width: 100%;
+// overflow-x: hidden;
         .profile-container {
+            
             .profile-block {
                 margin-right: 24px;
             }
+        }
+        .menuBar {
+            top: 5px;
+            right: 54px;
+            width: 200px;
         }
     }
     .toggle {
