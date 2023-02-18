@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Routing } from './navigation/Routing';
 import { AuthContext } from 'context/AuthContext/AuthContext';
-import { app } from 'FirebaseConfig/FireBaseConfig'
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

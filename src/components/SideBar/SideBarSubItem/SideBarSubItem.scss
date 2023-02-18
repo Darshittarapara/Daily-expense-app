@@ -1,0 +1,24 @@
+.label {
+    margin-left: 8px !important;
+    
+    .toggle-arrow {
+        float: right;
+    }
+
+   
+}
+.sub-item {
+    height: 0px ;
+    opacity: 0;
+    transition: all 0.35s ease-in-out;
+    overflow: hidden;
+    -moz-transition:all 350ms cubic-bezier(.42,0,.58,1);
+    -ms-transition:all 350ms cubic-bezier(.42,0,.58,1);
+    -o-transition:all 350ms cubic-bezier(.42,0,.58,1);
+    -webkit-transition:all 350ms cubic-bezier(.42,0,.58,1);
+    transition:all 350ms cubic-bezier(.42,0,.58,1);
+}
+.show-sub-item {
+    opacity: 1;
+    height: 80px;
+}

@@ -5,11 +5,13 @@ import { setItem } from 'helper/Storage';
 import { authErrorHandler } from 'helper/Validation';
 import { useNavigate } from 'react-router-dom'; import { SignUpSubmitPayLoad } from 'Modal/Modal';
 import { ref, set } from 'firebase/database'
+import { clearStorage } from 'helper/Storage';
 
 interface authContextProviderValues {
     onLogin: (email: string, password: string) => void,
     isLoading: boolean
     error: string
+    logOut: () => void
     onSignUp: (payload: SignUpSubmitPayLoad) => void
     setError: React.Dispatch<React.SetStateAction<string>>
     setUpRecaptcha: any
@@ -41,6 +43,10 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
             })
     }
 
+    const logOutHandler = () => {
+        clearStorage();
+        window.location.reload();
+    };
     const setUpRecaptcha = (phoneNumber: string) => {
         setLoading(true)
         const number = "+91" + phoneNumber;
@@ -75,6 +81,7 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
         setError,
         setUpRecaptcha,
         setLoading,
+        logOut: logOutHandler,
         onSignUp: signUpHandler
     }
     return <authContext.Provider value={ctx}>

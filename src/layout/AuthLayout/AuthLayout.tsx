@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
-import MainHeader from 'components/MainHeader/MainHeader'
+import MainHeader from 'components/MainHeader/MainHeader';
 import { LayOutProps } from '../../Modal/Modal'
-import { SideBar } from 'components/SideBar/SideBar'
+import { SideBar } from 'components/SideBar/SideBarSubItem'
 import './AuthLayout.scss';
 
 export const AuthLayout: React.FC<LayOutProps> = ({
@@ -11,7 +11,7 @@ export const AuthLayout: React.FC<LayOutProps> = ({
     return (
         <div>
             <Fragment>
-                {/* <MainHeader /> */}
+                <MainHeader name='tester' url='' />
                 <div className='main'>
                     <div className='main-sidebar'>
                         <SideBar />

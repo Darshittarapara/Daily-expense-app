@@ -1,11 +1,4 @@
-.Card {
-    /* background: whitesmoke; */
-    width: 550px;
-    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
-    height: auto;
 
-    padding: 7px 10px;
-}
 .dashboard {
     width: 80%;
     text-align: center;
