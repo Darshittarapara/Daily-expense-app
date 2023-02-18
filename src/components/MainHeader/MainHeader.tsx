@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import "./MainHeader.scss";
 import { logo, useAuthContext } from "context/AuthContext/AuthContext";
 import { HeaderProps } from "Modal/Modal";
@@ -31,25 +31,29 @@ const MainHeader: React.FC<HeaderProps> = ({
   name = "testDemo",
   url = logo
 }) => {
-  const [isShowMenuBar, setIsShowMenuBar] = useState<boolean>(false);
+  const [isShowMenuBar, setIsShowMenuBar] = useState<boolean>(true);
   return (
+    <Fragment>
+      <div className="container-fluid header">
+        <div className="row">
+          <div className="col-6 col-md-6 col-sm-6 col-lg-6">
 
-    <div className="container-fluid header">
-      <div className="row">
-        <div className="col-6 col-md-6 col-sm-6 col-lg-6">
-          
-        </div>
-        <div className="col-6 col-md-6 col-sm-6 col-lg-6 profile-container">
-          <div className="float-end profile-block" onClick={() => setIsShowMenuBar((preViewState) => !preViewState)}>
-            <img src='https://images.hivisasa.com/1200/It9Rrm02rE20.jpg' alt="profilePicture" />
-            <span>
-              Hi ! {name}
-            </span>
+          </div>
+          <div className="col-6 col-md-6 col-sm-6 col-lg-6 profile-container">
+            <div className="float-end profile-block" onClick={() => setIsShowMenuBar((preViewState) => !preViewState)}>
+              <img src='https://images.hivisasa.com/1200/It9Rrm02rE20.jpg' alt="profilePicture" />
+              <span>
+                Hi ! {name}
+              </span>
+            </div>
           </div>
         </div>
+
       </div>
       {isShowMenuBar && <MenuBar />}
-    </div>
+    </Fragment>
+
+
   );
 };
 export default MainHeader;

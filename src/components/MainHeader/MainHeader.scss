@@ -51,6 +51,7 @@
     position: absolute;
     background: whitesmoke;
     color: black;
+    max-width: 200px;
     top: 61px;
     min-height: 130px;
     right: 5px;
@@ -91,26 +92,27 @@
         }
     }
 }
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 786px) {
     .header {
-        padding: 0px 20px !important;
-width: 100%;
-// overflow-x: hidden;
+      padding: 0px;
+     width: 100% ;
+ overflow: hidden;
         .profile-container {
             
             .profile-block {
                 margin-right: 24px;
             }
         }
-        .menuBar {
-            top: 5px;
-            right: 54px;
-            width: 200px;
-        }
+      
+    }
+    .menuBar {
+        top: 6px;
+        right: 5px;
+        width: 50px;
     }
     .toggle {
         background: white;
-        z-index: 12;
+    
         display: none;
     }
 }
