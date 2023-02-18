@@ -8,7 +8,7 @@ import "./Signup.css";
 import "../auth.css";
 import { ErrorMessage } from "components/ErrorMessage/ErrorMessage";
 import { logo, useAuthContext } from "context/AuthContext/AuthContext";
-const initalUrl = "https://www.nailseatowncouncil.gov.uk/wp-content/uploads/blank-profile-picture-973460_1280.jpg"
+export const initalUrl = "https://www.nailseatowncouncil.gov.uk/wp-content/uploads/blank-profile-picture-973460_1280.jpg"
 
 interface SignUpFormValue {
   email: string,

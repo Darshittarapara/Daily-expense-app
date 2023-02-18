@@ -12,6 +12,7 @@ form {
 }
 form .form-image-input {
     display: flex;
+    margin-top: 40px;
     margin-bottom: -22px !important;
     justify-content: center;
 }

@@ -5,7 +5,8 @@ import { HeaderProps } from "Modal/Modal";
 import Card from "components/UI/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faSignOut, faUser } from "@fortawesome/free-solid-svg-icons";
-
+import { useUserContext } from "context/UserContext/UserContext";
+import { initalUrl } from "screen/Auth/SignUp/SignUp";
 const MenuBar = () => {
   const { logOut } = useAuthContext()
   return (
@@ -31,7 +32,8 @@ const MainHeader: React.FC<HeaderProps> = ({
   name = "testDemo",
   url = logo
 }) => {
-  const [isShowMenuBar, setIsShowMenuBar] = useState<boolean>(true);
+  const { displayName, photoURL } = useUserContext()
+  const [isShowMenuBar, setIsShowMenuBar] = useState<boolean>(false);
   return (
     <Fragment>
       <div className="container-fluid header">
@@ -41,9 +43,9 @@ const MainHeader: React.FC<HeaderProps> = ({
           </div>
           <div className="col-6 col-md-6 col-sm-6 col-lg-6 profile-container">
             <div className="float-end profile-block" onClick={() => setIsShowMenuBar((preViewState) => !preViewState)}>
-              <img src='https://images.hivisasa.com/1200/It9Rrm02rE20.jpg' alt="profilePicture" />
+              <img src={photoURL} alt="profilePicture" />
               <span>
-                Hi ! {name}
+                Hi ! {displayName}
               </span>
             </div>
           </div>

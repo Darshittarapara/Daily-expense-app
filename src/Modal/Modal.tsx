@@ -37,6 +37,36 @@ export interface SideBarSubItemProps {
 }
 
 export interface HeaderProps {
-    name:string
-    url:string
+    name: string
+    url: string
+}
+export interface UserProfileDetails {
+    displayName: string
+    photoURL: string
+}
+
+export interface MonthWiseExpenseState {
+
+}
+
+export interface MonthWiseData {
+    data: {
+        x: string
+        y: string
+    }[]
+}
+export interface ExpenseState {
+    
+        id: string
+        name: string
+        category: string
+        note: string,
+        amount: string
+        month: string
+    
+}
+export interface MonthlyChartProp {
+    id: string
+    data: ExpenseState[]
+    
 }

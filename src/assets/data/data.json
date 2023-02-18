@@ -1,0 +1,62 @@
+{
+    "expense":[
+        {
+            "id":"1",
+            "name" : "Taxi ticket",
+            "category" :"transpotion",
+            "note":"Daily charge from offlice to pg",
+            "amount":"40",
+            "month":"Jan"
+        },
+        {
+            "id":"2",
+            "name" : "Dinner",
+            "category" :"Foods",
+            "note":"Daily night charge",
+            "amount":"80",
+            "month":"March"
+        },
+        {
+            "id":"3",
+            "name" : "tea",
+            "category" :"drink",
+            "note":"",
+            "amount":"30",
+            "month":"Jan"
+        }
+    ],
+    "income":[
+        {
+            "id":"1",
+            "name" : "Salary",
+            "category" :"salary",
+            "note":"",
+            "amount":"14000",
+            "month":"Jan"
+        },
+        {
+            "id":"2",
+            "name" : "Investment",
+            "category" :"investment",
+            "note":"",
+            "amount":"5000",
+            "month":"Jan"
+        },
+        {
+            "id":"3",
+            "name" : "Home",
+            "category" :"home",
+            "note":"",
+            "month":"feb",
+            "amount":"6000"
+        },
+        {
+            "id":"4",
+            "name" : "Work",
+            "category" :"online",
+            "note":"",
+            "month":"feb",
+            "amount":"6000"
+        }
+    ]
+}

@@ -4,7 +4,10 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Routing } from './navigation/Routing';
-import { AuthContext } from 'context/AuthContext/AuthContext';
+import { AuthContext as AuthContextProvider } from 'context/AuthContext/AuthContext';
+import { UserContext as UserContextProvider } from 'context/UserContext/UserContext';
+import { ExpenseContext as ExpenseContextProvider } from 'context/ExpenseContext/ExpenseContext';
+import { IncomeContext, IncomeContextProvider } from 'context/IncomeContext/IncomeContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,11 +15,16 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthContext>
-        <Routing />
-      </AuthContext>
+      <AuthContextProvider>
+        <UserContextProvider>
+          <ExpenseContextProvider>
+            <IncomeContextProvider>
+              <Routing />
+            </IncomeContextProvider>
+          </ExpenseContextProvider>
+        </UserContextProvider>
+      </AuthContextProvider>
     </BrowserRouter>
-
   </React.StrictMode>
 );
 

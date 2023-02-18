@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import LoginWithOtp from 'screen/Auth/LoginWithOtp/LoginWithOtp';
 import SignUp from 'screen/Auth/SignUp/SignUp';
-import { Home } from 'screen/Home/Home';
+import { DashBoard } from 'screen/DashBoard/DashBoard';
 import WithAuthLayout from '../layout/WithAuthLayout/WithAuthLayout';
 import Login from '../screen/Auth/Login/Login';
 
@@ -21,7 +21,7 @@ export const Routing = () => {
         <Routes>
             {user && (
                 <Route path='/' element={
-                    <AuthLayout component={Home} />
+                    <AuthLayout component={DashBoard} />
                 } />
             )}
             <Route path='/auth' element={

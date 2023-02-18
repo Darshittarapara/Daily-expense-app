@@ -1,6 +1,7 @@
 #menu-bar {
     margin: 0px 7px;
   position: relative;
+  display: none;
     #first-line {
         width: 30px;
         background:  rgb(49, 48, 48);
@@ -126,6 +127,7 @@
     }
     #menu-bar {
         top: -55px;
+        display: block;
         .close-sidebar {           
             opacity: 1;
         }

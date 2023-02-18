@@ -53,11 +53,10 @@ const sidebarList = {
 export const SideBar = () => {
     const [isShowSideBar, setIsShowSideBar] = useState<boolean>(false)
 
-
     const toggleSideBar = () => {
         setIsShowSideBar((preViewState) => !preViewState);
     }
-    console.log(isShowSideBar)
+
     return (
         <Fragment>
             <div id='menu-bar'>
