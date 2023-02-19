@@ -1,19 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import * as firebase from 'firebase/auth';
 import { auth, db } from 'FirebaseConfig/FireBaseConfig';
-import { setItem } from 'helper/Storage';
+import { getItem, setItem } from 'helper/Storage';
 import { authErrorHandler } from 'helper/Validation';
 import { useNavigate } from 'react-router-dom'; import { SignUpSubmitPayLoad } from 'Modal/Modal';
 import { ref, set } from 'firebase/database'
 import { clearStorage } from 'helper/Storage';
-
 interface authContextProviderValues {
     onLogin: (email: string, password: string) => void,
     isLoading: boolean
     error: string
+    userId: string
     logOut: () => void
     onSignUp: (payload: SignUpSubmitPayLoad) => void
     setError: React.Dispatch<React.SetStateAction<string>>
+    setUserId: React.Dispatch<React.SetStateAction<string>>
     setUpRecaptcha: any
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
 };
@@ -26,14 +27,18 @@ export const authContext = React.createContext({} as authContextProviderValues);
 export const AuthContext: React.FC<AuthContextProps> = (props) => {
     const { RecaptchaVerifier, signInWithPhoneNumber } = firebase
     const navigator = useNavigate();
+    const [userId, setUserId] = useState<string>('');
     const [error, setError] = useState<string>("");
     const [isLoading, setLoading] = useState<boolean>(false);
+
+
     const loginHandler = async (email: string, password: string) => {
         setLoading(true);
         firebase.signInWithEmailAndPassword(auth, email, password)
             .then((response) => {
                 navigator('/');
                 setItem('user', response.user);
+                setUserId(response.user.uid);
                 setLoading(false);
 
             }).catch((error) => {
@@ -80,6 +85,8 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
         error,
         setError,
         setUpRecaptcha,
+        userId,
+        setUserId,
         setLoading,
         logOut: logOutHandler,
         onSignUp: signUpHandler

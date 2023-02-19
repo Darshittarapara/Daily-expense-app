@@ -1,4 +1,5 @@
 import React from 'react';
+import './CustomTable.scss'
 interface CustomTableProps {
     row: any[]
     coloum: any[]
@@ -6,9 +7,8 @@ interface CustomTableProps {
 }
 export const CustomTable: React.FC<CustomTableProps> = ({ row, coloum, showTableData }) => {
     return (
-       
-
-        <table className="table table-striped table-bordered table-hover">
+        <div className='table-wrapper'>
+ <table className="table table-hover">
             <thead>
                 <tr>
                 {row.map((header, index) => <td key={`${index}`}>{header}</td>)}
@@ -18,5 +18,7 @@ export const CustomTable: React.FC<CustomTableProps> = ({ row, coloum, showTable
                 {coloum.map((data, index) => showTableData(data,index))}
             </tbody>
         </table>
+        </div>
+       
     )
 }

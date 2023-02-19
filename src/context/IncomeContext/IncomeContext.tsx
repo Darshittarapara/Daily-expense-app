@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 // import { ref, get, child, getDatabase, } from 'firebase/database'
 // import { getItem } from 'helper/Storage';
 // import { UserProfileDetails } from 'Modal/Modal';
@@ -39,7 +39,10 @@ export const IncomeContextProvider: React.FC<IncomeContextProps> = (props) => {
     const incomeData = [...data.income]
     const [incomeList, setIncomeList] = useState<IncomeState[]>(incomeData);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-
+useEffect(() => {
+setIsLoading(true)
+setIncomeList(incomeData)
+},[])
     // const fetchUserData = useCallback(
     //     async () => {
     //         setIsLoading(true)

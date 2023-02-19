@@ -146,7 +146,7 @@ const LoginWithOtp = () => {
                         Back
                     </Button>
                     <div style={{ textAlign: "center" }}>
-                        <NavLink to="/auth/signup">Register Here</NavLink>
+                        <NavLink to="/signUp">Register Here</NavLink>
                     </div>
                 </div>
             </div>

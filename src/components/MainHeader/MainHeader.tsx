@@ -6,7 +6,7 @@ import Card from "components/UI/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faSignOut, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useUserContext } from "context/UserContext/UserContext";
-import { initalUrl } from "screen/Auth/SignUp/SignUp";
+
 const MenuBar = () => {
   const { logOut } = useAuthContext()
   return (

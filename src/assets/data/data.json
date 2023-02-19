@@ -5,7 +5,7 @@
             "name" : "Taxi ticket",
             "category" :"transpotion",
             "note":"Daily charge from offlice to pg",
-            "amount":"40",
+            "amount":"5640",
             "month":"Jan"
         },
         {
@@ -14,14 +14,22 @@
             "category" :"Foods",
             "note":"Daily night charge",
             "amount":"80",
-            "month":"March"
+            "month":"feb"
         },
         {
             "id":"3",
             "name" : "tea",
             "category" :"drink",
             "note":"",
-            "amount":"30",
+            "amount":"6630",
+            "month":"Jan"
+        },
+        {
+            "id":"4",
+            "name" : "meggi",
+            "category" :"Foods",
+            "note":"",
+            "amount":"5630",
             "month":"Jan"
         }
     ],

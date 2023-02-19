@@ -1,0 +1,18 @@
+.right-corner-container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 170px;
+    align-items: center;
+
+    select {
+        max-width: 100px;
+        margin-bottom: 20px;
+    }
+    .all-page-link {
+        color: blue;
+        margin-top: -6px;
+        text-decoration: underline;
+        text-transform: lowercase;
+        cursor: pointer;
+    }
+}

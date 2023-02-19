@@ -1,0 +1,37 @@
+.Card {
+  box-shadow: 0px 0px 20px 0px rgba($color: #000000, $alpha: 0.2);
+  border-radius: 15px;
+  padding: 19px 10px;
+}
+.dashboard {
+  width: 80%;
+  text-align: center;
+  transform: translate(16%, 10%);
+}
+
+@media screen and (max-width: 1200px) {
+  .Card {
+    transform: translate(70%, 40%);
+  }
+  .dashboard {
+    transform: translate(20%, 40%);
+    margin-bottom: 90px;
+  }
+}
+@media screen and (max-width: 960px) {
+  .Card {
+    transform: translate(10%, 40%);
+  }
+}
+@media screen and (max-width: 540px) {
+  .Card {
+    transform: translate(5%, 40%);
+    max-width: 348px;
+    overflow: scroll;
+  }
+  .dashboard {
+    width: 90%;
+    text-align: center;
+    transform: translate(1%, 10%);
+  }
+}

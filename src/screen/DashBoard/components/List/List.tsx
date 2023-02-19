@@ -1,8 +1,7 @@
-import { ColumnChart } from 'components/ColumnChart/ColumnChart';
-import React, { useEffect, useState, Fragment } from 'react'
-import { DashBoardListProps, MonthlyChartProp, ExpenseState } from 'Modal/Modal';
+import React, {  Fragment } from 'react'
+import { DashBoardListProps, ExpenseState } from 'Modal/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDeleteLeft, faEdit, faEye, faRemove, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {  faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CustomTable } from 'components/CustomTable/CustomTable';
 import './List.scss';
 export const List: React.FC<DashBoardListProps> = (props) => {
@@ -16,10 +15,10 @@ export const List: React.FC<DashBoardListProps> = (props) => {
             <td>{item.amount}</td>
             <td>{item.note}</td>
             <td>
-                <div  className='action-cell'>
-                <span className='btn btn-outline-success actions-btn'><FontAwesomeIcon icon={faEdit}/></span>
-                <span className='btn btn-outline-danger actions-btn'><FontAwesomeIcon icon={faTrash}/></span>
-                <span className='btn btn-outline-primary actions-btn'><FontAwesomeIcon icon={faEye}/></span>
+                <div className='action-cell'>
+                <span title='Edit' className='btn btn-outline-success actions-btn'><FontAwesomeIcon icon={faEdit}/></span>
+                <span title='Delete'  className='btn btn-outline-danger actions-btn'><FontAwesomeIcon icon={faTrash}/></span>
+                <span title='View'  className='btn btn-outline-primary actions-btn'><FontAwesomeIcon icon={faEye}/></span>
                 </div>
                
             </td>

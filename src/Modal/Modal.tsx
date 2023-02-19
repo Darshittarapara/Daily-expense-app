@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 export interface LayOutProps {
     component: React.ElementType
@@ -65,8 +65,14 @@ export interface ExpenseState {
 }
 export interface MonthlyChartProp {
     id: string
+    seriesName: string
+    monthlyChartData:number[]
     data: ExpenseState[]
+    setMontlyChartData : React.Dispatch<SetStateAction<number[]>>
 }
 export interface DashBoardListProps {
     data : ExpenseState[]
+}
+export interface MonthWiseSumKey {
+    [index: string]: any
 }

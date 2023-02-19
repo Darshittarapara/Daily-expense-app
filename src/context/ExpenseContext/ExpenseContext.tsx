@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 // import { ref, get, child, getDatabase, } from 'firebase/database'
 // import { getItem } from 'helper/Storage';
 // import { UserProfileDetails } from 'Modal/Modal';
@@ -34,6 +34,11 @@ export const ExpenseContext: React.FC<ExpenseContextProps> = (props) => {
     const [expenseList, setExpenseList] = useState<ExpenseState[]>(expenseData);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     console.log(data["expense"])
+
+    useEffect(() => {
+        setIsLoading(true)
+        setExpenseList(expenseData)
+        },[])
     // const fetchUserData = useCallback(
     //     async () => {
     //         setIsLoading(true)
