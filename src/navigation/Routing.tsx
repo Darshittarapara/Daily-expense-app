@@ -16,7 +16,6 @@ export const Routing = () => {
   const uId = getItem('user')
   useEffect(() => {
     const user = getItem("user");
-   
     let clearTimer: string | number | NodeJS.Timeout | undefined;
     setIsLoading(true);
     if (user) {
