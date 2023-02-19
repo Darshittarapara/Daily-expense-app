@@ -11,18 +11,18 @@ export const AuthLayout: React.FC<LayOutProps> = ({
     component: Component
 }) => {
     const { isLoading } = useUserContext();
-    const location = useLocation
+    
     return (
             <Fragment>
                 {isLoading ? <div className='loader'><Loader /></div> : (
                     <Fragment>
                         <MainHeader name='tester' url='' />
-                            <div className='row'>
+                            <div className='row' >
                                 <div className='col-md-3 col-lg-3 col-xl-3 col-3'>
                                     <SideBar />
                                 </div>
                                 <div className='col-12 col-md-9 col-xl-9 col-lg-9 screen-container'>
-                                    <Component />
+                                    <Component /> 
                                 </div>
                             </div>
                         
