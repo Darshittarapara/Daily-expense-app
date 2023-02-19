@@ -56,17 +56,17 @@ export interface MonthWiseData {
     }[]
 }
 export interface ExpenseState {
-    
         id: string
         name: string
         category: string
         note: string,
         amount: string
         month: string
-    
 }
 export interface MonthlyChartProp {
     id: string
     data: ExpenseState[]
-    
+}
+export interface DashBoardListProps {
+    data : ExpenseState[]
 }

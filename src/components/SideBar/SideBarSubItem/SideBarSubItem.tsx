@@ -4,7 +4,7 @@ import SideBarItem from '../SideBarItem/SideBarItem';
 import { capiltalLetter } from 'helper/helper';
 import './SideBarSubItem.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDoubleDown, faAngleDoubleUp, faAngleDown, faAngleUp, faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 const SideBarSubItem: React.FC<SideBarSubItemProps> = (props) => {
     const [isShowSubItem, setIsShowSubItem] = useState<boolean>(false);
@@ -17,7 +17,7 @@ const SideBarSubItem: React.FC<SideBarSubItemProps> = (props) => {
                 <span>
                     {capiltalLetter(props.label)}
                 </span>
-                <FontAwesomeIcon icon={isShowSubItem ? faArrowDown : faArrowUp} className="toggle-arrow" />
+                <FontAwesomeIcon icon={isShowSubItem ? faAngleDown : faAngleUp} className="toggle-arrow" />
             </li>
             <div className={isShowSubItem ? 'show-sub-item' : "sub-item"}>
                 <ul>

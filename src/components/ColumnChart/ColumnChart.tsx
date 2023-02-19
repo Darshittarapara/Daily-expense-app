@@ -1,6 +1,6 @@
 import { ApexOptions } from 'apexcharts';
 import React from 'react'
-import ReactApexChart from 'react-apexcharts'
+import ReactApexChart  from 'react-apexcharts'
 
 interface ColoumChartProps {
     id: string
@@ -8,31 +8,28 @@ interface ColoumChartProps {
     width: number
 }
 export const ColumnChart: React.FC<ColoumChartProps> = (props) => {
-    console.log(props.data[0].data)
+    console.log(props.id)
     const options: ApexOptions = {
         chart: {
             id: props.id
         },
+        xaxis: {
+            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+          }
     }
-    const series = [{
-        data: [{
-            x: 'category A',
-            y: 10
-        }, {
-            x: 'category B',
-            y: 18
-        }, {
-            x: 'category C',
-            y: 13
-        }]
-    }]
+    const series =  [
+        {
+          name: "series-1",
+          data: [30, 40, 45, 50, 49, 60, 70, 91]
+        }
+      ]
     return (
         <div className="row">
             <div className="mixed-chart">
-                <ReactApexChart
+                <ReactApexChart                 
                     series={series}
                     options={options}
-                    type="bar"
+                    type="line"
                     width={props.width}
                 />
             </div>

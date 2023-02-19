@@ -5,7 +5,8 @@ import { useExpenseContext } from 'context/ExpenseContext/ExpenseContext';
 import { useIncomeContext } from 'context/IncomeContext/IncomeContext';
 import React, { useState } from 'react';
 import { AccountContain } from './components/AccountContain/AccountContain';
-import { MonthlyCharts } from './components/AccountContain/MonthlyExpenseChart/MonthlyExpenseChart';
+import { List } from './components/List/List';
+import { MonthlyCharts } from './components/MonthlyExpenseChart/MonthlyExpenseChart';
 import './DashBoard.scss';
 
 export const DashBoard = () => {
@@ -34,6 +35,8 @@ export const DashBoard = () => {
                                 />
                                 <div className='card-body'>
                                     <AccountContain label='Total Balance' value="INR 50000" />
+                                    <AccountContain label='Daily Average expense' value="300" />
+                            </div>
                             </Card>
 
                         </div>
@@ -45,6 +48,17 @@ export const DashBoard = () => {
                                     headerTitle={listType.includes("income") ? "Monthly income" : "Monthly expense"} />
                                 <div className='card-body'>
                                     {listType.includes("expense") ? <MonthlyCharts data={expenseList} id="expense-id" /> : <MonthlyCharts data={incomeList} id="income-id" />}
+                                </div>
+                            </Card>
+                        </div>
+                        <div className='col-md-9 col-lg-9 col-xl-9 col-12 mb-5'>
+                            <Card>
+                                <SectionHeader
+                                    onChangeHandler={selectInputChangeHandler}
+                                    isListingPage={true} col="6" options={["expese", "income"]}
+                                    headerTitle={listType.includes("income") ? "Income list" : "Expense list"} />
+                                <div className='card-body'>
+                                   {listType.includes("income") ? <List data={incomeList} /> : <List data={expenseList} />}
                                 </div>
                             </Card>
                         </div>

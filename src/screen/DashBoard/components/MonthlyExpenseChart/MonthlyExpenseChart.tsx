@@ -1,6 +1,5 @@
 import { ColumnChart } from 'components/ColumnChart/ColumnChart';
-import { useExpenseContext } from 'context/ExpenseContext/ExpenseContext'
-import React, { useEffect, useMemo, useState, Fragment } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
 import { MonthWiseData, MonthlyChartProp } from 'Modal/Modal';
 
 export const MonthlyCharts: React.FC<MonthlyChartProp> = (props) => {
