@@ -3,7 +3,7 @@ import "./Card.scss";
 
 const Card = (props) => {
     return (
-        <div className={`Card ${props.className}`}>{props.children}</div>
+        <div className={`card Card ${props.className || ""}`}>{props.children}</div>
     )
 };
 export default Card;

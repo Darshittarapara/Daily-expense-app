@@ -39,7 +39,12 @@ export const VeriflyOtpSchema = Yup.object({
         .max(6, "Phone number must be 6 characters")
         .min(6, "Phone number must be 6 characters")
 })
-
+export const AddCategorySchema = Yup.object({
+    name: Yup.string()
+        .required("Please enter category name"),
+    type :Yup.string()
+    .required("Please select category type")
+})
 export const SignUpSchema = Yup.object({
     email: Yup.string()
         .required('Please enter email')

@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import * as firebase from 'firebase/auth';
 import { auth, db } from 'FirebaseConfig/FireBaseConfig';
-import { getItem, setItem } from 'helper/Storage';
+import {  setItem } from 'helper/Storage';
 import { authErrorHandler } from 'helper/Validation';
 import { useNavigate } from 'react-router-dom'; import { SignUpSubmitPayLoad } from 'Modal/Modal';
 import { ref, set } from 'firebase/database'
@@ -66,12 +66,14 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
         firebase.createUserWithEmailAndPassword(auth, payload.email, payload.password)
             .then((response) => {
                 setItem('user', response.user);
+                setUserId(response.user.uid);
                 set(ref(db, 'users/' + response.user.uid), {
                     displayName: payload.displayName,
                     photoURL: payload.pictureUrl
                 }).then((response) => {
                     navigator('/');
                     setLoading(false);
+                    
                 })
             }).catch((error) => {
                 const errors = authErrorHandler(new Error(error).message);

@@ -53,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@types/firebase": "^3.2.1",
     "sass": "^1.58.1"
   }
 }
