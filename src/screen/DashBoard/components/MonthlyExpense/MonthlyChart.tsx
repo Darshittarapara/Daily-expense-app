@@ -1,6 +1,6 @@
 import { ColumnChart } from 'components/ColumnChart/ColumnChart';
 import React, { useEffect, useState, Fragment } from 'react'
-import { MonthWiseData, MonthlyChartProp } from 'Modal/Modal';
+import {  MonthlyChartProp } from 'Modal/Modal';
 import { getMonthWiseAmounts } from 'helper/helper';
 
 export const MonthlyCharts: React.FC<MonthlyChartProp> = (props) => {
