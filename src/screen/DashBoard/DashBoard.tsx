@@ -9,15 +9,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Strings } from "resource/Strings";
 import { AccountContain } from "./components/AccountContain/AccountContain";
 import { List } from "./components/List/List";
-import { MonthlyCharts } from "./components/MonthlyExpense/MonthlyChart";
+import { MonthlyCharts } from "./components/MonthlyChart/MonthlyChart";
 import "./DashBoard.scss";
 
 export const DashBoard = () => {
-  const [monthlyChartType, setMonthlyChartType] = useState<string>("expense");
-  const [montlyListType, setMontlyListType] = useState<string>("expense");
-
   const { expenseList } = useExpenseContext();
   const { incomeList } = useIncomeContext();
+  const [monthlyChartType, setMonthlyChartType] = useState<string>("expense");
+  const [montlyListType, setMontlyListType] = useState<string>("expense");
   const [monthlyExpenses, setMontlyExpenses] = useState<number[]>([]);
   const [expenseMonths, setExpenseMonths] = useState<string[]>([]);
   const [incomeMonths, setIncomeMonths] = useState<string[]>([]);
@@ -97,7 +96,7 @@ export const DashBoard = () => {
                 </div>
               </Card>
             </div>
-            <div className="col-md-6 col-lg-6 col-xl-6  col-12 mb-5">
+            <div className="col-md-6 col-lg-6 col-xl-6  col-12">
               <Card>
                 <SectionHeader
                   isListingPage={false}
@@ -117,7 +116,7 @@ export const DashBoard = () => {
                 </div>
               </Card>
             </div>
-            <div className="col-md-9 col-lg-9 col-xl-9 col-12 mb-5">
+            <div className="col-md-9 col-lg-9 col-xl-9 col-12">
               <Card>
                 <SectionHeader
                   onChangeHandler={MontlyListTypeSelectInputChangeHandler}
@@ -130,7 +129,7 @@ export const DashBoard = () => {
                       : Strings.expense
                   }
                 />
-                <div className="card-body">
+                <div className="section-body">
                   {montlyListType.includes("income") ? (
                     <List data={incomeList} />
                   ) : (

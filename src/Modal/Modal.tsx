@@ -76,3 +76,7 @@ export interface DashBoardListProps {
 export interface MonthWiseSumKey {
     [index: string]: any
 }
+export interface CategoryFormValues {
+    name : string
+    type :string
+}

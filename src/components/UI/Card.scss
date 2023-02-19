@@ -8,11 +8,12 @@
   text-align: center;
   transform: translate(16%, 10%);
 }
-
+.right-bar-container {
+  padding: 10px 20px;
+  margin-left: -40px;
+}
 @media screen and (max-width: 1200px) {
-  .Card {
-    transform: translate(70%, 40%);
-  }
+ 
   .dashboard {
     transform: translate(20%, 40%);
     margin-bottom: 90px;
@@ -23,10 +24,10 @@
     transform: translate(10%, 40%);
   }
 }
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 786px) {
   .Card {
-    transform: translate(5%, 40%);
-    max-width: 400px;
+   margin-left: -30px;
+    max-width: 100%;
     overflow: scroll;
   }
   .dashboard {

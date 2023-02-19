@@ -5,7 +5,7 @@ import { getMonthWiseAmounts } from 'helper/helper';
 
 export const MonthlyCharts: React.FC<MonthlyChartProp> = (props) => {
     const [months, setMonths] = useState<string[]>([]);
-    console.log(props.data)
+  
     useEffect(() => {
       const {monthList} = getMonthWiseAmounts(props.data)
         setMonths(monthList)

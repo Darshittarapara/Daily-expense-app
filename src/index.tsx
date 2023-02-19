@@ -1,27 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
-import { Routing } from './navigation/Routing';
-import { AuthContext as AuthContextProvider } from 'context/AuthContext/AuthContext';
-import { UserContext as UserContextProvider } from 'context/UserContext/UserContext';
-import { ExpenseContext as ExpenseContextProvider } from 'context/ExpenseContext/ExpenseContext';
-import {  IncomeContextProvider } from 'context/IncomeContext/IncomeContext';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+import { Routing } from "./navigation/Routing";
+import { AuthContext as AuthContextProvider } from "context/AuthContext/AuthContext";
+import { UserContext as UserContextProvider } from "context/UserContext/UserContext";
+import { ExpenseContext as ExpenseContextProvider } from "context/ExpenseContext/ExpenseContext";
+import { IncomeContextProvider } from "context/IncomeContext/IncomeContext";
+import { CategoryContextProvider } from "context/CategoryContext/CategoryContext";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
         <UserContextProvider>
-          <ExpenseContextProvider>
-            <IncomeContextProvider>
-              <Routing />
-            </IncomeContextProvider>
-          </ExpenseContextProvider>
+          <CategoryContextProvider>
+            <ExpenseContextProvider>
+              <IncomeContextProvider>
+                <Routing />
+              </IncomeContextProvider>
+            </ExpenseContextProvider>
+          </CategoryContextProvider>
         </UserContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
