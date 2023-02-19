@@ -71,12 +71,12 @@ const Login = () => {
             </Button>
           </div>
           <div className="mt-3">
-            <Button disable={isLoading} onClick={() => navigator("/auth/login-with-otp")} type="submit" classes="authButton btn btn-success">
+            <Button disable={isLoading} onClick={() => navigator("/login-with-otp")} type="submit" classes="authButton btn btn-success">
               Sign In with Otp
             </Button>
           </div>
           <div style={{ textAlign: "center" }}>
-            <NavLink to="/auth/signup">Register Here</NavLink>
+            <NavLink to="/signUp">Register Here</NavLink>
           </div>
         </form>
 

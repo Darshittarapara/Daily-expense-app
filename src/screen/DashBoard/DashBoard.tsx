@@ -1,72 +1,147 @@
-import ContentTitle from 'components/ContentTitle/ContentTitle';
-import { SectionHeader } from 'components/SectionHeader/SectionHeader';
-import Card from 'components/UI/Card';
-import { useExpenseContext } from 'context/ExpenseContext/ExpenseContext';
-import { useIncomeContext } from 'context/IncomeContext/IncomeContext';
-import React, { useState } from 'react';
-import { AccountContain } from './components/AccountContain/AccountContain';
-import { List } from './components/List/List';
-import { MonthlyCharts } from './components/MonthlyExpenseChart/MonthlyExpenseChart';
-import './DashBoard.scss';
+import { ColumnChart } from "components/ColumnChart/ColumnChart";
+import ContentTitle from "components/ContentTitle/ContentTitle";
+import { SectionHeader } from "components/SectionHeader/SectionHeader";
+import Card from "components/UI/Card";
+import { useExpenseContext } from "context/ExpenseContext/ExpenseContext";
+import { useIncomeContext } from "context/IncomeContext/IncomeContext";
+import { getMonthWiseAmounts } from "helper/helper";
+import React, { useEffect, useMemo, useState } from "react";
+import { Strings } from "resource/Strings";
+import { AccountContain } from "./components/AccountContain/AccountContain";
+import { List } from "./components/List/List";
+import { MonthlyCharts } from "./components/MonthlyExpense/MonthlyChart";
+import "./DashBoard.scss";
 
 export const DashBoard = () => {
-    const [listType, setListType] = useState<string>('expense');
-    const { expenseList } = useExpenseContext()
-    const { incomeList } = useIncomeContext()
-    const selectInputChangeHandler = (value: string) => {
-        console.log(value);
-        setListType(value)
-    }
-    return (
-        <div className='container'>
-            <div className='row'>
-                <div className='col-12'>
-                    <ContentTitle title='Dashboard' />
-                </div>
-                <div className='col-12'>
-                    <div className='row'>
-                        <div className='col-md-6 col-lg-6 col-xl-6 col-12 mb-5'>
-                            <Card>
-                                <SectionHeader
-                                    isListingPage={false}
-                                    value={listType}
-                                    options={["expese", "incomex"]}
-                                    headerTitle="Your account" col='12'
-                                />
-                                <div className='card-body'>
-                                    <AccountContain label='Total Balance' value="INR 50000" />
-                                    <AccountContain label='Daily Average expense' value="300" />
-                            </div>
-                            </Card>
+  const [monthlyChartType, setMonthlyChartType] = useState<string>("expense");
+  const [montlyListType, setMontlyListType] = useState<string>("expense");
 
-                        </div>
-                        <div className='col-md-6 col-lg-6 col-xl-6  col-12 mb-5'>
-                            <Card>
-                                <SectionHeader
-                                    onChangeHandler={selectInputChangeHandler}
-                                    isListingPage={true} col="6" options={["expese", "income"]}
-                                    headerTitle={listType.includes("income") ? "Monthly income" : "Monthly expense"} />
-                                <div className='card-body'>
-                                    {listType.includes("expense") ? <MonthlyCharts data={expenseList} id="expense-id" /> : <MonthlyCharts data={incomeList} id="income-id" />}
-                                </div>
-                            </Card>
-                        </div>
-                        <div className='col-md-9 col-lg-9 col-xl-9 col-12 mb-5'>
-                            <Card>
-                                <SectionHeader
-                                    onChangeHandler={selectInputChangeHandler}
-                                    isListingPage={true} col="6" options={["expese", "income"]}
-                                    headerTitle={listType.includes("income") ? "Income list" : "Expense list"} />
-                                <div className='card-body'>
-                                   {listType.includes("income") ? <List data={incomeList} /> : <List data={expenseList} />}
-                                </div>
-                            </Card>
-                        </div>
-                    </div>
+  const { expenseList } = useExpenseContext();
+  const { incomeList } = useIncomeContext();
+  const [monthlyExpenses, setMontlyExpenses] = useState<number[]>([]);
+  const [expenseMonths, setExpenseMonths] = useState<string[]>([]);
+  const [incomeMonths, setIncomeMonths] = useState<string[]>([]);
+  const [monthlyIncome, setMontlyIncome] = useState<number[]>([]);
+  const expense = useMemo(() => expenseList, [expenseList]);
+  const income = useMemo(() => incomeList, [incomeList]);
+  useEffect(() => {
+    const monthWiseExpense = getMonthWiseAmounts(expense);
+    const monthWiseIncome = getMonthWiseAmounts(income);
+    setExpenseMonths(monthWiseExpense.monthList);
+    setIncomeMonths(monthWiseIncome.monthList);
+    setMontlyExpenses(monthWiseExpense.amountList);
+    setMontlyIncome(monthWiseIncome.amountList);
+  }, [expense, income]);
+  const MonthlyChartTypeSelectInputChangeHandler = (value: string) => {
+    setMonthlyChartType(value);
+  };
+  const MontlyListTypeSelectInputChangeHandler = (value: string) => {
+    setMontlyListType(value);
+  };
 
-                </div>
-            </div>
-
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-12">
+          <ContentTitle title="Dashboard" />
         </div>
-    )
-}
+        <div className="col-12">
+          <div className="row">
+            <div className="col-md-4 col-lg-4 col-xl-4 col-12 mb-5">
+              <AccountContain label="Total Balance" value="INR 50000" />
+            </div>
+            <div className="col-md-4 col-lg-4 col-xl-4 col-12 mb-5">
+              <AccountContain label="Daily Average expense" value="INR 300" />
+            </div>
+            <div className="col-md-4 col-lg-4 col-xl-4 col-12">
+              <AccountContain label="UpComing payment">
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <div>Electricity bill</div>
+                  <div>INR 3000</div>
+                </div>
+              </AccountContain>
+            </div>
+            <div className="col-md-6 col-lg-6 col-xl-6  col-12 mb-5">
+              <Card>
+                <SectionHeader
+                  onChangeHandler={MonthlyChartTypeSelectInputChangeHandler}
+                  isListingPage={true}
+                  col="6"
+                  options={["expese", "income"]}
+                  headerTitle={
+                    monthlyChartType.includes("income")
+                      ? "Monthly income"
+                      : "Monthly expense"
+                  }
+                />
+                <div className="card-body">
+                  {monthlyChartType.includes("income") ? (
+                    <MonthlyCharts
+                      data={incomeList}
+                      monthlyChartData={monthlyIncome}
+                      setMontlyChartData={setMontlyIncome}
+                      id="income-id"
+                      seriesName={Strings.monthlyIncome}
+                    />
+                  ) : (
+                    <MonthlyCharts
+                      data={expenseList}
+                      monthlyChartData={monthlyExpenses}
+                      setMontlyChartData={setMontlyExpenses}
+                      id="expense-id"
+                      seriesName={Strings.monthlyExpense}
+                    />
+                  )}
+                </div>
+              </Card>
+            </div>
+            <div className="col-md-6 col-lg-6 col-xl-6  col-12 mb-5">
+              <Card>
+                <SectionHeader
+                  isListingPage={false}
+                  col="12"
+                  headerTitle={Strings.monthlyExpenseVsIncome}
+                />
+                <div className="card-body">
+                 <ColumnChart 
+                 id ="expense-and-income"
+                 months={[...incomeMonths, ...expenseMonths]}
+                  series={[
+                    {name : Strings.income , data : monthlyIncome},
+                    {name : Strings.expense, data :monthlyExpenses}
+                 ]}
+                 width = {460}
+                 />
+                </div>
+              </Card>
+            </div>
+            <div className="col-md-9 col-lg-9 col-xl-9 col-12 mb-5">
+              <Card>
+                <SectionHeader
+                  onChangeHandler={MontlyListTypeSelectInputChangeHandler}
+                  isListingPage={true}
+                  col="6"
+                  options={["expese", "income"]}
+                  headerTitle={
+                    montlyListType.includes("income")
+                      ? Strings.income
+                      : Strings.expense
+                  }
+                />
+                <div className="card-body">
+                  {montlyListType.includes("income") ? (
+                    <List data={incomeList} />
+                  ) : (
+                    <List data={expenseList} />
+                  )}
+                </div>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

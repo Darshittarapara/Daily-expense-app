@@ -7,7 +7,7 @@ import { Routing } from './navigation/Routing';
 import { AuthContext as AuthContextProvider } from 'context/AuthContext/AuthContext';
 import { UserContext as UserContextProvider } from 'context/UserContext/UserContext';
 import { ExpenseContext as ExpenseContextProvider } from 'context/ExpenseContext/ExpenseContext';
-import { IncomeContext, IncomeContextProvider } from 'context/IncomeContext/IncomeContext';
+import {  IncomeContextProvider } from 'context/IncomeContext/IncomeContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
