@@ -46,10 +46,10 @@ export const DashBoard = () => {
         </div>
         <div className="col-12">
           <div className="row">
-            <div className="col-md-4 col-lg-4 col-xl-4 col-12 mb-5">
+            <div className="col-md-4 col-lg-4 col-xl-4 col-12 mb-3">
               <AccountContain label="Total Balance" value="INR 50000" />
             </div>
-            <div className="col-md-4 col-lg-4 col-xl-4 col-12 mb-5">
+            <div className="col-md-4 col-lg-4 col-xl-4 col-12 mb-3">
               <AccountContain label="Daily Average expense" value="INR 300" />
             </div>
             <div className="col-md-4 col-lg-4 col-xl-4 col-12">
@@ -62,7 +62,7 @@ export const DashBoard = () => {
                 </div>
               </AccountContain>
             </div>
-            <div className="col-md-6 col-lg-6 col-xl-6  col-12 mb-5">
+            <div className="col-md-6 col-lg-6 col-xl-6  col-12 mb-5 monthly-graph">
               <Card>
                 <SectionHeader
                   onChangeHandler={MonthlyChartTypeSelectInputChangeHandler}
@@ -96,7 +96,7 @@ export const DashBoard = () => {
                 </div>
               </Card>
             </div>
-            <div className="col-md-6 col-lg-6 col-xl-6  col-12">
+            <div className="col-md-6 col-lg-6 col-xl-6  col-12 ">
               <Card>
                 <SectionHeader
                   isListingPage={false}
@@ -117,7 +117,7 @@ export const DashBoard = () => {
               </Card>
             </div>
             <div className="col-md-9 col-lg-9 col-xl-9 col-12">
-              <Card>
+               <Card>
                 <SectionHeader
                   onChangeHandler={MontlyListTypeSelectInputChangeHandler}
                   isListingPage={true}
@@ -136,7 +136,7 @@ export const DashBoard = () => {
                     <List data={expenseList} />
                   )}
                 </div>
-              </Card>
+              </Card> 
             </div>
           </div>
         </div>
