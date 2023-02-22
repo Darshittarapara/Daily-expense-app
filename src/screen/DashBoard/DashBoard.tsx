@@ -111,7 +111,7 @@ export const DashBoard = () => {
                     {name : Strings.income , data : monthlyIncome},
                     {name : Strings.expense, data :monthlyExpenses}
                  ]}
-                 width = {460}
+                 width = {400}
                  />
                 </div>
               </Card>

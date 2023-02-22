@@ -14,7 +14,7 @@ export const MonthlyCharts: React.FC<MonthlyChartProp> = (props) => {
     return (
         <Fragment>
             { props.monthlyChartData.length > 0 && months.length > 0 && <ColumnChart
-                width={460}
+                width={390}
                 series = {[{name : props.seriesName, data : props.monthlyChartData}]}
                 id={props.id}
                 months={months}

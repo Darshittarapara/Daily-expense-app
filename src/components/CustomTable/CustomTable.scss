@@ -1,6 +1,17 @@
+table {
+    vertical-align: middle !important;
+    td {
+        text-align: center;
+        
+        &:last-child {
+            max-width: 40px;
+        }
+    }
+}
 @media screen and (max-width:786px) {
     .table-wrapper {
      width: 100%;
         overflow-x: scroll;
     }
+
 }

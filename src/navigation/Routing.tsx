@@ -10,9 +10,10 @@ import { DashBoard } from "screen/DashBoard/DashBoard";
 import WithAuthLayout from "../layout/WithAuthLayout/WithAuthLayout";
 import Login from "../screen/Auth/Login/Login";
 import CategoryForm from "screen/Category/Add";
+import categoryList from 'screen/Category/List/List';
 export const Routing = () => {
   const { userId, setUserId } = useAuthContext();
-  const { setIsLoading, isLoading } = useUserContext();
+  const { setIsLoading } = useUserContext();
   const uId = getItem('user')
   useEffect(() => {
     const user = getItem("user");
@@ -42,6 +43,10 @@ export const Routing = () => {
       <Route
         path="/category/add"
         element={<AuthLayout component={CategoryForm} />}
+      />
+       <Route
+        path="/category"
+        element={<AuthLayout component={categoryList} />}
       />
 
       <Route

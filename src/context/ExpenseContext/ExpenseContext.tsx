@@ -33,7 +33,7 @@ export const ExpenseContext: React.FC<ExpenseContextProps> = (props) => {
     const expenseData = data.expense
     const [expenseList, setExpenseList] = useState<ExpenseState[]>(expenseData);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    console.log(data["expense"])
+
 
     useEffect(() => {
         setIsLoading(true)
