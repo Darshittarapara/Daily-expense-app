@@ -1,56 +1,77 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useContext, useEffect } from 'react';
-import { ref, get, child, getDatabase, } from 'firebase/database'
-// import { getItem } from 'helper/Storage';
-import { db } from 'FirebaseConfig/FireBaseConfig';
-// import { UserProfileDetails } from 'Modal/Modal';
-// import { number } from 'yup';
-import { ExpenseState } from 'Modal/Modal';
-import data from 'assets/data/data.json';
+import React, { useState, useContext, useCallback, useEffect } from 'react';
+import { addCategory, getCategory, getIndividualCategory } from 'service/Category';
+import { useAuthContext } from 'context/AuthContext/AuthContext';
+import { useNavigate } from 'react-router';
+import { async } from 'q';
 
-// interface userContextProviderValues {
-
-// };
 interface CategoryContextValues {
-    onSubmit : (name:string, type:"income"|'expense') => void
+    onSubmit: (name: string, type: "income" | 'expense') => void
     isLoading: boolean
+    onDelete : (id:string) => void
+    categoryList: CategoryListState[]
 }
 interface CategoryContextProps {
     children: JSX.Element,
 
 }
+export interface CategoryListState {
+    name: string,
+    type: string,
+    id: string,
 
+}
 
 
 export const categoryContext = React.createContext({} as CategoryContextValues);
 export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) => {
-    
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const { userId } = useAuthContext()
+    const navigator = useNavigate()
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [categoryList, setCategoryList] = useState<CategoryListState[]>([]);
 
-    const addCategoriesHandler =async (name:string ,type:"expense"|"income") => {
-console.log(name, type);
+    const fetchCategory = useCallback(async () => {
+        if (userId) {
+            const data = await getCategory(userId);
+            const category = Object.entries(data).map(([key, value]) => {
+                const values = value as { name: string, type: string }
+                return {
+                    id: key,
+                    ...values
+                }
+            })
 
+            setCategoryList(category);
+        }
+    }, [userId]);
+
+    useEffect(() => {
+      
+        fetchCategory();
+    }, [fetchCategory])
+    console.log(categoryList)
+
+    const deleteCategoryHandler =async (id:string) => {
+        const reponse = await getIndividualCategory(userId, id)
+        console.log(reponse)
     }
-    // const fetchUserData = useCallback(
-    //     async () => {
-    //         setIsLoading(true)
-    //         const { uid } = userId;
-    //         const startRef = ref(getDatabase());
-    //         const response = await get(child(startRef, `users/${uid}`))
-    //         if (response.exists()) {
-    //             setUserData(response.val());
-    //             setIsLoading(false)
-    //         }
-    //         else {
-    //             setIsLoading(false);
-    //             console.log('no data found')
-    //         }
-    //     },
-    //     [userId],
-    // )
+    const addCategoriesHandler = async (name: string, type: "expense" | "income") => {
+        setIsLoading(true)
+        const payload = {
+            name, type
+        }
+        const data = await addCategory(payload, userId)
+        if (data) {
+            await fetchCategory();
+            navigator('/category')
+        }
+        setIsLoading(false);
+    }
 
-    //
-    return <categoryContext.Provider value={{ isLoading, onSubmit:addCategoriesHandler }}>
+    return <categoryContext.Provider value={{ isLoading, 
+    onSubmit: addCategoriesHandler, 
+    onDelete:deleteCategoryHandler,
+    categoryList }}>
         {props.children}
     </categoryContext.Provider>
 }

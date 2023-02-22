@@ -1,7 +1,5 @@
 import React from "react";
-import ContentTitle from "components/ContentTitle/ContentTitle";
 import { Strings } from "resource/Strings";
-import Card from "components/UI/Card";
 import { SectionHeader } from "components/SectionHeader/SectionHeader";
 import Button from "components/Button/Button";
 import { useNavigate } from "react-router-dom";
@@ -12,9 +10,10 @@ import { SelectInput } from "components/SelectInput/SelectInput";
 import { AddCategorySchema } from "helper/Validation";
 import { ErrorMessage } from "components/ErrorMessage/ErrorMessage";
 import { useCategoryContext } from "context/CategoryContext/CategoryContext";
+import { Loader } from "components/Loader/Loader";
 const Form = () => {
   const navigator = useNavigate();
-  const {onSubmit} = useCategoryContext()
+  const {onSubmit, isLoading} = useCategoryContext()
   const formilk = useFormik<CategoryFormValues>({
     initialValues: {
       name: "",
@@ -71,7 +70,7 @@ const Form = () => {
               type="submit"
               classes="btn btn-primary"
             >
-              {Strings.addCategory}
+              {isLoading ? <Loader/> : Strings.addCategory}
             </Button>
           </div>
         </form>

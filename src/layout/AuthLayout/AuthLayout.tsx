@@ -5,8 +5,7 @@ import { SideBar } from 'components/SideBar/SideBar'
 import './AuthLayout.scss';
 import { useUserContext } from 'context/UserContext/UserContext';
 import { Loader } from 'components/Loader/Loader';
-import Card from 'components/UI/Card';
-import { useLocation } from 'react-router-dom';
+
 export const AuthLayout: React.FC<LayOutProps> = ({
     component: Component
 }) => {

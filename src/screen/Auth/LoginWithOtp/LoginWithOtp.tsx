@@ -32,7 +32,7 @@ const LoginWithOtp = () => {
                     setConfirmObj(response)
                     setFlag(true)
                 } catch (error) {
-                    console.log(error)
+ 
                     setError("Please enter valid phone number");
                     setLoading(false)
                 }

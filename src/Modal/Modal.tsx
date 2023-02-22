@@ -80,3 +80,8 @@ export interface CategoryFormValues {
     name : string
     type :string
 }
+
+export interface addCategoryPayLoad {
+    name : string
+    type: string
+}

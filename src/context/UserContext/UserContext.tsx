@@ -26,8 +26,7 @@ export const UserContext: React.FC<UserContextProps> = (props) => {
         displayName: "",
         photoURL: "",
     });
-    console.log(userId);
-    // const userId = useMemo(() => user, [user]);
+
     const fetchUserData = useCallback(async () => {
         if (userId) {
             setIsLoading(true);
