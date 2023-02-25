@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext, useCallback, useEffect } from 'react';
-import { addCategory, getCategory, getIndividualCategory } from 'service/Category';
+import {  getCategory, getIndividualCategory, searchCategoryIcon } from 'service/CategoryService';
 import { useAuthContext } from 'context/AuthContext/AuthContext';
-import { useNavigate } from 'react-router';
-import { async } from 'q';
+// import { useNavigate } from 'react-router';
+
 
 interface CategoryContextValues {
     onSubmit: (name: string, type: "income" | 'expense') => void
@@ -26,7 +26,6 @@ export interface CategoryListState {
 export const categoryContext = React.createContext({} as CategoryContextValues);
 export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) => {
     const { userId } = useAuthContext()
-    const navigator = useNavigate()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [categoryList, setCategoryList] = useState<CategoryListState[]>([]);
 
@@ -57,14 +56,16 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) =
     }
     const addCategoriesHandler = async (name: string, type: "expense" | "income") => {
         setIsLoading(true)
-        const payload = {
-            name, type
-        }
-        const data = await addCategory(payload, userId)
-        if (data) {
-            await fetchCategory();
-            navigator('/category')
-        }
+        // const payload = {
+        //     name, type
+        // }
+        const icon = await searchCategoryIcon(name);
+        console.log(icon)
+        // const data = await addCategory(payload, userId)
+        // if (data) {
+        //     await fetchCategory();
+        //     navigator('/category')
+        // }
         setIsLoading(false);
     }
 
