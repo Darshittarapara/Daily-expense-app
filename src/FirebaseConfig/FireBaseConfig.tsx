@@ -5,7 +5,7 @@
 
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics'
-import {  browserSessionPersistence, initializeAuth, browserPopupRedirectResolver } from 'firebase/auth';
+import { browserSessionPersistence, initializeAuth, browserPopupRedirectResolver } from 'firebase/auth';
 import { getDatabase } from "firebase/database";
 const firebaseConfig = {
     apiKey: "AIzaSyC4G9wvfTvRcHhiknlMvGvuwbg7pmy70YI",
@@ -20,7 +20,7 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
-export const db = getDatabase()
+export const db = getDatabase(app)
 export const auth = initializeAuth(app, {
     persistence: browserSessionPersistence,
     popupRedirectResolver: browserPopupRedirectResolver,

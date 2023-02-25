@@ -31,19 +31,21 @@ export const getCategory = async (userId: string) => {
         if (response.status === 200) {
             return response?.data
         }
+        console.log(response.data)
         return response?.data?.message
     } catch (error) {
         return error
     }
 }
 
-export const getIndividualCategory = async (userId: string, categoryId: string) => {
+export const deleteCategory = async (userId: string, categoryId: string) => {
     try {
-        const url = config.baseURL + 'category' + userId + ".json/" + categoryId
+        const url = config.baseURL + 'category' + userId + "/" + categoryId + ".json"
+        console.log(url)
         const response = await axios.delete(url);
-   
+
         if (response.status === 200) {
-            return response?.data
+            return response
         }
         return response?.data?.message
     } catch (error) {

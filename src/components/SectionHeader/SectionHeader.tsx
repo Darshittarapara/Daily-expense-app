@@ -14,9 +14,9 @@ interface Props {
 }
 export const SectionHeader: React.FC<Props> = (props) => {
   return (
-    <div className="section-header">
+    <div className="section-header" style={{ padding: "5px 5px" }}>
       <div className="row">
-        <div className={`col-${props.col || 12}`}>
+        <div className={`col-${props.col || 12} mt-2`} >
           <ContentTitle title={props.headerTitle} />
         </div>
         <div className="col-6">
