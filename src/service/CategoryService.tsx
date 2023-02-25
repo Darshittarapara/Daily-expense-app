@@ -13,7 +13,7 @@ export const addCategory = async (payload: addCategoryPayLoad, userId: string) =
     try {
         const url = config.baseURL + 'category' + userId + ".json"
         const response = await axios.post(url, payload);
-    
+
         if (response.status === 200) {
             return true
         }
@@ -23,11 +23,11 @@ export const addCategory = async (payload: addCategoryPayLoad, userId: string) =
     }
 }
 
-export const getCategory = async (userId:string) => {
+export const getCategory = async (userId: string) => {
     try {
         const url = config.baseURL + 'category' + userId + ".json"
         const response = await axios.get(url);
-        console.log(response)
+
         if (response.status === 200) {
             return response?.data
         }
@@ -37,11 +37,11 @@ export const getCategory = async (userId:string) => {
     }
 }
 
-export const getIndividualCategory = async (userId:string, categoryId:string) => {
+export const getIndividualCategory = async (userId: string, categoryId: string) => {
     try {
-        const url = config.baseURL + 'category' + userId  + ".json/" +categoryId
+        const url = config.baseURL + 'category' + userId + ".json/" + categoryId
         const response = await axios.delete(url);
-        console.log(response)
+   
         if (response.status === 200) {
             return response?.data
         }
@@ -51,33 +51,22 @@ export const getIndividualCategory = async (userId:string, categoryId:string) =>
     }
 }
 
-export const searchCategoryIcon = async (query:string) => {
+export const searchCategoryIcon = async (token: string, query: string) => {
     try {
-       const API_URL = config.iconeBaseURL + "/search?query=" +  query
-       const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${config.ICONE_API_KEY}`,
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json"
-        }
-      };
-      
-    //   const response = await fetch(API_URL, options)
-    //   return await response.json()
+        const API_URL = config.serchBaseURL + "?q=" + query
         const response = await axios.get(API_URL, {
-            headers : {
-                accept: 'application/json',
-                Authorization:`Bearer ${config.ICONE_API_KEY}`
+            headers: {
+                'Accept': 'application/json',
+                "Authorization": `Bearer ${token}`
             }
         });
-        console.log(response)
         if (response.status === 200) {
-            return response?.data
+
+            return response.data?.data?.[0]?.images?.[24];
         }
-       
+
     } catch (error) {
         return error
     }
 }
+
