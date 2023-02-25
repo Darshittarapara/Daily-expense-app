@@ -26,7 +26,6 @@ export interface CategoryListState {
 export const categoryContext = React.createContext({} as CategoryContextValues);
 export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) => {
     const { userId } = useAuthContext()
-    const navigator = useNavigate()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [categoryList, setCategoryList] = useState<CategoryListState[]>([]);
 
