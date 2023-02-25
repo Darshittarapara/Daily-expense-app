@@ -1,6 +1,6 @@
 import React, {  Fragment } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {  faEdit, faEye, faTrash, faIndianRupeeSign } from '@fortawesome/free-solid-svg-icons';
 import { CustomTable } from 'components/CustomTable/CustomTable';
 import './List.scss';
 import {SectionHeader} from 'components/SectionHeader/SectionHeader';
@@ -26,10 +26,13 @@ const List = () => {
         console.log(id)
     }
     const showRowData = (item: CategoryListState, index: number) => {
+        const typeCellClasses = item.type.toLocaleLowerCase() === "expense" ? "expense-type-icon" : "income-type-icon";
         return <tr key={`${index}`}>
             <td>{index + 1}</td>
             <td>{item.name}</td>
-            <td>{item.type}</td>
+            <td className= {typeCellClasses}>
+                <FontAwesomeIcon icon={faIndianRupeeSign} />
+            </td>
             <td>
                 <div className='action-cell'>
                 <span title='Edit' className='btn btn-outline-success actions-btn' onClick={() => editCategory(item.id)}><FontAwesomeIcon icon={faEdit}/></span>
