@@ -1,5 +1,5 @@
 export let api  = {
-    category : {
-
+    flatIconAuth : {
+        authentication:"/authentication"
     }
 }

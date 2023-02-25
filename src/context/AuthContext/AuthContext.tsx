@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
 import * as firebase from 'firebase/auth';
 import { auth, db } from 'FirebaseConfig/FireBaseConfig';
-import {  setItem } from 'helper/Storage';
+import { setItem } from 'helper/Storage';
 import { authErrorHandler } from 'helper/Validation';
 import { useNavigate } from 'react-router-dom'; import { SignUpSubmitPayLoad } from 'Modal/Modal';
 import { ref, set } from 'firebase/database'
 import { clearStorage } from 'helper/Storage';
+import { getAccessToken } from 'service/FlatIconAuthService';
 interface authContextProviderValues {
     onLogin: (email: string, password: string) => void,
     isLoading: boolean
@@ -35,12 +36,12 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
     const loginHandler = async (email: string, password: string) => {
         setLoading(true);
         firebase.signInWithEmailAndPassword(auth, email, password)
-            .then((response) => {
+            .then(async (response) => {
+                await getAccessToken();
                 navigator('/');
                 setItem('user', response.user);
                 setUserId(response.user.uid);
                 setLoading(false);
-
             }).catch((error) => {
                 const errors = authErrorHandler(new Error(error).message);
                 setError(errors);
@@ -60,7 +61,7 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
         recaptchaVerifier.render().then(() => setLoading(false)).catch(() => setLoading(false))
         return signInWithPhoneNumber(auth, number, recaptchaVerifier)
     }
-    console.log(db)
+    
     const signUpHandler = async (payload: SignUpSubmitPayLoad) => {
         setLoading(true);
         firebase.createUserWithEmailAndPassword(auth, payload.email, payload.password)
@@ -73,7 +74,7 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
                 }).then((response) => {
                     navigator('/');
                     setLoading(false);
-                    
+
                 })
             }).catch((error) => {
                 const errors = authErrorHandler(new Error(error).message);

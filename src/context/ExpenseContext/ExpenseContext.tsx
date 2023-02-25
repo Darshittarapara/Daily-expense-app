@@ -38,28 +38,8 @@ export const ExpenseContext: React.FC<ExpenseContextProps> = (props) => {
     useEffect(() => {
         setIsLoading(true)
         setExpenseList(expenseData)
-        },[])
-    // const fetchUserData = useCallback(
-    //     async () => {
-    //         setIsLoading(true)
-    //         const { uid } = userId;
-    //         const startRef = ref(getDatabase());
-    //         const response = await get(child(startRef, `users/${uid}`))
-    //         if (response.exists()) {
-    //             setUserData(response.val());
-    //             setIsLoading(false)
-    //         }
-    //         else {
-    //             setIsLoading(false);
-    //             console.log('no data found')
-    //         }
-    //     },
-    //     [userId],
-    // )
+    }, [])
 
-    // useEffect(() => {
-    //     fetchUserData()
-    // }, []);
     return <expenseContext.Provider value={{ isLoading, expenseList }}>
         {props.children}
     </expenseContext.Provider>

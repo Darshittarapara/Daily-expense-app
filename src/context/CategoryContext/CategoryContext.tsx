@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext, useCallback, useEffect } from 'react';
-import {  getCategory, getIndividualCategory, searchCategoryIcon } from 'service/CategoryService';
+import { getCategory, getIndividualCategory, searchCategoryIcon, addCategory } from 'service/CategoryService';
 import { useAuthContext } from 'context/AuthContext/AuthContext';
-// import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
+import { getItem } from 'helper/Storage';
 
 
 interface CategoryContextValues {
     onSubmit: (name: string, type: "income" | 'expense') => void
     isLoading: boolean
-    onDelete : (id:string) => void
+    onDelete: (id: string) => void
     categoryList: CategoryListState[]
 }
 interface CategoryContextProps {
@@ -25,7 +26,9 @@ export interface CategoryListState {
 
 export const categoryContext = React.createContext({} as CategoryContextValues);
 export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) => {
-    const { userId } = useAuthContext()
+    const { userId } = useAuthContext();
+    const flatIconToken = getItem('flatIconToken')
+    const navigator = useNavigate();
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [categoryList, setCategoryList] = useState<CategoryListState[]>([]);
 
@@ -45,34 +48,35 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) =
     }, [userId]);
 
     useEffect(() => {
-      
+
         fetchCategory();
     }, [fetchCategory])
-    console.log(categoryList)
 
-    const deleteCategoryHandler =async (id:string) => {
+
+    const deleteCategoryHandler = async (id: string) => {
         const reponse = await getIndividualCategory(userId, id)
         console.log(reponse)
     }
     const addCategoriesHandler = async (name: string, type: "expense" | "income") => {
-        setIsLoading(true)
-        // const payload = {
-        //     name, type
-        // }
-        const icon = await searchCategoryIcon(name);
-        console.log(icon)
-        // const data = await addCategory(payload, userId)
-        // if (data) {
-        //     await fetchCategory();
-        //     navigator('/category')
-        // }
+        setIsLoading(true);
+        const icon = await searchCategoryIcon(flatIconToken?.token, name);
+        const payload = {
+            name: icon as string, type
+        }
+        const data = await addCategory(payload, userId)
+        if (data) {
+            await fetchCategory();
+            navigator('/category')
+        }
         setIsLoading(false);
     }
 
-    return <categoryContext.Provider value={{ isLoading, 
-    onSubmit: addCategoriesHandler, 
-    onDelete:deleteCategoryHandler,
-    categoryList }}>
+    return <categoryContext.Provider value={{
+        isLoading,
+        onSubmit: addCategoriesHandler,
+        onDelete: deleteCategoryHandler,
+        categoryList
+    }}>
         {props.children}
     </categoryContext.Provider>
 }

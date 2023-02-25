@@ -29,7 +29,9 @@ const List = () => {
         const typeCellClasses = item.type.toLocaleLowerCase() === "expense" ? "expense-type-icon" : "income-type-icon";
         return <tr key={`${index}`}>
             <td>{index + 1}</td>
-            <td>{item.name}</td>
+            <td>
+                <img src={item.name} alt = "category Name" />
+            </td>
             <td className= {typeCellClasses}>
                 <FontAwesomeIcon icon={faIndianRupeeSign} />
             </td>
