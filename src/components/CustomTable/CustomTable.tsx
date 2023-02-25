@@ -1,11 +1,17 @@
 import React from 'react';
 import './CustomTable.scss'
+import { Strings } from 'resource/Strings';
+import { useCategoryContext } from 'context/CategoryContext/CategoryContext';
+import { Loader } from 'components/Loader/Loader';
 interface CustomTableProps {
     row: any[]
     coloum: any[]
+    isLoading?: boolean
+    isError?: boolean
     showTableData: (item: any, index: number) => JSX.Element
 }
-export const CustomTable: React.FC<CustomTableProps> = ({ row, coloum, showTableData }) => {
+export const CustomTable: React.FC<CustomTableProps> = ({ isLoading, isError, row, coloum, showTableData }) => {
+
     return (
         <div className='table-wrapper'>
             <table className="table table-hover">
@@ -15,10 +21,12 @@ export const CustomTable: React.FC<CustomTableProps> = ({ row, coloum, showTable
                     </tr>
                 </thead>
                 <tbody>
-                    {coloum.map((data, index) => showTableData(data, index))}
+                    {isLoading && <tr><td><Loader /></td></tr>}
+                    {isError && !isLoading && <tr><td>{Strings.noMoreItem}</td></tr>}
+                    {!isError && !isLoading && coloum.map((data, index) => showTableData(data, index))}
                 </tbody>
             </table>
         </div>
-       
+
     )
 }

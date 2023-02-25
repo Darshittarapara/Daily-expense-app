@@ -13,15 +13,15 @@ import { useCategoryContext } from "context/CategoryContext/CategoryContext";
 import { Loader } from "components/Loader/Loader";
 const Form = () => {
   const navigator = useNavigate();
-  const {onSubmit, isLoading} = useCategoryContext()
+  const { onSubmit, isLoading } = useCategoryContext()
   const formilk = useFormik<CategoryFormValues>({
     initialValues: {
       name: "",
       type: "",
     },
-    validationSchema:AddCategorySchema,
+    validationSchema: AddCategorySchema,
     onSubmit: (formValues) => {
-      onSubmit(formValues.name, formValues.type as "income"|"expense");
+      onSubmit(formValues.name, formValues.type as "income" | "expense");
     },
   });
   const handlerChange = (value: string) => {
@@ -58,20 +58,22 @@ const Form = () => {
           <div className="mb-3">
             <label className="form-label">{Strings.categoryType}</label>
             <SelectInput
-              options={["select category type","expense", "income"]}
+              options={["select category type", "expense", "income"]}
               value={formilk.values.type}
               onChange={handlerChange}
               name="type"
             />
-              {formilk.errors.type && formilk.touched.type && <ErrorMessage message={formilk.errors.type} />}
+            {formilk.errors.type && formilk.touched.type && <ErrorMessage message={formilk.errors.type} />}
           </div>
           <div className="mb-3">
             <Button
               type="submit"
+              disable={isLoading}
               classes="btn btn-primary"
             >
-              {isLoading ? <Loader/> : Strings.addCategory}
+              {Strings.addCategory}
             </Button>
+            {isLoading && <Loader />}
           </div>
         </form>
       </div>

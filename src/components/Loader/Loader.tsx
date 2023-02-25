@@ -1,7 +1,11 @@
 import React from 'react';
-
+import './Loader.scss';
 export const Loader = () => {
+
     return (
-        <div className="d-flex justifly-content-center align-item-center spinner-border" role="status" />
+        <div className="loading"></div>
+        // <div className="box">
+        //     <div className="loader-30"></div>
+        // </div>
     )
 }
