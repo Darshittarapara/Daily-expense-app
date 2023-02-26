@@ -31,7 +31,6 @@ export const getCategory = async (userId: string) => {
         if (response.status === 200) {
             return response?.data
         }
-        console.log(response.data)
         return response?.data?.message
     } catch (error) {
         return error

@@ -1,7 +1,6 @@
 import React from 'react';
 import './CustomTable.scss'
 import { Strings } from 'resource/Strings';
-import { useCategoryContext } from 'context/CategoryContext/CategoryContext';
 import { Loader } from 'components/Loader/Loader';
 interface CustomTableProps {
     row: any[]

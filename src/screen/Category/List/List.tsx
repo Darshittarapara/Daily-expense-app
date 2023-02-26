@@ -8,7 +8,7 @@ import { CategoryListState, useCategoryContext } from 'context/CategoryContext/C
 import { Strings } from 'resource/Strings';
 import Button from 'components/Button/Button';
 import { useNavigate } from 'react-router';
-import { Loader } from 'components/Loader/Loader';
+
 const List = () => {
     const navigator = useNavigate();
     const { categoryList, onDelete, isLoading, fetchCategory } = useCategoryContext();
@@ -67,7 +67,7 @@ const List = () => {
                 isError={categoryList.length > 0 ? false : true}
                 coloum={categoryList}
                 row={row}
-                showTableData={showRowData} 
+                showTableData={showRowData}
             />
         </Fragment>
     )

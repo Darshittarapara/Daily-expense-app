@@ -51,30 +51,31 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
 
     const logOutHandler = () => {
         clearStorage();
+        navigator("/login");
         window.location.reload();
     };
     const setUpRecaptcha = (phoneNumber: string) => {
         setLoading(true)
         const number = "+91" + phoneNumber;
-        alert(number)
         const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth)
         recaptchaVerifier.render().then(() => setLoading(false)).catch(() => setLoading(false))
         return signInWithPhoneNumber(auth, number, recaptchaVerifier)
     }
-    
+
     const signUpHandler = async (payload: SignUpSubmitPayLoad) => {
         setLoading(true);
         firebase.createUserWithEmailAndPassword(auth, payload.email, payload.password)
             .then((response) => {
+
                 setItem('user', response.user);
                 setUserId(response.user.uid);
                 set(ref(db, 'users/' + response.user.uid), {
                     displayName: payload.displayName,
                     photoURL: payload.pictureUrl
-                }).then((response) => {
+                }).then(async (response) => {
                     navigator('/');
                     setLoading(false);
-
+                    await getAccessToken();
                 })
             }).catch((error) => {
                 const errors = authErrorHandler(new Error(error).message);
