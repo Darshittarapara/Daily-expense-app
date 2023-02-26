@@ -7,9 +7,10 @@ import PrivateRouting from "./PrivateRouting/PrivateRouting";
 export const Routing = () => {
   const { user } = useUserContext()
   const userDetails = getItem('user');
+  console.log(user);
   return (
     <Fragment>
-      {(user || userDetails) ? <PrivateRouting /> : <AuthRouting />}
+      {user ? <PrivateRouting /> : <AuthRouting />}
     </Fragment>
   );
 };

@@ -18,11 +18,8 @@ interface UserContextProps {
 export const logo = "https://www.travelperk.com/wp-content/uploads/expensify-logo-1580x232.png";
 export const userContext = React.createContext({} as UserContextProvider);
 export const UserContext: React.FC<UserContextProps> = (props) => {
-    const { setUserId, setLoading } = useAuthContext();
-    const [user, setUser] = useState(() => {
-        const user = auth.currentUser;
-        return user;
-    });
+    const { setUserId, setLoading, userId } = useAuthContext();
+    const [user, setUser] = useState();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [userData, setUserData] = useState<UserProfileDetails>({
@@ -30,26 +27,31 @@ export const UserContext: React.FC<UserContextProps> = (props) => {
         photoURL: "",
     });
 
-    const fetchUserData = useCallback(async (userId: string) => {
-        setIsLoading(true);
-        const startRef = ref(getDatabase());
-        const response = await get(child(startRef, `users/${userId}`));
-        if (response.exists()) {
-            setUserData(response.val());
-            setIsLoading(false);
-        } else {
-            setIsLoading(false);
-            console.log("no data found");
+    const fetchUserData = useCallback(async () => {
+
+        if (userId) {
+            setIsLoading(true);
+            const startRef = ref(getDatabase());
+            const response = await get(child(startRef, `users/${userId}`));
+            if (response.exists()) {
+                setUserData(response.val());
+                setIsLoading(false);
+            } else {
+                setIsLoading(false);
+                console.log("no data found");
+            }
         }
 
-    }, []);
+
+    }, [userId]);
 
     useEffect(() => {
         const userDetails = getItem('user');
+        console.log(userDetails)
         setUser(userDetails);
         setUserId(userDetails!?.uid);
-        fetchUserData(userDetails!?.uid);
-    }, [setUserId, setLoading]);
+        fetchUserData();
+    }, [setUserId, setLoading, fetchUserData]);
 
     return (
         <userContext.Provider
