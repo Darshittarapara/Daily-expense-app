@@ -16,3 +16,17 @@
 .income-type-icon {
     color : green
 }
+.pagination {
+    display: flex;
+    justify-content: space-evenly;
+    min-width: 200px;
+    float: right;
+    align-items: center;
+}
+.active {
+    cursor: pointer;
+    padding: 8px 15px;
+    color:white;
+  
+    background : rgb(85, 85, 141);
+}

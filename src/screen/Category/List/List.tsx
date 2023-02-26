@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faEye, faTrash, faIndianRupeeSign } from '@fortawesome/free-solid-svg-icons';
 import { CustomTable } from 'components/CustomTable/CustomTable';
@@ -8,9 +8,11 @@ import { CategoryListState, useCategoryContext } from 'context/CategoryContext/C
 import { Strings } from 'resource/Strings';
 import Button from 'components/Button/Button';
 import { useNavigate } from 'react-router';
+import PaginationItems from 'components/PaginationItems/PaginationItems';
 
 const List = () => {
     const navigator = useNavigate();
+
     const { categoryList, onDelete, isLoading } = useCategoryContext();
     const row = ["No", "Title", "Type", "Action"]
 
@@ -26,6 +28,7 @@ const List = () => {
     const viewCategory = (id: string) => {
         navigator(`/category/${id}/view`);
     }
+
     const showRowData = (item: CategoryListState, index: number) => {
         const typeCellClasses = item.type.toLocaleLowerCase() === "expense" ? "expense-type-icon" : "income-type-icon";
         return <tr key={`${index}`}>
@@ -58,13 +61,7 @@ const List = () => {
                     {Strings.addCategory}
                 </Button>
             </SectionHeader>
-            <CustomTable
-                isLoading={isLoading}
-                isError={categoryList.length > 0 ? false : true}
-                coloum={categoryList}
-                row={row}
-                showTableData={showRowData}
-            />
+            <PaginationItems limit={5} row={row} showRowData={showRowData} isLoading={isLoading} list={categoryList} />
         </Fragment>
     )
 }
