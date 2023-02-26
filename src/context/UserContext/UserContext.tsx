@@ -15,7 +15,7 @@ interface UserContextProvider {
 interface UserContextProps {
     children: JSX.Element;
 }
-export const logo ="https://www.travelperk.com/wp-content/uploads/expensify-logo-1580x232.png";
+export const logo = "https://www.travelperk.com/wp-content/uploads/expensify-logo-1580x232.png";
 export const userContext = React.createContext({} as UserContextProvider);
 export const UserContext: React.FC<UserContextProps> = (props) => {
     const { setUserId, setLoading } = useAuthContext();
@@ -47,8 +47,8 @@ export const UserContext: React.FC<UserContextProps> = (props) => {
     useEffect(() => {
         const userDetails = getItem('user');
         setUser(userDetails);
-        setUserId(userDetails!.uid);
-        fetchUserData(userDetails!.uid);
+        setUserId(userDetails!?.uid);
+        fetchUserData(userDetails!?.uid);
     }, [setUserId, setLoading]);
 
     return (
