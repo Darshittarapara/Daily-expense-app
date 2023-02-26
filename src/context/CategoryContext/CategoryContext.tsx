@@ -34,9 +34,7 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) =
     const [categoryList, setCategoryList] = useState<CategoryListState[] | []>([]);
 
     const fetchCategory = useCallback(async () => {
-        console.log("this effect run")
         if (userId) {
-
             setIsLoading(true);
             const data = await getCategory(userId);
             if (data) {
@@ -57,8 +55,7 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) =
     }, [userId]);
 
     useEffect(() => {
-        fetchCategory();
-        console.log('this api is call')
+        fetchCategory()
     }, [fetchCategory])
 
 

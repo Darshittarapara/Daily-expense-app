@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faEye, faTrash, faIndianRupeeSign } from '@fortawesome/free-solid-svg-icons';
 import { CustomTable } from 'components/CustomTable/CustomTable';
