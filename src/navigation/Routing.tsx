@@ -10,7 +10,7 @@ export const Routing = () => {
   console.log(user);
   return (
     <Fragment>
-      {user ? <PrivateRouting /> : <AuthRouting />}
+      {(user || userDetails) ? <PrivateRouting /> : <AuthRouting />}
     </Fragment>
   );
 };
