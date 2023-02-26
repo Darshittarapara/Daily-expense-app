@@ -8,7 +8,7 @@ const PaginationItems: React.FC<any> = ({ list, isLoading, row, showRowData, lim
     const pageCount = Math.ceil(list.length / limit);
 
     const handlePageClick = (event: any) => {
-        const newOffset = (event.selected * 10) % list.length;
+        const newOffset = (event.selected * limit) % list.length;
         setItemOffset(newOffset);
     };
     return (
