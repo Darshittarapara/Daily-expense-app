@@ -54,6 +54,15 @@ const Form = () => {
     formilk.setFieldValue("type", value);
   };
 
+  const navigationHandler = () => {
+    console.log(id)
+    if (id) {
+      navigator("/category/add")
+    }
+    else {
+      navigator("/category")
+    }
+  }
 
   return (
     <div className="container">
@@ -66,10 +75,10 @@ const Form = () => {
       >
         <Button
           type="button"
-          onClick={() => navigator("/category/add")}
+          onClick={() => navigationHandler()}
           classes="btn btn-primary"
         >
-          {Strings.addCategory}
+          {id ? Strings.addCategory : Strings.category}
         </Button>
       </SectionHeader>
       <div className="form">
