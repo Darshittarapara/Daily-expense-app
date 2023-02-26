@@ -20,7 +20,7 @@ export const CustomTable: React.FC<CustomTableProps> = ({ isLoading, isError, ro
                     </tr>
                 </thead>
                 <tbody>
-                    {isLoading && <tr><td><Loader /></td></tr>}
+                    {isLoading && <tr><td><Loader className='table-loader' /></td></tr>}
                     {isError && !isLoading && <tr><td>{Strings.noMoreItem}</td></tr>}
                     {!isError && !isLoading && coloum.map((data, index) => showTableData(data, index))}
                 </tbody>

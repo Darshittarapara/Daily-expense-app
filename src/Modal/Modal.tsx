@@ -56,32 +56,46 @@ export interface MonthWiseData {
     }[]
 }
 export interface ExpenseState {
-        id: string
-        name: string
-        category: string
-        note: string,
-        amount: string
-        month: string
+    id: string
+    name: string
+    category: string
+    note: string,
+    amount: string
+    month: string
 }
 export interface MonthlyChartProp {
     id: string
     seriesName: string
-    monthlyChartData:number[]
+    monthlyChartData: number[]
     data: ExpenseState[]
-    setMontlyChartData : React.Dispatch<SetStateAction<number[]>>
+    setMontlyChartData: React.Dispatch<SetStateAction<number[]>>
 }
 export interface DashBoardListProps {
-    data : ExpenseState[]
+    data: ExpenseState[]
 }
 export interface MonthWiseSumKey {
     [index: string]: any
 }
 export interface CategoryFormValues {
-    name : string
-    type :string
+    name: string
+    type: string
 }
 
 export interface addCategoryPayLoad {
-    name : string
+    icon: string
+    name: string
     type: string
+}
+
+export interface BackIconProps {
+    path: string
+}
+
+export interface ViewRowContainProps {
+    label: string
+    value: string
+}
+
+export interface LoaderProps {
+    className?: string
 }

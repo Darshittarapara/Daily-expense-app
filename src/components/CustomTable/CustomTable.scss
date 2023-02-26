@@ -2,12 +2,17 @@ table {
     vertical-align: middle !important;
     td {
         text-align: center;
-        
+        min-height: 60px;
+        .table-loader {
+            top: 80%;
+        }
+
         &:last-child {
             max-width: 40px;
         }
     }
 }
+
 @media screen and (max-width:786px) {
     .table-wrapper {
      width: 100%;

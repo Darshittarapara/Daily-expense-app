@@ -11,11 +11,7 @@ import { useNavigate } from 'react-router';
 
 const List = () => {
     const navigator = useNavigate();
-    const { categoryList, onDelete, isLoading, fetchCategory } = useCategoryContext();
-
-    useEffect(() => {
-        fetchCategory()
-    }, [fetchCategory])
+    const { categoryList, onDelete, isLoading } = useCategoryContext();
     const row = ["No", "Title", "Type", "Action"]
 
     const editCategory = (id: string) => {
@@ -28,14 +24,15 @@ const List = () => {
     }
 
     const viewCategory = (id: string) => {
-        console.log(id)
+        console.log(id);
+        navigator(`/category/${id}/view`);
     }
     const showRowData = (item: CategoryListState, index: number) => {
         const typeCellClasses = item.type.toLocaleLowerCase() === "expense" ? "expense-type-icon" : "income-type-icon";
         return <tr key={`${index}`}>
             <td>{index + 1}</td>
             <td>
-                <img src={item.name} alt="category Name" />
+                <img src={item.icon} alt="category Name" />
             </td>
             <td className={typeCellClasses}>
                 <FontAwesomeIcon icon={faIndianRupeeSign} />
