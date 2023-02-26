@@ -1,30 +1,15 @@
-import { useAuthContext } from "context/AuthContext/AuthContext";
-import { auth } from "FirebaseConfig/FireBaseConfig";
+import { useUserContext } from "context/UserContext/UserContext";
 import { getItem } from "helper/Storage";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import AuthRouting from "./AuthRouting/AuthRouting";
 import PrivateRouting from "./PrivateRouting/PrivateRouting";
 
 export const Routing = () => {
-  const { setUserId } = useAuthContext();
-  const uId = getItem('user')
-  const [user, setUser] = useState(() => {
-    const user = auth.currentUser;
-    return user;
-  });
-
-  useEffect(() => {
-    if (uId) {
-      auth.onAuthStateChanged(function (user) {
-        setUser(user);
-        setUserId(user!.uid);
-      });
-    }
-  }, [uId, setUserId]);
-
+  const { user } = useUserContext()
+  const userDetails = getItem('user');
   return (
     <Fragment>
-      {(user || uId) ? <PrivateRouting /> : <AuthRouting />}
+      {(user || userDetails) ? <PrivateRouting /> : <AuthRouting />}
     </Fragment>
   );
 };
