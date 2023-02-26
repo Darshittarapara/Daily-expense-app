@@ -87,6 +87,12 @@ export interface addCategoryPayLoad {
     type: string
 }
 
+export interface editCategoryPayLoad {
+    icon: string
+    name: string
+    type: string
+
+}
 export interface BackIconProps {
     path: string
 }

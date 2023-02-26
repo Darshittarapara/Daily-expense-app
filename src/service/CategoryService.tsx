@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { config } from 'config/config';
-import { addCategoryPayLoad } from 'Modal/Modal';
+import { addCategoryPayLoad, editCategoryPayLoad } from 'Modal/Modal';
 
 
 export const defaultHeader = {
@@ -37,9 +37,30 @@ export const getCategory = async (userId: string) => {
     }
 }
 
+export const updateCategory = async (userId: string, categoryId: string, payload: editCategoryPayLoad) => {
+    try {
+        /**
+    * My url like category + userId +"/" + firebase alphabetical key +".json"
+    * if you use fetch then add put into method or use  axios use axios.put
+    */
+        const url = config.baseURL + 'category' + userId + "/" + categoryId + ".json"
+        const response = await axios.put(url, payload);
+        if (response.status === 200) {
+            return response.data
+        }
+        return response?.data?.message
+    } catch (error) {
+        return error
+    }
+}
 export const deleteCategory = async (userId: string, categoryId: string) => {
     try {
-        const url = config.baseURL + 'category' + userId + "/" + categoryId + ".json"
+        /**
+         * My url like category + userId +"/" + firebase alphabetical key +".json"
+         * if you use fetch then add delete into method or use  axios use axios.delete
+         */
+        const url = config.baseURL + 'category' + userId + "/" + categoryId + ".json";
+        console.log(url)
         const response = await axios.delete(url);
 
         if (response.status === 200) {
@@ -61,7 +82,6 @@ export const searchCategoryIcon = async (token: string, query: string) => {
             }
         });
         if (response.status === 200) {
-
             return response.data?.data?.[0]?.images?.[24];
         }
 

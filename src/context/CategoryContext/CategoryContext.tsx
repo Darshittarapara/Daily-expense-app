@@ -1,17 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext, useCallback, useEffect } from 'react';
-import { getCategory, deleteCategory, searchCategoryIcon, addCategory } from 'service/CategoryService';
+import { getCategory, deleteCategory, searchCategoryIcon, addCategory, updateCategory } from 'service/CategoryService';
 import { useAuthContext } from 'context/AuthContext/AuthContext';
 import { useNavigate } from 'react-router';
 import { getItem } from 'helper/Storage';
 import { AlertMessage } from 'helper/AlertMessage';
-
+import Swal from 'sweetalert2';
 interface CategoryContextValues {
-    onSubmit: (name: string, type: "income" | 'expense') => void
+    onAddCategory: (name: string, type: "income" | 'expense') => void
     isLoading: boolean
     onDelete: (id: string) => void
     categoryList: CategoryListState[],
     fetchCategory: () => void
+    onUpdateCategory: (name: string, type: "income" | 'expense', categoryId: string) => void
 }
 interface CategoryContextProps {
     children: JSX.Element,
@@ -39,6 +40,10 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) =
             const data = await getCategory(userId);
             if (data) {
                 const category = Object.entries(data).map(([key, value]) => {
+                    /**
+                     * @param key = is the firebase alphabetical key (-NKYD.. type)
+                     * store that object into state
+                     */
                     const values = value as { name: string, type: string, icon: string }
                     return {
                         id: key,
@@ -83,10 +88,34 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) =
         setIsLoading(false);
     }
 
+    const editCategoriesHandler = async (name: string, type: "expense" | "income", categoryId: string) => {
+        setIsLoading(true);
+        const icon = await searchCategoryIcon(flatIconToken?.token, name);
+        const payload = {
+            name, type, icon
+        }
+        const data = await updateCategory(userId, categoryId, payload);
+
+        if (data) {
+            Swal.fire({
+                title: "Update category",
+                text: "Category updated successfully",
+                icon: "success"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await fetchCategory();
+                    navigator('/category')
+                }
+            })
+        }
+        setIsLoading(false);
+    }
+
     return <categoryContext.Provider value={{
         isLoading,
-        onSubmit: addCategoriesHandler,
+        onAddCategory: addCategoriesHandler,
         fetchCategory,
+        onUpdateCategory: editCategoriesHandler,
         onDelete: deleteCategoryHandler,
         categoryList
     }}>

@@ -15,7 +15,7 @@ const List = () => {
     const row = ["No", "Title", "Type", "Action"]
 
     const editCategory = (id: string) => {
-        console.log(id)
+        navigator(`/category/${id}/edit`);
     }
 
     const deleteCategory = (id: string) => {
@@ -24,7 +24,6 @@ const List = () => {
     }
 
     const viewCategory = (id: string) => {
-        console.log(id);
         navigator(`/category/${id}/view`);
     }
     const showRowData = (item: CategoryListState, index: number) => {
