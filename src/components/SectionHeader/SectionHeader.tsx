@@ -3,20 +3,24 @@ import ContentTitle from "components/ContentTitle/ContentTitle";
 import { SelectInput } from "components/SelectInput/SelectInput";
 import { Strings } from "resource/Strings";
 import "./SectionHeader.scss";
+import BackIcon from "components/BackIcon/BackIcon";
 interface Props {
   headerTitle: string;
   options?: string[];
+  isBackIconRequired?: boolean
   isListingPage: boolean;
   col?: string;
   value?: string;
   onChangeHandler?: (value: string) => void;
   children?: JSX.Element;
+  path?: string
 }
 export const SectionHeader: React.FC<Props> = (props) => {
   return (
     <div className="section-header" style={{ padding: "5px 5px" }}>
       <div className="row">
         <div className={`col-${props.col || 12} mt-2`} >
+          {props.isBackIconRequired && <BackIcon path={props.path!} />}
           <ContentTitle title={props.headerTitle} />
         </div>
         <div className="col-6">

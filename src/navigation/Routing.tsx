@@ -1,32 +1,30 @@
 import { useAuthContext } from "context/AuthContext/AuthContext";
-import { useUserContext } from "context/UserContext/UserContext";
+import { auth } from "FirebaseConfig/FireBaseConfig";
 import { getItem } from "helper/Storage";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import AuthRouting from "./AuthRouting/AuthRouting";
 import PrivateRouting from "./PrivateRouting/PrivateRouting";
-import { auth } from "FirebaseConfig/FireBaseConfig";
+
 export const Routing = () => {
-  const { userId, setUserId } = useAuthContext();
-  const { setIsLoading } = useUserContext();
+  const { setUserId } = useAuthContext();
   const uId = getItem('user')
+  const [user, setUser] = useState(() => {
+    const user = auth.currentUser;
+    return user;
+  });
+
   useEffect(() => {
-    const user = getItem("user");
-    let clearTimer: string | number | NodeJS.Timeout | undefined;
-    setIsLoading(true);
-    if (user) {
-      setUserId(user.uid);
-      clearTimer = setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
+    if (uId) {
+      auth.onAuthStateChanged(function (user) {
+        setUser(user);
+        setUserId(user!.uid);
+      });
     }
-    return () => {
-      clearTimeout(clearTimer);
-    };
-  }, [setIsLoading, setUserId]);
+  }, [uId, setUserId]);
 
   return (
     <Fragment>
-      {userId && uId ? <PrivateRouting /> : <AuthRouting />}
+      {(user || uId) ? <PrivateRouting /> : <AuthRouting />}
     </Fragment>
   );
 };

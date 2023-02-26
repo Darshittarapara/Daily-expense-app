@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { getCategory, deleteCategory, searchCategoryIcon, addCategory } from 'service/CategoryService';
 import { useAuthContext } from 'context/AuthContext/AuthContext';
 import { useNavigate } from 'react-router';
@@ -21,24 +21,27 @@ export interface CategoryListState {
     name: string,
     type: string,
     id: string,
-
+    icon: string
 }
 
 
 export const categoryContext = React.createContext({} as CategoryContextValues);
 export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) => {
     const { userId } = useAuthContext();
-    const flatIconToken = getItem('flatIconToken')
     const navigator = useNavigate();
+    const flatIconToken = getItem('flatIconToken')
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [categoryList, setCategoryList] = useState<CategoryListState[] | []>([]);
+
     const fetchCategory = useCallback(async () => {
+        console.log("this effect run")
         if (userId) {
+
             setIsLoading(true);
             const data = await getCategory(userId);
             if (data) {
                 const category = Object.entries(data).map(([key, value]) => {
-                    const values = value as { name: string, type: string }
+                    const values = value as { name: string, type: string, icon: string }
                     return {
                         id: key,
                         ...values
@@ -52,6 +55,12 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) =
             setIsLoading(false)
         }
     }, [userId]);
+
+    useEffect(() => {
+        fetchCategory();
+        console.log('this api is call')
+    }, [fetchCategory])
+
 
     const deleteCategoryHandler = (id: string) => {
         AlertMessage().then(async (result) => {
@@ -67,9 +76,9 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (props) =
         setIsLoading(true);
         const icon = await searchCategoryIcon(flatIconToken?.token, name);
         const payload = {
-            name: icon as string, type
+            name, type, icon
         }
-        const data = await addCategory(payload, userId)
+        const data = await addCategory(payload, userId);
         if (data) {
             await fetchCategory();
             navigator('/category')
