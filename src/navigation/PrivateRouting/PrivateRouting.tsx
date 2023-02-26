@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router'
 import { DashBoard } from 'screen/DashBoard/DashBoard';
 import AuthLayOut from "layout/AuthLayout/AuthLayout";
-import CategoryForm from 'screen/Category/Add'
+import CategoryForm from 'screen/Category/Form'
 import ViewCategory from 'screen/Category/View/View';
 import CategoryList from 'screen/Category/List/List'
 import { useAuthContext } from 'context/AuthContext/AuthContext';
@@ -20,11 +20,14 @@ const PrivateRouting = () => {
                 path="/category/add"
                 element={<AuthLayOut component={CategoryForm} />}
             />
-            {!isLoading && <Route
+            <Route
                 path="/category/:id/view"
                 element={<AuthLayOut component={ViewCategory} />}
-            />}
-
+            />
+            <Route
+                path="/category/:id/edit"
+                element={<AuthLayOut component={CategoryForm} />}
+            />
             <Route
                 path="/category"
                 element={<AuthLayOut component={CategoryList} />}

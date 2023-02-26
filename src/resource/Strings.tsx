@@ -6,6 +6,8 @@ export const Strings = {
     viewCategory: "View category",
     seeAll: "See all",
     noMoreItem: "No more item",
+    editCategory: "Edit category",
+    updateCategory: "Update category",
     categoryName: "Category name",
     categoryType: "Category type",
     monthlyExpense: "Monthly expense",

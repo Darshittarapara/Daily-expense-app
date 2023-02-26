@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Strings } from "resource/Strings";
 import { SectionHeader } from "components/SectionHeader/SectionHeader";
 import Button from "components/Button/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Input from "components/Input/Input";
 import { useFormik } from "formik";
 import { CategoryFormValues } from "Modal/Modal";
@@ -13,7 +13,8 @@ import { useCategoryContext } from "context/CategoryContext/CategoryContext";
 import { Loader } from "components/Loader/Loader";
 const Form = () => {
   const navigator = useNavigate();
-  const { onSubmit, isLoading } = useCategoryContext()
+  const { id } = useParams();
+  const { onAddCategory, isLoading, categoryList, onUpdateCategory } = useCategoryContext()
   const formilk = useFormik<CategoryFormValues>({
     initialValues: {
       name: "",
@@ -21,25 +22,54 @@ const Form = () => {
     },
     validationSchema: AddCategorySchema,
     onSubmit: (formValues) => {
-      onSubmit(formValues.name, formValues.type as "income" | "expense");
+      if (id) {
+        onUpdateCategory(formValues.name, formValues.type as "income" | "expense", id);
+        return
+      }
+      onAddCategory(formValues.name, formValues.type as "income" | "expense");
     },
   });
+
+  useEffect(() => {
+    if (id) {
+      const categoryItem = categoryList.find((item) => id === item.id);
+      formilk.resetForm({
+        values: {
+          name: categoryItem?.name as string,
+          type: categoryItem?.type as string
+        }
+      })
+    }
+    else {
+      formilk.resetForm({
+        values: {
+          name: "",
+          type: ""
+        }
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
   const handlerChange = (value: string) => {
     formilk.setFieldValue("type", value);
   };
+
+
   return (
     <div className="container">
       <SectionHeader
-        headerTitle={Strings.addCategory}
+        headerTitle={id ? Strings.editCategory : Strings.addCategory}
+        isBackIconRequired={id ? true : false}
+        path="/category"
         isListingPage={false}
         col="6"
       >
         <Button
           type="button"
-          onClick={() => navigator("/category")}
+          onClick={() => navigator("/category/add")}
           classes="btn btn-primary"
         >
-          {Strings.category}
+          {Strings.addCategory}
         </Button>
       </SectionHeader>
       <div className="form">
@@ -71,7 +101,7 @@ const Form = () => {
               disable={isLoading}
               classes="btn btn-primary"
             >
-              {Strings.addCategory}
+              {id ? Strings.updateCategory : Strings.addCategory}
             </Button>
             {isLoading && <Loader />}
           </div>
