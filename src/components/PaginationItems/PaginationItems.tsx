@@ -1,6 +1,9 @@
 import React, { Fragment, useState } from 'react'
 import { CustomTable } from 'components/CustomTable/CustomTable';
 import ReactPaginate from 'react-paginate';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+
 const PaginationItems: React.FC<any> = ({ list, isLoading, row, showRowData, limit }) => {
     const [itemOffset, setItemOffset] = useState(0);
     const endOffset = itemOffset + limit;
@@ -22,13 +25,13 @@ const PaginationItems: React.FC<any> = ({ list, isLoading, row, showRowData, lim
             />
             <ReactPaginate
                 breakLabel="..."
-                nextLabel={list.length > 5 ? "Next" : ""}
+                nextLabel={list.length > 5 ? <FontAwesomeIcon icon={faChevronRight} />: ""}
                 onPageChange={handlePageClick}
                 pageRangeDisplayed={limit}
                 pageCount={pageCount}
                 className="pagination"
                 activeClassName="active"
-                previousLabel={list.length > 5 ? "Previous" : ""}
+                previousLabel={list.length > 5 ?<FontAwesomeIcon icon={faChevronLeft} /> : ""}
 
             />
         </Fragment>

@@ -47,7 +47,7 @@ export const UserContext: React.FC<UserContextProps> = (props) => {
 
     useEffect(() => {
         const userDetails = getItem('user');
-        console.log(userDetails)
+     
         setUser(userDetails);
         setUserId(userDetails!?.uid);
         fetchUserData();

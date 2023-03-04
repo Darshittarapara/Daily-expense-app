@@ -9,7 +9,7 @@ import { useAuthContext } from 'context/AuthContext/AuthContext';
 import { Loader } from 'components/Loader/Loader';
 const PrivateRouting = () => {
     const { isLoading } = useAuthContext();
-    console.log(isLoading)
+
     return (
         <Routes>
             {isLoading && <Route path="/" element={<Loader />} />}

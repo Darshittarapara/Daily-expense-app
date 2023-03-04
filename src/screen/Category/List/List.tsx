@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faEye, faTrash, faIndianRupeeSign } from '@fortawesome/free-solid-svg-icons';
-import { CustomTable } from 'components/CustomTable/CustomTable';
+import dummyIcon from 'assets/image/image-not-found-icon.png'
 import './List.scss';
 import { SectionHeader } from 'components/SectionHeader/SectionHeader';
 import { CategoryListState, useCategoryContext } from 'context/CategoryContext/CategoryContext';
@@ -21,7 +21,7 @@ const List = () => {
     }
 
     const deleteCategory = (id: string) => {
-        console.log(id)
+        
         onDelete(id)
     }
 
@@ -34,7 +34,7 @@ const List = () => {
         return <tr key={`${index}`}>
             <td>{index + 1}</td>
             <td>
-                <img src={item.icon} alt="category Name" />
+                <img className='categoryImage' src={item.icon || dummyIcon} alt="category Name" />
             </td>
             <td className={typeCellClasses}>
                 <FontAwesomeIcon icon={faIndianRupeeSign} />

@@ -81,6 +81,7 @@ export const searchCategoryIcon = async (token: string, query: string) => {
                 "Authorization": `Bearer ${token}`
             }
         });
+        console.log(response);
         if (response.status === 200) {
             return response.data?.data?.[0]?.images?.[24];
         }

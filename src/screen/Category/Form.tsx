@@ -55,7 +55,7 @@ const Form = () => {
   };
 
   const navigationHandler = () => {
-    console.log(id)
+    
     if (id) {
       navigator("/category/add")
     }
