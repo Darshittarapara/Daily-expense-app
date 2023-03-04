@@ -35,11 +35,13 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
     const [isLoading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        if(!flatIconToken?.token) {
-            getAccessToken();
-        }
+       setInterval(async function () {
+await getAccessToken()
+},7200000 );
+            
+        
    
-    }, [flatIconToken?.token]);
+    }, []);
     const loginHandler = async (email: string, password: string) => {
         setLoading(true);
         firebase.signInWithEmailAndPassword(auth, email, password)
