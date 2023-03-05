@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 
 import './SideBarItem.scss';
 import { capiltalLetter } from 'helper/helper';
-const SideBarItem: React.FC<SideBarItemProps> = ({ title, icon, path }) => {
+const SideBarItem: React.FC<SideBarItemProps> = ({ title, icon, path, onToggle }) => {
     const navigator = useNavigate()
     const navigateHandler = () => {
         navigator(path!);
+        onToggle!();
     }
 
     return (

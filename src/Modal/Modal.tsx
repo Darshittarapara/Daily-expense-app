@@ -24,6 +24,7 @@ export interface SideBarItemProps {
     title: string
     onclick?: () => void
     path?: string
+    onToggle?: () => void
     icon: IconProp
 }
 
@@ -33,6 +34,7 @@ export interface SideBarSubItemProps {
         path: string
         icon: IconProp
     }[]
+    onToggle: () => void
     label: string
 }
 
