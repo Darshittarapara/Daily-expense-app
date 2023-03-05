@@ -1,70 +1,40 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useContext, useEffect } from 'react';
-// import { ref, get, child, getDatabase, } from 'firebase/database'
-// import { getItem } from 'helper/Storage';
-// import { UserProfileDetails } from 'Modal/Modal';
-// import { number } from 'yup';
-import data from 'assets/data/data.json';
+import React, { useState, useContext } from 'react';
 
-// interface userContextProviderValues {
-
-// };
+export interface IncomeState {
+    id?: string
+    name: string
+    note: string,
+    date?: Date,
+    category: string,
+    amount: string | number,
+    month: string
+}
 interface IncomeContextValues {
-    incomeList: {
-        id: string,
-        month: string
-        name: string,
-        category: string,
-        note: string,
-        amount: string
-    }[]
+    incomeList: IncomeState[]
     isLoading: boolean
+    onAddIncome: (payload: IncomeState) => void
 }
 interface IncomeContextProps {
     children: JSX.Element,
 
 }
-interface IncomeState {
-    id: string
-    name: string
-    category: string
-    note: string,
-    month: string
-    amount: string
-}
+
 
 
 export const IncomeContext = React.createContext({} as IncomeContextValues);
 export const IncomeContextProvider: React.FC<IncomeContextProps> = (props) => {
-    const incomeData = [...data.income]
-    const [incomeList, setIncomeList] = useState<IncomeState[]>(incomeData);
+    const [incomeList, setIncomeList] = useState<IncomeState[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-useEffect(() => {
-setIsLoading(true)
-setIncomeList(incomeData)
-},[])
-    // const fetchUserData = useCallback(
-    //     async () => {
-    //         setIsLoading(true)
-    //         const { uid } = userId;
-    //         const startRef = ref(getDatabase());
-    //         const response = await get(child(startRef, `users/${uid}`))
-    //         if (response.exists()) {
-    //             setUserData(response.val());
-    //             setIsLoading(false)
-    //         }
-    //         else {
-    //             setIsLoading(false);
-    //             console.log('no data found')
-    //         }
-    //     },
-    //     [userId],
-    // )
+    const addIncomeItemHandler = (payload: IncomeState) => {
+        setIsLoading(true);
+        const newIncomeItem = [...incomeList];
+        newIncomeItem.push(payload);
+        setIncomeList(newIncomeItem)
+        setIsLoading(false);
+    };
 
-    // useEffect(() => {
-    //     fetchUserData()
-    // }, []);
-    return <IncomeContext.Provider value={{ isLoading, incomeList }}>
+    return <IncomeContext.Provider value={{ isLoading, incomeList, onAddIncome: addIncomeItemHandler }}>
         {props.children}
     </IncomeContext.Provider>
 }

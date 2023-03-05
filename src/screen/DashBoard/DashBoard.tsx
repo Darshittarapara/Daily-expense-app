@@ -23,6 +23,20 @@ export const DashBoard = () => {
   const [monthlyIncome, setMontlyIncome] = useState<number[]>([]);
   const expense = useMemo(() => expenseList, [expenseList]);
   const income = useMemo(() => incomeList, [incomeList]);
+
+  const totalIncome = incomeList?.reduce((accum, currentElement) => {
+    console.log(currentElement)
+    accum += Number(currentElement?.amount);
+    return accum
+  }, 0);
+  const totalExpense = expenseList?.reduce((accum, currentElement) => {
+    accum += Number(currentElement?.amount);
+    return accum
+  }, 0);
+
+  const totalBalance = totalIncome - totalExpense;
+  console.log(totalBalance);
+  console.log(totalIncome);
   useEffect(() => {
     const monthWiseExpense = getMonthWiseAmounts(expense);
     const monthWiseIncome = getMonthWiseAmounts(income);
@@ -47,7 +61,7 @@ export const DashBoard = () => {
         <div className="col-12">
           <div className="row">
             <div className="col-md-4 col-lg-4 col-xl-4 col-12 mb-3">
-              <AccountContain label="Total Balance" value="INR 50000" />
+              <AccountContain label="Total Balance" value={`INR ${totalBalance || 0}`} />
             </div>
             <div className="col-md-4 col-lg-4 col-xl-4 col-12 mb-3">
               <AccountContain label="Daily Average expense" value="INR 300" />
@@ -78,7 +92,7 @@ export const DashBoard = () => {
                 <div className="card-body">
                   {monthlyChartType.includes("income") ? (
                     <MonthlyCharts
-                      data={incomeList}
+                      data={incomeList as any}
                       monthlyChartData={monthlyIncome}
                       setMontlyChartData={setMontlyIncome}
                       id="income-id"
@@ -104,20 +118,20 @@ export const DashBoard = () => {
                   headerTitle={Strings.monthlyExpenseVsIncome}
                 />
                 <div className="card-body">
-                 <ColumnChart 
-                 id ="expense-and-income"
-                 months={[...incomeMonths, ...expenseMonths]}
-                  series={[
-                    {name : Strings.income , data : monthlyIncome},
-                    {name : Strings.expense, data :monthlyExpenses}
-                 ]}
-                 width = {400}
-                 />
+                  <ColumnChart
+                    id="expense-and-income"
+                    months={[...incomeMonths, ...expenseMonths]}
+                    series={[
+                      { name: Strings.income, data: monthlyIncome },
+                      { name: Strings.expense, data: monthlyExpenses }
+                    ]}
+                    width={400}
+                  />
                 </div>
               </Card>
             </div>
             <div className="col-md-9 col-lg-9 col-xl-9 col-12">
-               <Card>
+              <Card>
                 <SectionHeader
                   onChangeHandler={MontlyListTypeSelectInputChangeHandler}
                   isListingPage={true}
@@ -136,7 +150,7 @@ export const DashBoard = () => {
                     <List data={expenseList} />
                   )}
                 </div>
-              </Card> 
+              </Card>
             </div>
           </div>
         </div>

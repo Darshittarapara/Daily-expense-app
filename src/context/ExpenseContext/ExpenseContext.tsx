@@ -12,10 +12,11 @@ import data from 'assets/data/data.json';
 // };
 interface ExpenseContextValues {
     expenseList: {
-        id: string,
+        id?: string,
         name: string,
         category: string,
-        note: string,
+        note :string
+        
         month: string
         amount: string
     }[]
