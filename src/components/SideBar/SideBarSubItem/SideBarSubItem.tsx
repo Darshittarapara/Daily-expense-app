@@ -21,7 +21,7 @@ const SideBarSubItem: React.FC<SideBarSubItemProps> = (props) => {
             </li>
             <div className={isShowSubItem ? 'show-sub-item' : "sub-item"}>
                 <ul>
-                    {props.list.map((item, index) => <SideBarItem key={`${index}`} title={item.title} icon={item.icon} path={item.path} />)}
+                    {props.list.map((item, index) => <SideBarItem onToggle={() =>props.onToggle()} key={`${index}`} title={item.title} icon={item.icon} path={item.path} />)}
                 </ul>
 
             </div>

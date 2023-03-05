@@ -38,12 +38,11 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
         const clearFlatIconAuthInterval = setInterval(async function () {
             await getAccessToken()
         }, 7200000);
-
-
         return () => {
             clearInterval(clearFlatIconAuthInterval)
         }
     }, []);
+    
     const loginHandler = async (email: string, password: string) => {
         setLoading(true);
         firebase.signInWithEmailAndPassword(auth, email, password)
