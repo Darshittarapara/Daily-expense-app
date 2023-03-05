@@ -83,7 +83,19 @@ export const SideBar = () => {
                 <ul className='sidebar-list-item'>
                     {Object.entries(sidebarList).map(([key, value], index) => {
                         return Array.isArray(value) ? (
-                            <SideBarSubItem onToggle={toggleSideBar} key={`${index}`} list={value} label={key} />) : (<SideBarItem key={`${index}`} title={value.title} icon={value.icon} path={value.path} />)
+                            <SideBarSubItem
+                                onToggle={toggleSideBar}
+                                key={`${index}`}
+                                list={value}
+                                label={key} />) :
+                            (
+                                <SideBarItem
+                                    onToggle={toggleSideBar}
+                                    key={`${index}`}
+                                    title={value.title}
+                                    icon={value.icon}
+                                    path={value.path} />
+                            )
 
                     })}
                 </ul>
