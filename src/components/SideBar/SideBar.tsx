@@ -19,7 +19,7 @@ const sidebarList = {
         },
         {
             title: "Add income",
-            path: "/incomes/add",
+            path: "/income/add",
             icon: faSignOut
         },
 

@@ -1,5 +1,6 @@
 import React, { SetStateAction } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { FormikProps } from "formik";
 export interface LayOutProps {
     component: React.ElementType
 }
@@ -58,7 +59,7 @@ export interface MonthWiseData {
     }[]
 }
 export interface ExpenseState {
-    id: string
+    id?: string
     name: string
     category: string
     note: string,
@@ -73,7 +74,7 @@ export interface MonthlyChartProp {
     setMontlyChartData: React.Dispatch<SetStateAction<number[]>>
 }
 export interface DashBoardListProps {
-    data: ExpenseState[]
+    data: any
 }
 export interface MonthWiseSumKey {
     [index: string]: any
@@ -106,4 +107,20 @@ export interface ViewRowContainProps {
 
 export interface LoaderProps {
     className?: string
+}
+
+export interface IncomeFormValues {
+    name: string
+    categoryName: string
+    income: string | number
+    note: string
+}
+
+export interface TextAreaProps {
+    name: string
+    placeHolder: string
+    className?: string
+    id: string
+    formilk: FormikProps<IncomeFormValues>
+    value: string
 }
