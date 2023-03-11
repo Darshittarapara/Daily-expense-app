@@ -35,12 +35,7 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
     const [isLoading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        const clearFlatIconAuthInterval = setInterval(async function () {
-            await getAccessToken()
-        }, 7200000);
-        return () => {
-            clearInterval(clearFlatIconAuthInterval)
-        }
+         getAccessToken();
     }, []);
     
     const loginHandler = async (email: string, password: string) => {
