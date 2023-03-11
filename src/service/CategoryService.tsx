@@ -60,7 +60,6 @@ export const deleteCategory = async (userId: string, categoryId: string) => {
          * if you use fetch then add delete into method or use  axios use axios.delete
          */
         const url = config.baseURL + 'category' + userId + "/" + categoryId + ".json";
-        console.log(url)
         const response = await axios.delete(url);
 
         if (response.status === 200) {
@@ -81,7 +80,6 @@ export const searchCategoryIcon = async (token: string, query: string) => {
                 "Authorization": `Bearer ${token}`
             }
         });
-        console.log(response);
         if (response.status === 200) {
             return response.data?.data?.[0]?.images?.[24];
         }

@@ -10,7 +10,7 @@ import {
 import { useAuthContext } from "context/AuthContext/AuthContext";
 import { useNavigate } from "react-router";
 import { getItem } from "helper/Storage";
-import { AlertMessage } from "helper/AlertMessage";
+import { AlertMessage, Message } from "helper/AlertMessage";
 import Swal from "sweetalert2";
 interface CategoryContextValues {
   onAddCategory: (name: string, type: "income" | "expense") => void;
@@ -104,8 +104,13 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (
     };
     const data = await addCategory(payload, userId);
     if (data) {
-      await fetchCategory();
-      navigator("/category");
+      setIsLoading(false);
+      Message('success', 'Category added successfully').then(async (result) => {
+        if (result.isConfirmed) {
+          await fetchCategory();
+          navigator("/category");
+        }
+      })
     }
     setIsLoading(false);
   };
@@ -123,8 +128,8 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (
       icon,
     };
     const data = await updateCategory(userId, categoryId, payload);
-
     if (data) {
+      setIsLoading(false);
       Swal.fire({
         title: "Update category",
         text: "Category updated successfully",

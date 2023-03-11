@@ -1,7 +1,4 @@
-import { ExpenseState } from "Modal/Modal";
-
 export const capiltalLetter = (input: string) => {
-
   return (
     input?.charAt(0)?.toLocaleUpperCase() + input?.slice(1)?.toLocaleLowerCase()
   );
@@ -35,4 +32,15 @@ export const getCurrentMonth = (index: number) => {
     "July", "August", "September", "October", "November", "December"
   ];
   return monthNames[index]
+}
+
+export const findDuplicateInput = (data: any[], name: string) => {
+  const getItem = data?.find((item) => {
+    return item?.name?.toLowerCase() === name.toLocaleLowerCase();
+  });
+  if (getItem) {
+    return true;
+  }
+  return false;
+
 }

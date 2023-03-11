@@ -11,6 +11,9 @@ import { AddCategorySchema } from "helper/Validation";
 import { ErrorMessage } from "components/ErrorMessage/ErrorMessage";
 import { useCategoryContext } from "context/CategoryContext/CategoryContext";
 import { Loader } from "components/Loader/Loader";
+import { findDuplicateInput } from "helper/helper";
+import { Message } from "helper/AlertMessage";
+
 const Form = () => {
   const navigator = useNavigate();
   const { id } = useParams();
@@ -22,13 +25,18 @@ const Form = () => {
     },
     validationSchema: AddCategorySchema,
     onSubmit: (formValues) => {
+      const isCategotyAlreadyAdd = findDuplicateInput(categoryList, formValues.name);
+      if (isCategotyAlreadyAdd) {
+        Message('error', "Category already added")
+        return
+      }
       if (id) {
         onUpdateCategory(formValues.name, formValues.type as "income" | "expense", id);
         return
       }
       onAddCategory(formValues.name, formValues.type as "income" | "expense");
-    },
-  });
+    }
+  })
 
   useEffect(() => {
     if (id) {
@@ -55,7 +63,7 @@ const Form = () => {
   };
 
   const navigationHandler = () => {
-    
+
     if (id) {
       navigator("/category/add")
     }
