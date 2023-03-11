@@ -90,7 +90,7 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (
       }
     });
   };
-  
+
   const addCategoriesHandler = async (
     name: string,
     type: "expense" | "income"
@@ -107,8 +107,8 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (
       setIsLoading(false);
       Message('success', 'Category added successfully').then(async (result) => {
         if (result.isConfirmed) {
-          await fetchCategory();
           navigator("/category");
+          await fetchCategory();
         }
       })
     }
@@ -136,8 +136,8 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (
         icon: "success",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          await fetchCategory();
           navigator("/category");
+          await fetchCategory();
         }
       });
     }

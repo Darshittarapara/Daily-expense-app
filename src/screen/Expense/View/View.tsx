@@ -1,23 +1,23 @@
 import { DownLoadPdfButton } from 'components/DownLoadPdfButton/DownLoadPdfButton'
 import { SectionHeader } from 'components/SectionHeader/SectionHeader'
 import { ViewRowContain } from 'components/ViewRowContain/ViewRowContain'
-import { useIncomeContext } from 'context/IncomeContext/IncomeContext'
+import { useExpenseContext } from 'context/ExpenseContext/ExpenseContext'
 import { formatDDMMYYYFormat } from 'helper/helper'
 import React, { Fragment } from 'react'
 import { useParams } from 'react-router'
 import { Strings } from 'resource/Strings'
 
 const View = () => {
-    const { incomeList } = useIncomeContext();
+    const { expenseList } = useExpenseContext();
     const { id } = useParams();
-    const incomeItem = incomeList.filter((item) => id === item.id);
+    const expenseItem = expenseList.filter((item) => id === item.id);
 
     return (
         <Fragment>
-            {incomeItem.length > 0 && incomeItem.map((item, index) => {
+            {expenseItem.length > 0 && expenseItem.map((item, index) => {
                 return (
                     <Fragment key={`${index}`}>
-                        <SectionHeader isBackIconRequired={true} path='/incomes' isListingPage={false} headerTitle={Strings.viewIncome} />
+                        <SectionHeader isBackIconRequired={true} path='/expenses' isListingPage={false} headerTitle={Strings.viewExpense} />
                         <ViewRowContain label={Strings.name} value={item.name} />
                         <ViewRowContain label={Strings.amount} value={"INR " + item.amount.toString()} />
                         <ViewRowContain label={Strings.category} value={item.category} />

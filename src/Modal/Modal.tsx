@@ -62,9 +62,10 @@ export interface MonthWiseData {
 export interface ExpenseState {
     id?: string
     name: string
-    category: string
     note: string,
-    amount: string
+    date?: Date,
+    category: string,
+    amount: string | number,
     month: string
 }
 export interface MonthlyChartProp {
@@ -72,10 +73,13 @@ export interface MonthlyChartProp {
     seriesName: string
     monthlyChartData: number[]
     data: ExpenseState[] | IncomeState[]
-    setMontlyChartData: React.Dispatch<SetStateAction<number[]>>
 }
 export interface DashBoardListProps {
-    data: any
+    data: ExpenseState[] | IncomeState[]
+    onEditButtonClick: (id: string) => void
+    onViewButtonClick: (id: string) => void
+    onDeleteButtonClick: (id: string) => void
+pageName : "Expense" | "Income"
 }
 export interface MonthWiseSumKey {
     [index: string]: any
@@ -116,17 +120,21 @@ export interface IncomeFormValues {
     income: string | number
     note: string
 }
-
+export interface ExpenseFormValues {
+    name: string
+    categoryName: string
+    expense: string | number
+    note: string
+}
 export interface TextAreaProps {
     name: string
     placeHolder: string
     className?: string
     id: string
-    formilk: FormikProps<IncomeFormValues>
+    formilk: FormikProps<IncomeFormValues> | FormikProps<ExpenseFormValues>
     value: string
 }
 
 export interface addIncomePayload {
     name: string
-
 }

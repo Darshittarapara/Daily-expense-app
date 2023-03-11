@@ -27,7 +27,7 @@ const sidebarList = {
     expense: [
         {
             title: "expense",
-            path: "/expense",
+            path: "/expenses",
             icon: faSignOut
         },
         {

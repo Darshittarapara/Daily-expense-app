@@ -5,10 +5,14 @@ export const Strings = {
     income: "Income",
     addCategory: "Add category",
     category: "Category",
+    downloadPdf: "Download pdf",
     viewCategory: "View category",
     seeAll: "See all",
     addIncome: "Add income",
     editIncome: "Edit income",
+    addExpense: "Add expense",
+    dailyExpense: 'Daily expense',
+    editExpense: "Edit expense",
     name: "Name",
     noMoreItem: "No more item",
     editCategory: "Edit category",
@@ -24,5 +28,7 @@ export const Strings = {
     month: "Month",
     monthlyExpenseVsIncome: "Montly expense vs income",
     time: 'Time',
-    viewIncome: 'View income'
+    viewIncome: 'View income',
+    updateExpense: "Update expense",
+    viewExpense: "View expense"
 }
