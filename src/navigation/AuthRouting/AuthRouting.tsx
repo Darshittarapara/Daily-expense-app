@@ -7,7 +7,7 @@ import Login from "screen/Auth/Login/Login";
 const AuthRouting = () => {
     return (
         <Routes>
-            <Route path="/login" element={<WithAuthLayout component={Login} />} />
+            <Route index path="/login" element={<WithAuthLayout component={Login} />} />
             <Route
                 path="/login-with-otp"
                 element={<WithAuthLayout component={LoginWithOtp} />}
