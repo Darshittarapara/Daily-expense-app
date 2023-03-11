@@ -81,7 +81,6 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (
     fetchCategory();
   }, [fetchCategory]);
 
-
   const deleteCategoryHandler = (id: string) => {
     AlertMessage().then(async (result) => {
       if (result.isConfirmed) {
@@ -91,6 +90,7 @@ export const CategoryContextProvider: React.FC<CategoryContextProps> = (
       }
     });
   };
+  
   const addCategoriesHandler = async (
     name: string,
     type: "expense" | "income"

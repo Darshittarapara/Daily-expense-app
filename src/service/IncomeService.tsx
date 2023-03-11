@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { config } from 'config/config';
-import { addCategoryPayLoad, editCategoryPayLoad } from 'Modal/Modal';
+import { IncomeState } from 'context/IncomeContext/IncomeContext';
+import { editCategoryPayLoad } from 'Modal/Modal';
 
 
 export const defaultHeader = {
@@ -9,10 +10,11 @@ export const defaultHeader = {
     "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
     "Access-Control-Allow-Origin": "*"
 }
-export const addCategory = async (payload: addCategoryPayLoad, userId: string) => {
+export const addIncome = async (payload: IncomeState, userId: string) => {
     try {
-        const url = config.baseURL + 'category' + userId + ".json"
+        const url = config.baseURL + 'income' + userId + ".json"
         const response = await axios.post(url, payload);
+
         if (response.status === 200) {
             return true
         }
@@ -22,9 +24,9 @@ export const addCategory = async (payload: addCategoryPayLoad, userId: string) =
     }
 }
 
-export const getCategory = async (userId: string) => {
+export const getIncomes = async (userId: string) => {
     try {
-        const url = config.baseURL + 'category' + userId + ".json"
+        const url = config.baseURL + 'income' + userId + ".json"
         const response = await axios.get(url);
 
         if (response.status === 200) {
@@ -36,13 +38,13 @@ export const getCategory = async (userId: string) => {
     }
 }
 
-export const updateCategory = async (userId: string, categoryId: string, payload: editCategoryPayLoad) => {
+export const updateIncome = async (userId: string, incomeId: string, payload: IncomeState) => {
     try {
         /**
     * My url like category + userId +"/" + firebase alphabetical key +".json"
     * if you use fetch then add put into method or use  axios use axios.put
     */
-        const url = config.baseURL + 'category' + userId + "/" + categoryId + ".json"
+        const url = config.baseURL + 'income' + userId + "/" + incomeId + ".json"
         const response = await axios.put(url, payload);
         if (response.status === 200) {
             return response.data
@@ -52,13 +54,13 @@ export const updateCategory = async (userId: string, categoryId: string, payload
         return error
     }
 }
-export const deleteCategory = async (userId: string, categoryId: string) => {
+export const deleteIncome = async (userId: string, incomeId: string) => {
     try {
         /**
          * My url like category + userId +"/" + firebase alphabetical key +".json"
          * if you use fetch then add delete into method or use  axios use axios.delete
          */
-        const url = config.baseURL + 'category' + userId + "/" + categoryId + ".json";
+        const url = config.baseURL + 'income' + userId + "/" + incomeId + ".json";
         const response = await axios.delete(url);
 
         if (response.status === 200) {
@@ -69,22 +71,3 @@ export const deleteCategory = async (userId: string, categoryId: string) => {
         return error
     }
 }
-
-export const searchCategoryIcon = async (token: string, query: string) => {
-    try {
-        const API_URL = config.serchBaseURL + "?q=" + query
-        const response = await axios.get(API_URL, {
-            headers: {
-                'Accept': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-        });
-        if (response.status === 200) {
-            return response.data?.data?.[0]?.images?.[24];
-        }
-
-    } catch (error) {
-        return error
-    }
-}
-

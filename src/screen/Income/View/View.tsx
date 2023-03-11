@@ -1,28 +1,31 @@
 import { SectionHeader } from 'components/SectionHeader/SectionHeader'
 import { ViewRowContain } from 'components/ViewRowContain/ViewRowContain'
-import { useCategoryContext } from 'context/CategoryContext/CategoryContext'
+import { useIncomeContext } from 'context/IncomeContext/IncomeContext'
+import { formatDDMMYYYFormat } from 'helper/helper'
 import React, { Fragment } from 'react'
 import { useParams } from 'react-router'
 import { Strings } from 'resource/Strings'
 
 const View = () => {
-    const { categoryList } = useCategoryContext();
+    const { incomeList } = useIncomeContext();
     const { id } = useParams();
-    const categoryItem = categoryList.filter((item) => id === item.id);
+    const incomeItem = incomeList.filter((item) => id === item.id);
 
     return (
         <Fragment>
-            {categoryItem.length > 0 && categoryItem.map((item, index) => {
+            {incomeItem.length > 0 && incomeItem.map((item, index) => {
                 return (
                     <Fragment key={`${index}`}>
-                        <SectionHeader isBackIconRequired={true} path='/category' isListingPage={false} headerTitle={Strings.viewCategory} />
-                        <ViewRowContain label={Strings.categoryName} value={item.name} />
-                        <ViewRowContain label={Strings.categoryType} value={item.type} />
-                        <ViewRowContain label={Strings.categoryIcon} value={item.icon} />
+                        <SectionHeader isBackIconRequired={true} path='/incomes' isListingPage={false} headerTitle={Strings.viewIncome} />
+                        <ViewRowContain label={Strings.name} value={item.name} />
+                        <ViewRowContain label={Strings.amount} value={"INR "  + item.amount.toString()} />
+                        <ViewRowContain label={Strings.category} value={item.category} />
+                        <ViewRowContain label={Strings.month} value={item.month} />
+                        <ViewRowContain label={Strings.date} value={formatDDMMYYYFormat(new Date(item.date!))} />
+                        <ViewRowContain label={Strings.time} value={new Date(item.date!).toLocaleTimeString()} />
                     </Fragment>
                 )
             })}
-
         </Fragment>
     )
 }

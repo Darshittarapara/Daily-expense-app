@@ -14,12 +14,13 @@ import TextArea from "components/TextArea/TextArea";
 import { useIncomeContext } from "context/IncomeContext/IncomeContext";
 import { findDuplicateInput, getCurrentMonth } from "helper/helper";
 import { Message } from "helper/AlertMessage";
+import { AddIncomeSchema } from "helper/Validation";
 
 const Form = () => {
   const navigator = useNavigate();
   const { id } = useParams();
   const { categoryList } = useCategoryContext();
-  const { isLoading, onAddIncome, incomeList } = useIncomeContext();
+  const { isLoading, onAddIncome, incomeList, onUpdateIncome } = useIncomeContext();
   const formilk = useFormik<IncomeFormValues>({
     initialValues: {
       name: "",
@@ -27,7 +28,7 @@ const Form = () => {
       income: "",
       note: ""
     },
-    // validationSchema: AddCategorySchema,
+    validationSchema: AddIncomeSchema,
     onSubmit: (formValues) => {
       const payload = {
         name: formValues.name,
@@ -37,27 +38,29 @@ const Form = () => {
         date: new Date(),
         month: getCurrentMonth(new Date().getMonth())
       };
-      const isCategotyAlreadyAdd = findDuplicateInput(incomeList, formValues.name);
-      if (isCategotyAlreadyAdd) {
+      if (id) {
+        onUpdateIncome(payload, id);
+        return
+      }
+      const isIncomeAlreadyAdd = findDuplicateInput(incomeList, formValues.name);
+      if (isIncomeAlreadyAdd) {
         Message('error', "Income  already added")
         return
       };
-      // if (id) {
-      //   onUpdateCategory(formValues.name, formValues.type as "income" | "expense", id);
-      //   return
-      // }
       onAddIncome(payload);
     },
   });
 
   useEffect(() => {
     if (id) {
-      const categoryItem = categoryList.find((item) => id === item.id);
+      const incomeItem = incomeList.find((item) => id === item.id);
       formilk.resetForm({
         values: {
           ...formilk.values,
-          name: categoryItem?.name as string,
-
+          name: incomeItem?.name as string,
+          categoryName: incomeItem?.category || "",
+          income: incomeItem?.amount || '',
+          note: incomeItem?.note || ''
         }
       })
     }
@@ -80,7 +83,7 @@ const Form = () => {
       navigator("/income/add")
     }
     else {
-      navigator("/income")
+      navigator("/incomes")
     }
   }
 
@@ -94,7 +97,7 @@ const Form = () => {
       <SectionHeader
         headerTitle={id ? Strings.editIncome : Strings.addIncome}
         isBackIconRequired={id ? true : false}
-        path="/category"
+        path="/incomes"
         isListingPage={false}
         col="6"
       >
@@ -117,7 +120,6 @@ const Form = () => {
               formilk={formilk}
               value={formilk.values.name}
             />
-            {formilk.errors.name && formilk.touched.name && <ErrorMessage message={formilk.errors.name} />}
           </div>
           <div className="mb-3">
             <label className="form-label">{Strings.categoryType}</label>
@@ -150,7 +152,6 @@ const Form = () => {
               id="notes"
               value={formilk.values.note}
             />
-            {formilk.errors.income && formilk.touched.income && <ErrorMessage message={formilk.errors.income} />}
           </div>
           <div className="mb-3">
             <Button

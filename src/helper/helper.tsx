@@ -16,16 +16,18 @@ export const getMonthWiseAmounts = (list: any) => {
     }
     return accum;
   }, {});
-
   Object.entries(monthWiseAmount).forEach(([key, value]) => {
     const amount = value as number
     monthList.push(key);
     amountList.push(amount);
   });
-
   return { monthList, amountList };
 };
 
+export const formatDDMMYYYFormat = (date: Date) => {
+  const [month, day, year] = date.toLocaleDateString().split('/');
+  return `${day}-${month}-${year}`;
+}
 
 export const getCurrentMonth = (index: number) => {
   const monthNames = ["January", "February", "March", "April", "May", "June",

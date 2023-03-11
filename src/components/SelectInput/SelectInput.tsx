@@ -14,8 +14,8 @@ export const SelectInput: React.FC<SelectInputProp> = (props) => {
         <select value={props.value} onChange={(e: React.BaseSyntheticEvent) => props.onChange(e.target.value)} className={classes} name={props.name}>
             {props?.options.map((option, index) => {
                 return <option
-                 key={index} 
-                 value={option?.id} >{capiltalLetter(option?.name || option)}</option>
+                    key={index}
+                    value={option?.name} >{capiltalLetter(option?.name || option)}</option>
             })}
         </select>
     )

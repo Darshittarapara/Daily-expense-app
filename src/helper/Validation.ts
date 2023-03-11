@@ -14,7 +14,6 @@ export const authErrorHandler = (message: string) => {
         return "Too Many attempts please reset your password"
     }
 }
-
 export const SignInPageSchema = Yup.object({
     email: Yup.string()
         .required('Please enter email')
@@ -32,19 +31,20 @@ export const SignInPageWithOtpSchema = Yup.object({
         .min(10, "Phone number must be 10 characters")
 })
 
-
 export const VeriflyOtpSchema = Yup.object({
     otp: Yup.string()
         .required("Please enter otp")
         .max(6, "Phone number must be 6 characters")
         .min(6, "Phone number must be 6 characters")
-})
+});
+
 export const AddCategorySchema = Yup.object({
     name: Yup.string()
         .required("Please enter category name"),
     type :Yup.string()
     .required("Please select category type")
-})
+});
+
 export const SignUpSchema = Yup.object({
     email: Yup.string()
         .required('Please enter email')
@@ -59,8 +59,16 @@ export const SignUpSchema = Yup.object({
         .min(5, "Please enter minimum 5 characters")
         .max(10, "Please enter maximum 10 characters"),
     userName: Yup.string()
-        .required("please enter user name")
-        
+        .required("please enter user name")    
+});
+
+export const AddIncomeSchema = Yup.object({
+    name: Yup.string()
+        .required("Please enter income name"),
+    categoryName :Yup.string()
+    .required("Please select category"),
+    income:Yup.string().required("Please enter income"),
+    note : Yup.string().optional()
 })
 
 export const isPhoneNumberAndOtpValid = (value: string, label: string) => {
