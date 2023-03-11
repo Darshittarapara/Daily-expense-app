@@ -5,6 +5,7 @@ import SignUp from "screen/Auth/SignUp/SignUp";
 import WithAuthLayout from "layout/WithAuthLayout/WithAuthLayout";
 import Login from "screen/Auth/Login/Login";
 const AuthRouting = () => {
+alert("hello")
     return (
         <Routes>
             <Route index path="/login" element={<WithAuthLayout component={Login} />} />
