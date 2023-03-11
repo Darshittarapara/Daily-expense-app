@@ -15,11 +15,11 @@ import ExpenseForm from 'screen/Expense/Form';
 import ViewExpense from 'screen/Expense/View/View';
 
 const PrivateRouting = () => {
-    const { isLoading } = useAuthContext();
+    const { isLoading, isStartUserProfileLoad } = useAuthContext();
     return (
         <Routes>
-            {isLoading && <Route path="/" element={<Loader />} />}
-            {!isLoading && <Route path="/" element={<AuthLayOut component={DashBoard} />} />}
+            {(isLoading || isStartUserProfileLoad) && <Route path="/" element={<Loader />} />}
+            {(!isLoading || !isStartUserProfileLoad) && <Route path="/" element={<AuthLayOut component={DashBoard} />} />}
             <Route path="/dashboard" element={<AuthLayOut component={DashBoard} />} />
             <Route
                 path="/category/add"

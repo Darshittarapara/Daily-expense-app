@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import * as firebase from 'firebase/auth';
 import { auth, db } from 'FirebaseConfig/FireBaseConfig';
-import { getItem, setItem } from 'helper/Storage';
+import { setItem } from 'helper/Storage';
 import { authErrorHandler } from 'helper/Validation';
 import { useNavigate } from 'react-router-dom'; import { SignUpSubmitPayLoad } from 'Modal/Modal';
 import { ref, set } from 'firebase/database'
@@ -17,6 +17,8 @@ interface authContextProviderValues {
     setError: React.Dispatch<React.SetStateAction<string>>
     setUserId: React.Dispatch<React.SetStateAction<string>>
     setUpRecaptcha: any
+    setIsStartUserProfileLoading: React.Dispatch<React.SetStateAction<boolean>>
+    isStartUserProfileLoad: boolean
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
 };
 
@@ -31,6 +33,7 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
     const [userId, setUserId] = useState<string>('');
     const [error, setError] = useState<string>("");
     const [isLoading, setLoading] = useState<boolean>(false);
+    const [isStartUserProfileLoad, setIsStartUserProfileLoading] = useState<boolean>(true);
 
     useEffect(() => {
         getAccessToken();
@@ -40,7 +43,6 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
         setLoading(true);
         firebase.signInWithEmailAndPassword(auth, email, password)
             .then(async (response) => {
-
                 navigator('/');
                 setItem('user', response.user);
                 setUserId(response.user.uid);
@@ -89,6 +91,8 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
         onLogin: loginHandler,
         isLoading,
         error,
+        setIsStartUserProfileLoading,
+        isStartUserProfileLoad,
         setError,
         setUpRecaptcha,
         userId,

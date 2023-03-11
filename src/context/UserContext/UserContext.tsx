@@ -3,14 +3,11 @@ import React, { useState, useContext, useEffect, useCallback } from "react";
 import { ref, get, child, getDatabase } from "firebase/database";
 import { UserProfileDetails } from "Modal/Modal";
 import { useAuthContext } from "context/AuthContext/AuthContext";
-import { auth } from "FirebaseConfig/FireBaseConfig";
 import { getItem } from "helper/Storage";
 interface UserContextProvider {
     displayName: string;
     photoURL: string;
     user: any
-    isLoading: boolean;
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 interface UserContextProps {
     children: JSX.Element;
@@ -18,24 +15,23 @@ interface UserContextProps {
 export const logo = "https://www.travelperk.com/wp-content/uploads/expensify-logo-1580x232.png";
 export const userContext = React.createContext({} as UserContextProvider);
 export const UserContext: React.FC<UserContextProps> = (props) => {
-    const { setUserId, setLoading, userId } = useAuthContext();
+    const { setUserId, setIsStartUserProfileLoading, userId } = useAuthContext();
     const [user, setUser] = useState();
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [userData, setUserData] = useState<UserProfileDetails>({
         displayName: "",
         photoURL: "",
     });
-    console.log('run')
+
     const fetchUserData = useCallback(async () => {
         if (userId) {
-            setIsLoading(true);
+            setIsStartUserProfileLoading(true);
             const startRef = ref(getDatabase());
             const response = await get(child(startRef, `users/${userId}`));
             if (response.exists()) {
                 setUserData(response.val());
-                setIsLoading(false);
+                setIsStartUserProfileLoading(false);
             } else {
-                setIsLoading(false);
+                setIsStartUserProfileLoading(false);
                 console.log("no data found");
             }
         }
@@ -46,16 +42,14 @@ export const UserContext: React.FC<UserContextProps> = (props) => {
         setUser(userDetails);
         setUserId(userDetails!?.uid);
         fetchUserData();
-    }, [setUserId, setLoading, fetchUserData]);
+    }, [setUserId, setIsStartUserProfileLoading, fetchUserData]);
 
     return (
         <userContext.Provider
             value={{
-                isLoading,
                 user,
                 displayName: userData.displayName,
-                photoURL: userData.photoURL,
-                setIsLoading
+                photoURL: userData.photoURL,                
             }}
         >
             {props.children}
