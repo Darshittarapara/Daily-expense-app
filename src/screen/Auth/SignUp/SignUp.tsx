@@ -143,7 +143,7 @@ const SignUp = () => {
             </Button>
           </div>
           <div style={{ textAlign: "center" }}>
-            <NavLink to="/auth">Already user</NavLink>
+            <NavLink to="/login">Already user</NavLink>
           </div>
         </form>
 

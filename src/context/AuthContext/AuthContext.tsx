@@ -28,16 +28,14 @@ export const authContext = React.createContext({} as authContextProviderValues);
 export const AuthContext: React.FC<AuthContextProps> = (props) => {
     const { RecaptchaVerifier, signInWithPhoneNumber } = firebase
     const navigator = useNavigate();
-    const flatIconToken = getItem('flatIconToken');
-
     const [userId, setUserId] = useState<string>('');
     const [error, setError] = useState<string>("");
     const [isLoading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-         getAccessToken();
+        getAccessToken();
     }, []);
-    
+
     const loginHandler = async (email: string, password: string) => {
         setLoading(true);
         firebase.signInWithEmailAndPassword(auth, email, password)
@@ -71,7 +69,6 @@ export const AuthContext: React.FC<AuthContextProps> = (props) => {
         setLoading(true);
         firebase.createUserWithEmailAndPassword(auth, payload.email, payload.password)
             .then((response) => {
-
                 setItem('user', response.user);
                 setUserId(response.user.uid);
                 set(ref(db, 'users/' + response.user.uid), {

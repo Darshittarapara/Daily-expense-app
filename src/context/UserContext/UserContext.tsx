@@ -20,15 +20,13 @@ export const userContext = React.createContext({} as UserContextProvider);
 export const UserContext: React.FC<UserContextProps> = (props) => {
     const { setUserId, setLoading, userId } = useAuthContext();
     const [user, setUser] = useState();
-
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [userData, setUserData] = useState<UserProfileDetails>({
         displayName: "",
         photoURL: "",
     });
-
+    console.log('run')
     const fetchUserData = useCallback(async () => {
-
         if (userId) {
             setIsLoading(true);
             const startRef = ref(getDatabase());
@@ -41,13 +39,10 @@ export const UserContext: React.FC<UserContextProps> = (props) => {
                 console.log("no data found");
             }
         }
-
-
     }, [userId]);
 
     useEffect(() => {
         const userDetails = getItem('user');
-     
         setUser(userDetails);
         setUserId(userDetails!?.uid);
         fetchUserData();
