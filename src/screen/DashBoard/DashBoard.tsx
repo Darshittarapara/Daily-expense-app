@@ -1,4 +1,4 @@
-Rrbimport { ColumnChart } from "components/ColumnChart/ColumnChart";
+import { ColumnChart } from "components/ColumnChart/ColumnChart";
 import ContentTitle from "components/ContentTitle/ContentTitle";
 import { SectionHeader } from "components/SectionHeader/SectionHeader";
 import Card from "components/UI/Card";
