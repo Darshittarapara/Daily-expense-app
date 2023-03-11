@@ -67,7 +67,10 @@ const Form = () => {
     else {
       formilk.resetForm({
         values: {
-          ...formilk.values,
+          name: "",
+          categoryName: "",
+          income: "",
+          note: ""
         }
       })
     }
