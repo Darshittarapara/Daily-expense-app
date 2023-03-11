@@ -7,7 +7,7 @@ import './List.scss';
 import { IncomeState } from 'context/IncomeContext/IncomeContext';
 
 export const List: React.FC<DashBoardListProps> = (props) => {
-    const row = ["No", "Title", "Category", "Month", "Amount", "Note", "Action"];
+    const row = ["No", "Title", "Category", "Month", "Amount", "Action"];
     const showRowData = (item: IncomeState | ExpenseState, index: number) => {
         return <tr key={`${index}`}>
             <td>{index + 1}</td>
@@ -15,7 +15,6 @@ export const List: React.FC<DashBoardListProps> = (props) => {
             <td>{item.category}</td>
             <td>{item.month}</td>
             <td>{item.amount}</td>
-            <td>{item.note}</td>
             <td>
                 <div className='action-cell'>
                     <span title='Edit' className='btn btn-outline-success actions-btn' onClick={() => props.onEditButtonClick(item.id || '')}><FontAwesomeIcon icon={faEdit} /></span>

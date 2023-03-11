@@ -7,7 +7,7 @@ import BackIcon from "components/BackIcon/BackIcon";
 import { useLocation, useNavigate } from "react-router-dom";
 interface Props {
   headerTitle: string;
-  options?: string[];
+  options?: { name: string }[];
   isBackIconRequired?: boolean
   isListingPage: boolean;
   col?: string;

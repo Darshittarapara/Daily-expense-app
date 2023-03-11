@@ -34,13 +34,11 @@ export const DashBoard = () => {
 
   const totalBalance = totalIncome - totalExpense;
   const MonthlyChartTypeSelectInputChangeHandler = (value: string) => {
-alert("func:" value)
     setMonthlyChartType(value.toLocaleLowerCase());
   };
   const MontlyListTypeSelectInputChangeHandler = (value: string) => {
     setMonthlyListType(value.toLocaleLowerCase());
   };
-alert("state:" monthlyChartType)
 
   return (
     <div className="container">
@@ -54,7 +52,7 @@ alert("state:" monthlyChartType)
               <AccountContain label="Total Balance" value={`INR ${totalBalance || 0}`} />
             </div>
             <div className="col-md-4 col-lg-4 col-xl-4 col-12 mb-3">
-              <AccountContain label="Daily expense" value={`INR ${totalExpense / 30 || 0}`} />
+              <AccountContain label="Daily expense" value={`INR ${(totalExpense / 30 || 0).toFixed(0)}`} />
             </div>
             <div className="col-md-4 col-lg-4 col-xl-4 col-12">
               <AccountContain label="UpComing payment">
@@ -73,7 +71,7 @@ alert("state:" monthlyChartType)
                   isListingPage={true}
                   value={monthlyChartType}
                   col="6"
-                  options={[{name:"expese"},{name: "income"}]}
+                  options={[{ name: "expese" }, { name: "income" }]}
                   headerTitle={
                     monthlyChartType.includes("income")
                       ? "Monthly income"
@@ -115,14 +113,14 @@ alert("state:" monthlyChartType)
                 </div>
               </Card>
             </div>
-            <div className="col-md-9 col-lg-9 col-xl-9 col-12 mt-4">
+            <div className="col-md-9 col-lg-9 col-xl-9 col-12 mt-10 recent-list">
               <Card>
                 <SectionHeader
                   onChangeHandler={MontlyListTypeSelectInputChangeHandler}
                   isListingPage={true}
                   col="6"
                   value={monthlyListType}
-                  options={["expese", "income"]}
+                  options={[{ name: "expese" }, { name: "income" }]}
                   headerTitle={
                     monthlyListType.includes("income")
                       ? Strings.income
