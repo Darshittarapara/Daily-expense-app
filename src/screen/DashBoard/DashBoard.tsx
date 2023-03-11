@@ -34,11 +34,13 @@ export const DashBoard = () => {
 
   const totalBalance = totalIncome - totalExpense;
   const MonthlyChartTypeSelectInputChangeHandler = (value: string) => {
+alert("func:" value)
     setMonthlyChartType(value.toLocaleLowerCase());
   };
   const MontlyListTypeSelectInputChangeHandler = (value: string) => {
     setMonthlyListType(value.toLocaleLowerCase());
   };
+alert("state:" monthlyChartType)
 
   return (
     <div className="container">
