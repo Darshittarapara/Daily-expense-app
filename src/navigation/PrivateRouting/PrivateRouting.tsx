@@ -8,14 +8,15 @@ import CategoryList from 'screen/Category/List/List'
 import { useAuthContext } from 'context/AuthContext/AuthContext';
 import { Loader } from 'components/Loader/Loader';
 import IncomeForm from 'screen/Income/Form';
+import ViewIncome from 'screen/Income/View/View';
+import Incomes from 'screen/Income/List/List';
+
 const PrivateRouting = () => {
     const { isLoading } = useAuthContext();
-
     return (
         <Routes>
             {isLoading && <Route path="/" element={<Loader />} />}
             {!isLoading && <Route path="/" element={<AuthLayOut component={DashBoard} />} />}
-
             <Route path="/dashboard" element={<AuthLayOut component={DashBoard} />} />
             <Route
                 path="/category/add"
@@ -37,9 +38,19 @@ const PrivateRouting = () => {
                 path="/income/add"
                 element={<AuthLayOut component={IncomeForm} />}
             />
+            <Route
+                path="/income/:id/view"
+                element={<AuthLayOut component={ViewIncome} />}
+            />
+            <Route
+                path="/income/:id/edit"
+                element={<AuthLayOut component={IncomeForm} />}
+            />
+            <Route
+                path="/incomes"
+                element={<AuthLayOut component={Incomes} />}
+            />
         </Routes>
-
-
     )
 }
 

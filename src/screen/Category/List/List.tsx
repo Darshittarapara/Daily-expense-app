@@ -21,7 +21,6 @@ const List = () => {
     }
 
     const deleteCategory = (id: string) => {
-        
         onDelete(id)
     }
 

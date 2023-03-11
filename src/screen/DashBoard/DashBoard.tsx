@@ -87,23 +87,16 @@ export const DashBoard = () => {
                   }
                 />
                 <div className="card-body">
-                  {monthlyChartType.includes("income") ? (
-                    <MonthlyCharts
-                      data={incomeList as any}
-                      monthlyChartData={monthlyIncome}
-                      setMontlyChartData={setMontlyIncome}
-                      id="income-id"
-                      seriesName={Strings.monthlyIncome}
-                    />
-                  ) : (
-                    <MonthlyCharts
-                      data={expenseList}
-                      monthlyChartData={monthlyExpenses}
-                      setMontlyChartData={setMontlyExpenses}
-                      id="expense-id"
-                      seriesName={Strings.monthlyExpense}
-                    />
-                  )}
+
+                  <MonthlyCharts
+                    data={income}
+                    monthlyChartData={monthlyIncome}
+                    setMontlyChartData={setMontlyIncome}
+                    id="income-id"
+                    seriesName={Strings.monthlyIncome}
+                  />
+
+
                 </div>
               </Card>
             </div>

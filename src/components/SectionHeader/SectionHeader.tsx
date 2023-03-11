@@ -4,6 +4,7 @@ import { SelectInput } from "components/SelectInput/SelectInput";
 import { Strings } from "resource/Strings";
 import "./SectionHeader.scss";
 import BackIcon from "components/BackIcon/BackIcon";
+import { useLocation, useNavigate } from "react-router-dom";
 interface Props {
   headerTitle: string;
   options?: string[];
@@ -16,6 +17,9 @@ interface Props {
   path?: string
 }
 export const SectionHeader: React.FC<Props> = (props) => {
+  const navigator = useNavigate();
+  const { pathname } = useLocation();
+
   return (
     <div className="section-header" style={{ padding: "5px 5px" }}>
       <div className="row">
@@ -33,11 +37,11 @@ export const SectionHeader: React.FC<Props> = (props) => {
                 onChange={(value) => props.onChangeHandler!(value)}
               />
             )}
-            {props.headerTitle === "Expense" && (
-              <p className="all-page-link">{Strings.seeAll}</p>
+            {props.headerTitle === "Expense" && pathname === "/dashboard" && (
+              <p className="all-page-link" onClick={() => navigator('/incomes')}>{Strings.seeAll}</p>
             )}
 
-            {props.headerTitle === "Income" && (
+            {props.headerTitle === "Income" && pathname === "/dashboard" && (
               <p className="all-page-link">{Strings.seeAll}</p>
             )}
             {props.children}

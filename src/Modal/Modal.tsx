@@ -1,6 +1,7 @@
 import React, { SetStateAction } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FormikProps } from "formik";
+import { IncomeState } from "context/IncomeContext/IncomeContext";
 export interface LayOutProps {
     component: React.ElementType
 }
@@ -70,7 +71,7 @@ export interface MonthlyChartProp {
     id: string
     seriesName: string
     monthlyChartData: number[]
-    data: ExpenseState[]
+    data: ExpenseState[] | IncomeState[]
     setMontlyChartData: React.Dispatch<SetStateAction<number[]>>
 }
 export interface DashBoardListProps {
@@ -123,4 +124,9 @@ export interface TextAreaProps {
     id: string
     formilk: FormikProps<IncomeFormValues>
     value: string
+}
+
+export interface addIncomePayload {
+    name: string
+
 }

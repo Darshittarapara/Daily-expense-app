@@ -1,49 +1,47 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEye, faTrash, faIndianRupeeSign } from '@fortawesome/free-solid-svg-icons';
-import dummyIcon from 'assets/image/image-not-found-icon.png'
+import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import './List.scss';
 import { SectionHeader } from 'components/SectionHeader/SectionHeader';
-import { CategoryListState, useCategoryContext } from 'context/CategoryContext/CategoryContext';
 import { Strings } from 'resource/Strings';
 import Button from 'components/Button/Button';
 import { useNavigate } from 'react-router';
 import PaginationItems from 'components/PaginationItems/PaginationItems';
+import { IncomeState, useIncomeContext } from 'context/IncomeContext/IncomeContext';
+import { formatDDMMYYYFormat } from 'helper/helper';
 
 const List = () => {
     const navigator = useNavigate();
-
-    const { categoryList, onDelete, isLoading } = useCategoryContext();
-    const row = ["No", "Title", "Type", "Action"]
+    const { incomeList, isLoading, onDelete } = useIncomeContext();
+    const row = ["No", "Title", "Category", "Amount", "Month", 'Date', "Time", "Action"];
 
     const editCategory = (id: string) => {
-        navigator(`/category/${id}/edit`);
+        navigator(`/income/${id}/edit`);
     }
 
     const deleteCategory = (id: string) => {
-        
-        onDelete(id)
+        onDelete(id);
     }
 
     const viewCategory = (id: string) => {
-        navigator(`/category/${id}/view`);
+        navigator(`/income/${id}/view`);
     }
 
-    const showRowData = (item: CategoryListState, index: number) => {
-        const typeCellClasses = item.type.toLocaleLowerCase() === "expense" ? "expense-type-icon" : "income-type-icon";
+    const showRowData = (item: IncomeState, index: number) => {
+        const date = item.date + '';
         return <tr key={`${index}`}>
             <td>{index + 1}</td>
-            <td>
-                <img className='categoryImage' src={item.icon || dummyIcon} alt="category Name" />
-            </td>
-            <td className={typeCellClasses}>
-                <FontAwesomeIcon icon={faIndianRupeeSign} />
-            </td>
+            <td>{item.name}</td>
+            <td>{item.category}</td>
+            <td>{item.amount}</td>
+            <td>{item.month}</td>
+            <td>{formatDDMMYYYFormat(new Date(date))}</td>
+            <td>{new Date(date).toLocaleTimeString()}</td>
             <td>
                 <div className='action-cell'>
-                    <span title='Edit' className='btn btn-outline-success actions-btn' onClick={() => editCategory(item.id)}><FontAwesomeIcon icon={faEdit} /></span>
-                    <span title='Delete' className='btn btn-outline-danger actions-btn' onClick={() => deleteCategory(item.id)}><FontAwesomeIcon icon={faTrash} /></span>
-                    <span title='View' className='btn btn-outline-primary actions-btn' onClick={() => viewCategory(item.id)}><FontAwesomeIcon icon={faEye} /></span>
+                    <span title='Edit' className='btn btn-outline-success actions-btn' onClick={() => editCategory(item.id!)}><FontAwesomeIcon icon={faEdit} /></span>
+                    <span title='Delete' className='btn btn-outline-danger actions-btn' onClick={() => deleteCategory(item.id!)}><FontAwesomeIcon icon={faTrash} /></span>
+                    <span title='View' className='btn btn-outline-primary actions-btn' onClick={() => viewCategory(item.id!)}><FontAwesomeIcon icon={faEye} /></span>
                 </div>
 
             </td>
@@ -55,13 +53,19 @@ const List = () => {
             <SectionHeader
                 isListingPage={false}
                 col="6"
-                headerTitle={Strings.category}
+                headerTitle={Strings.income}
             >
-                <Button type="button" classes="btn btn-warning" onClick={() => navigator('/category/add')} >
-                    {Strings.addCategory}
+                <Button type="button" classes="btn btn-warning" onClick={() => navigator('/income/add')} >
+                    {Strings.addIncome}
                 </Button>
             </SectionHeader>
-            <PaginationItems limit={5} row={row} showRowData={showRowData} isLoading={isLoading} list={categoryList} />
+            <PaginationItems
+                limit={5}
+                row={row}
+                showRowData={showRowData}
+                isLoading={isLoading}
+                list={incomeList}
+            />
         </Fragment>
     )
 }

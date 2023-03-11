@@ -1,4 +1,6 @@
 export const Strings = {
+    amount: "Amount",
+    date: 'Date',
     expense: "Expense",
     income: "Income",
     addCategory: "Add category",
@@ -13,12 +15,14 @@ export const Strings = {
     updateCategory: "Update category",
     notes: "Notes",
     updateIncome: "Update Income",
-
     description: "Description",
     categoryName: "Category name",
     categoryType: "Category type",
     monthlyExpense: "Monthly expense",
     categoryIcon: "Category icon",
     monthlyIncome: "Mothly Income",
-    monthlyExpenseVsIncome: "Montly expense vs income"
+    month: "Month",
+    monthlyExpenseVsIncome: "Montly expense vs income",
+    time: 'Time',
+    viewIncome: 'View income'
 }
