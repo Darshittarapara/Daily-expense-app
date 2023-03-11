@@ -1,4 +1,4 @@
-import { capiltalLetter } from 'helper/helper'
+Jiimport { capiltalLetter } from 'helper/helper'
 import React from 'react'
 
 interface SelectInputProp {
@@ -17,7 +17,7 @@ export const SelectInput: React.FC<SelectInputProp> = (props) => {
                 console.log(option)
                 return <option
                     key={index}
-                    value={option?.name?.toLowerCase()} >{capiltalLetter(option?.name || option)}</option>
+                    value={option?.name?.toLowerCase() || option} >{capiltalLetter(option?.name || option)}</option>
             })}
         </select>
     )
