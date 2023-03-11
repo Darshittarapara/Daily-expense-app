@@ -38,11 +38,11 @@ export const SectionHeader: React.FC<Props> = (props) => {
               />
             )}
             {props.headerTitle === "Expense" && pathname === "/dashboard" && (
-              <p className="all-page-link" onClick={() => navigator('/incomes')}>{Strings.seeAll}</p>
+              <p className="all-page-link" onClick={() => navigator('/expenses')}>{Strings.seeAll}</p>
             )}
 
             {props.headerTitle === "Income" && pathname === "/dashboard" && (
-              <p className="all-page-link">{Strings.seeAll}</p>
+              <p className="all-page-link" onClick={() => navigator('/incomes')}>{Strings.seeAll}</p>
             )}
             {props.children}
           </div>

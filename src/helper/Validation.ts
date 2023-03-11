@@ -71,6 +71,16 @@ export const AddIncomeSchema = Yup.object({
     note : Yup.string().optional()
 })
 
+export const AddExpenseSchema = Yup.object({
+    name: Yup.string()
+        .required("Please enter income name"),
+    categoryName :Yup.string()
+    .required("Please select category"),
+    expense:Yup.string().required("Please enter expense"),
+    note : Yup.string().optional()
+})
+
+
 export const isPhoneNumberAndOtpValid = (value: string, label: string) => {
     let isValid = true;
     value.split('').forEach((character: any) => {

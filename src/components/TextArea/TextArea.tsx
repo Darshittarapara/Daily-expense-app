@@ -12,7 +12,7 @@ const TextArea: React.FC<TextAreaProps> = (props) => {
 
     return (
         <Fragment>
-            <label htmlFor={name}>{placeHolder}</label>
+            <label htmlFor={id}>{placeHolder}</label>
             <textarea id={id}
                 cols={7}
                 rows={3}

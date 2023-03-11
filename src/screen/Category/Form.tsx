@@ -25,13 +25,13 @@ const Form = () => {
     },
     validationSchema: AddCategorySchema,
     onSubmit: (formValues) => {
+      if (id) {
+        onUpdateCategory(formValues.name, formValues.type as "income" | "expense", id);
+        return
+      }
       const isCategotyAlreadyAdd = findDuplicateInput(categoryList, formValues.name);
       if (isCategotyAlreadyAdd) {
         Message('error', "Category already added")
-        return
-      }
-      if (id) {
-        onUpdateCategory(formValues.name, formValues.type as "income" | "expense", id);
         return
       }
       onAddCategory(formValues.name, formValues.type as "income" | "expense");
