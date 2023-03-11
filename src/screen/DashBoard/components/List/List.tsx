@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react'
-import { DashBoardListProps, ExpenseState } from 'Modal/Modal';
+import { DashBoardListProps } from 'Modal/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CustomTable } from 'components/CustomTable/CustomTable';
 import './List.scss';
 export const List: React.FC<DashBoardListProps> = (props) => {
     const row = ["No", "Title", "Category", "Month", "Amount", "Note", "Action"];
-    console.log(props.data)
     const showRowData = (item: any, index: number) => {
         return <tr key={`${index}`}>
             <td>{index + 1}</td>

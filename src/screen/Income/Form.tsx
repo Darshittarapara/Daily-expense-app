@@ -12,13 +12,14 @@ import { useCategoryContext } from "context/CategoryContext/CategoryContext";
 import { Loader } from "components/Loader/Loader";
 import TextArea from "components/TextArea/TextArea";
 import { useIncomeContext } from "context/IncomeContext/IncomeContext";
-import { getCurrentMonth } from "helper/helper";
+import { findDuplicateInput, getCurrentMonth } from "helper/helper";
+import { Message } from "helper/AlertMessage";
+
 const Form = () => {
   const navigator = useNavigate();
   const { id } = useParams();
   const { categoryList } = useCategoryContext();
-  const { isLoading, onAddIncome } = useIncomeContext();
-  console.log(categoryList)
+  const { isLoading, onAddIncome, incomeList } = useIncomeContext();
   const formilk = useFormik<IncomeFormValues>({
     initialValues: {
       name: "",
@@ -28,7 +29,6 @@ const Form = () => {
     },
     // validationSchema: AddCategorySchema,
     onSubmit: (formValues) => {
-      console.log(formValues);
       const payload = {
         name: formValues.name,
         category: formValues.categoryName,
@@ -36,6 +36,11 @@ const Form = () => {
         note: formValues.note,
         date: new Date(),
         month: getCurrentMonth(new Date().getMonth())
+      };
+      const isCategotyAlreadyAdd = findDuplicateInput(incomeList, formValues.name);
+      if (isCategotyAlreadyAdd) {
+        Message('error', "Income  already added")
+        return
       };
       // if (id) {
       //   onUpdateCategory(formValues.name, formValues.type as "income" | "expense", id);

@@ -25,7 +25,6 @@ export const DashBoard = () => {
   const income = useMemo(() => incomeList, [incomeList]);
 
   const totalIncome = incomeList?.reduce((accum, currentElement) => {
-    console.log(currentElement)
     accum += Number(currentElement?.amount);
     return accum
   }, 0);
@@ -35,8 +34,6 @@ export const DashBoard = () => {
   }, 0);
 
   const totalBalance = totalIncome - totalExpense;
-  console.log(totalBalance);
-  console.log(totalIncome);
   useEffect(() => {
     const monthWiseExpense = getMonthWiseAmounts(expense);
     const monthWiseIncome = getMonthWiseAmounts(income);
