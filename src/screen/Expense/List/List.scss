@@ -23,11 +23,17 @@
     float: right;
     align-items: center;
 }
+.close-icon {
+    padding: 6px;
+    height: 17px;
+    color: white;
+    background: #433165;
+    cursor: pointer
+}
 .active {
     cursor: pointer;
     padding: 8px 15px;
     color:white;
-  
     background : rgb(85, 85, 141);
 }
 

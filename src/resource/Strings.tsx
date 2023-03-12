@@ -16,6 +16,8 @@ export const Strings = {
     dailyExpense: 'Daily expense',
     editExpense: "Edit expense",
     name: "Name",
+    options: "Options",
+    search: "Search",
     noMoreItem: "No more item",
     editCategory: "Edit category",
     updateCategory: "Update category",
