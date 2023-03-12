@@ -14,6 +14,8 @@ import Expenses from 'screen/Expense/List/List'
 import ExpenseForm from 'screen/Expense/Form';
 import ViewExpense from 'screen/Expense/View/View';
 import { PageNotFound } from 'screen/PageNotFound/PageNotFount';
+import WithAuthLayout from 'layout/WithAuthLayout/WithAuthLayout';
+import Login from 'screen/Auth/Login/Login';
 
 const PrivateRouting = () => {
     const { isLoading, isStartUserProfileLoad } = useAuthContext();
@@ -66,10 +68,11 @@ const PrivateRouting = () => {
                 path="/expense/:id/edit"
                 element={<AuthLayOut component={ExpenseForm} />}
             />
-            <Route
+            <Route  
                 path="/expenses"
                 element={<AuthLayOut component={Expenses} />}
             />
+            <Route index path="/login" element={<WithAuthLayout component={Login} />} />
             <Route
                 path="*"
                 element={<PageNotFound />}
