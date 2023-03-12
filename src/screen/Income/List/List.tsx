@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router';
 import PaginationItems from 'components/PaginationItems/PaginationItems';
 import { IncomeState, useIncomeContext } from 'context/IncomeContext/IncomeContext';
 import { formatDDMMYYYFormat } from 'helper/helper';
+import { DropDown } from 'components/DropDown/DropDown';
 
 const List = () => {
     const navigator = useNavigate();
@@ -38,11 +39,20 @@ const List = () => {
             <td>{formatDDMMYYYFormat(new Date(date))}</td>
             <td>{new Date(date).toLocaleTimeString()}</td>
             <td>
-                <div className='action-cell'>
-                    <span title='Edit' className='btn btn-outline-success actions-btn' onClick={() => editCategory(item.id!)}><FontAwesomeIcon icon={faEdit} /></span>
+                <DropDown id='action' menuTitle='Action'>
+                    <div className='dropdown-item'>
+                        <span title='Edit' onClick={() => editCategory(item.id!)}>{Strings.edit}</span>
+                    </div>
+                    <div className='dropdown-item'>
+                        <span title='Delete' onClick={() =>deleteCategory(item.id || '')}>{Strings.delete}</span>
+                    </div>
+                    <div className='dropdown-item'>
+                        <span title='View' onClick={() => viewCategory(item.id || '')}>{Strings.view}</span>
+                    </div>
+                </DropDown>
+                {/* <span title='Edit' className='btn btn-outline-success actions-btn' onClick={() => editCategory(item.id!)}><FontAwesomeIcon icon={faEdit} /></span>
                     <span title='Delete' className='btn btn-outline-danger actions-btn' onClick={() => deleteCategory(item.id!)}><FontAwesomeIcon icon={faTrash} /></span>
-                    <span title='View' className='btn btn-outline-primary actions-btn' onClick={() => viewCategory(item.id!)}><FontAwesomeIcon icon={faEye} /></span>
-                </div>
+                    <span title='View' className='btn btn-outline-primary actions-btn' onClick={() => viewCategory(item.id!)}><FontAwesomeIcon icon={faEye} /></span> */}
 
             </td>
         </tr>

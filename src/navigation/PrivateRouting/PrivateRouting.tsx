@@ -13,6 +13,7 @@ import Incomes from 'screen/Income/List/List';
 import Expenses from 'screen/Expense/List/List'
 import ExpenseForm from 'screen/Expense/Form';
 import ViewExpense from 'screen/Expense/View/View';
+import { PageNotFound } from 'screen/PageNotFound/PageNotFount';
 
 const PrivateRouting = () => {
     const { isLoading, isStartUserProfileLoad } = useAuthContext();
@@ -20,7 +21,6 @@ const PrivateRouting = () => {
         <Routes>
             {(isLoading || isStartUserProfileLoad) && <Route path="/" element={<Loader />} />}
             {(!isLoading || !isStartUserProfileLoad) && <Route path="/" element={<AuthLayOut component={DashBoard} />} />}
-            <Route path="/dashboard" element={<AuthLayOut component={DashBoard} />} />
             <Route
                 path="/category/add"
                 element={<AuthLayOut component={CategoryForm} />}
@@ -69,6 +69,10 @@ const PrivateRouting = () => {
             <Route
                 path="/expenses"
                 element={<AuthLayOut component={Expenses} />}
+            />
+            <Route
+                path="*"
+                element={<PageNotFound />}
             />
         </Routes>
     )

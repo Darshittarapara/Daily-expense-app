@@ -5,6 +5,8 @@ import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CustomTable } from 'components/CustomTable/CustomTable';
 import './List.scss';
 import { IncomeState } from 'context/IncomeContext/IncomeContext';
+import { DropDown } from 'components/DropDown/DropDown';
+import { Strings } from 'resource/Strings';
 
 export const List: React.FC<DashBoardListProps> = (props) => {
     const row = ["No", "Title", "Category", "Month", "Amount", "Action"];
@@ -16,12 +18,17 @@ export const List: React.FC<DashBoardListProps> = (props) => {
             <td>{item.month}</td>
             <td>{item.amount}</td>
             <td>
-                <div className='action-cell'>
-                    <span title='Edit' className='btn btn-outline-success actions-btn' onClick={() => props.onEditButtonClick(item.id || '')}><FontAwesomeIcon icon={faEdit} /></span>
-                    <span title='Delete' className='btn btn-outline-danger actions-btn' onClick={() => props.onDeleteButtonClick(item.id || '')}><FontAwesomeIcon icon={faTrash} /></span>
-                    <span title='View' className='btn btn-outline-primary actions-btn' onClick={() => props.onViewButtonClick(item.id || '')}><FontAwesomeIcon icon={faEye} /></span>
-                </div>
-
+                <DropDown id='action' menuTitle='Action'>
+                    <div className='dropdown-item'>
+                        <span title='Edit' onClick={() => props.onEditButtonClick(item.id || '')}>{Strings.edit}</span>
+                    </div>
+                    <div className='dropdown-item'>
+                        <span title='Delete'  onClick={() => props.onDeleteButtonClick(item.id || '')}>{Strings.delete}</span>
+                    </div>
+                    <div className='dropdown-item'>
+                        <span title='View' onClick={() => props.onViewButtonClick(item.id || '')}>{Strings.view}</span>
+                    </div>
+                </DropDown>
             </td>
         </tr>
     }

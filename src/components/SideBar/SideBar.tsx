@@ -8,7 +8,7 @@ import SideBarSubItem from './SideBarSubItem/SideBarSubItem';
 const sidebarList = {
     dashBoard: {
         title: "dashboard",
-        path: "/dashboard",
+        path: "/",
         icon: faSignOut
     },
     income: [

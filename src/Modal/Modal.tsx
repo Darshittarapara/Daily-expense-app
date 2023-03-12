@@ -1,19 +1,29 @@
-import React, { SetStateAction } from "react";
+import React from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FormikProps } from "formik";
 import { IncomeState } from "context/IncomeContext/IncomeContext";
+
+export interface DropDownProps {
+    children: JSX.Element | React.ReactNode
+    id: string
+    menuTitle: string
+};
+
 export interface LayOutProps {
     component: React.ElementType
-}
+};
+
 export interface ErrorMessageProps {
     message: string
-}
+};
+
 export interface SignInWithOtpFormValues {
     phoneNumber: string
-}
+};
+
 export interface VeriflyOtpFormValues {
     otp: string
-}
+};
 
 export interface SignUpSubmitPayLoad {
     email: string
@@ -79,7 +89,7 @@ export interface DashBoardListProps {
     onEditButtonClick: (id: string) => void
     onViewButtonClick: (id: string) => void
     onDeleteButtonClick: (id: string) => void
-pageName : "Expense" | "Income"
+    pageName: "Expense" | "Income"
 }
 export interface MonthWiseSumKey {
     [index: string]: any
@@ -119,13 +129,15 @@ export interface IncomeFormValues {
     categoryName: string
     income: string | number
     note: string
-}
+};
+
 export interface ExpenseFormValues {
     name: string
     categoryName: string
     expense: string | number
     note: string
-}
+};
+
 export interface TextAreaProps {
     name: string
     placeHolder: string
