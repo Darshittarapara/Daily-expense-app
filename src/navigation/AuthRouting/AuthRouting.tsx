@@ -6,6 +6,7 @@ import SignUp from "screen/Auth/SignUp/SignUp";
 import WithAuthLayout from "layout/WithAuthLayout/WithAuthLayout";
 import Login from "screen/Auth/Login/Login";
 import { useLocation } from 'react-router-dom';
+import { PageNotFound } from 'screen/PageNotFound/PageNotFount';
 
 const AuthRouting = () => {
     const navigator = useNavigate();
@@ -24,6 +25,10 @@ const AuthRouting = () => {
                 element={<WithAuthLayout component={LoginWithOtp} />}
             />
             <Route path="/signUp" element={<WithAuthLayout component={SignUp} />} />
+            <Route
+                path="*"
+                element={<PageNotFound />}
+            />
         </Routes>
 
 
