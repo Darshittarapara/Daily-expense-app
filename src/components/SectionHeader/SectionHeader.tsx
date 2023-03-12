@@ -37,11 +37,11 @@ export const SectionHeader: React.FC<Props> = (props) => {
                 onChange={(value) => props.onChangeHandler!(value)}
               />
             )}
-            {props.headerTitle === "Expense" && pathname === "/dashboard" && (
+            {props.headerTitle === "Expense" && pathname === "/" && (
               <p className="all-page-link" onClick={() => navigator('/expenses')}>{Strings.seeAll}</p>
             )}
 
-            {props.headerTitle === "Income" && pathname === "/dashboard" && (
+            {props.headerTitle === "Income" && pathname === "/" && (
               <p className="all-page-link" onClick={() => navigator('/incomes')}>{Strings.seeAll}</p>
             )}
             {props.children}
