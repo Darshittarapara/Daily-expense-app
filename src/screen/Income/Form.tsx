@@ -149,7 +149,6 @@ const Form = () => {
           </div>
 
           <div className="mb-3">
-            <label className="form-label">{Strings.description}</label>
             <TextArea
               name="note"
               placeHolder={Strings.description}

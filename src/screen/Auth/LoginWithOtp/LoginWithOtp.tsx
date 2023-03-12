@@ -32,7 +32,7 @@ const LoginWithOtp = () => {
                     setConfirmObj(response)
                     setFlag(true)
                 } catch (error) {
- 
+
                     setError("Please enter valid phone number");
                     setLoading(false)
                 }
@@ -142,7 +142,7 @@ const LoginWithOtp = () => {
                         </form>
                     )}
                 <div className="mt-3">
-                    <Button onClick={() => navigator('/auth')} disable={isLoading} type="button" classes="authButton btn btn-success">
+                    <Button onClick={() => navigator('/login')} disable={isLoading} type="button" classes="authButton btn btn-success">
                         Back
                     </Button>
                     <div style={{ textAlign: "center" }}>

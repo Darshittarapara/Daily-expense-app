@@ -21,6 +21,7 @@ const Form = () => {
   const { id } = useParams();
   const { categoryList } = useCategoryContext();
   const { isLoading, onAddExpense, expenseList, onUpdateExpense } = useExpenseContext();
+
   const formilk = useFormik<ExpenseFormValues>({
     initialValues: {
       name: "",
@@ -147,7 +148,6 @@ const Form = () => {
             {formilk.errors.expense && formilk.touched.expense && <ErrorMessage message={formilk.errors.expense} />}
           </div>
           <div className="mb-3">
-            <label className="form-label">{Strings.description}</label>
             <TextArea
               name="note"
               placeHolder={Strings.description}
@@ -162,9 +162,9 @@ const Form = () => {
               disable={isLoading || !formilk.isValid || !formilk.dirty}
               classes="btn btn-primary"
             >
+              {isLoading && <Loader />}
               {id ? Strings.updateExpense : Strings.addExpense}
             </Button>
-            {isLoading && <Loader />}
           </div>
         </form>
       </div>

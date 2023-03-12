@@ -1,6 +1,4 @@
-import React, { Fragment } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
+import React, { Fragment, useState } from 'react'
 import './List.scss';
 import { SectionHeader } from 'components/SectionHeader/SectionHeader';
 import { Strings } from 'resource/Strings';
@@ -11,12 +9,35 @@ import { IncomeState } from 'context/IncomeContext/IncomeContext';
 import { formatDDMMYYYFormat } from 'helper/helper';
 import { useExpenseContext } from 'context/ExpenseContext/ExpenseContext';
 import { DropDown } from 'components/DropDown/DropDown';
+import { useSearchItem } from 'hooks/useSearchItem';
+import { ExpenseState } from 'Modal/Modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 const List = () => {
+    let list;
     const navigator = useNavigate();
+    const [searchItems, setSearchItems] = useState<ExpenseState[]>([]);
+    const [searchStatus, setSearchStatus] = useState("pending");
     const { expenseList, isLoading, onDelete } = useExpenseContext();
-    const row = ["No", "Title", "Category", "Amount", "Month", 'Date', "Time", "Action"];
+    const [isSearch, setIsSearch] = useState<boolean>(false);
+    const inputElement = useSearchItem({
+        label: Strings.expense,
+        list: expenseList,
+        setSearchItems,
+        setSearchStatus
+    });
 
+    const row = ["No", "Title", "Category", "Amount", "Month", 'Date', "Time", "Action"]
+    if (searchStatus === "pending") {
+        list = expenseList
+    }
+    if (searchStatus === "success") {
+        list = searchItems
+    }
+    if (searchStatus === "error") {
+        list = [];
+    }
     const editCategory = (id: string) => {
         navigator(`/expense/${id}/edit`);
     }
@@ -41,18 +62,16 @@ const List = () => {
             <td>{new Date(date).toLocaleTimeString()}</td>
             <td>
                 <DropDown id='action' menuTitle='Action'>
-                    <div className='dropdown-item'>
-                        <span title='Edit' onClick={() => editCategory(item.id!)}>{Strings.edit}</span>
+                    <div className='dropdown-item' onClick={() => editCategory(item.id!)}>
+                        <span title='Edit'>{Strings.edit}</span>
                     </div>
-                    <div className='dropdown-item'>
-                        <span title='Delete' onClick={() => deleteCategory(item.id || '')}>{Strings.delete}</span>
+                    <div className='dropdown-item' onClick={() => deleteCategory(item.id || '')}>
+                        <span title='Delete'>{Strings.delete}</span>
                     </div>
-                    <div className='dropdown-item'>
-                        <span title='View' onClick={() => viewCategory(item.id || '')}>{Strings.view}</span>
+                    <div className='dropdown-item' onClick={() => viewCategory(item.id || '')}>
+                        <span title='View'>{Strings.view}</span>
                     </div>
                 </DropDown>
-
-
             </td>
         </tr>
     }
@@ -64,18 +83,32 @@ const List = () => {
                 col="6"
                 headerTitle={Strings.expense}
             >
-                <Button type="button" classes="btn btn-warning" onClick={() => navigator('/expense/add')} >
-                    {Strings.addExpense}
-                </Button>
+                {isSearch ? <>
+                    {inputElement}
+                    <FontAwesomeIcon className='close-icon' icon={faClose} onClick={() => setIsSearch(false)} />
+                </> : (
+                    <DropDown id='expense-options' menuTitle={Strings.options}>
+                        <div className='dropdown-item'>
+                            <span onClick={() => setIsSearch(true)}>
+                                {Strings.search}
+                            </span>
+                        </div>
+                        <div className='dropdown-item'>
+                            <span onClick={() => navigator('/expense/add')} >
+                                {Strings.addExpense}
+                            </span>
+                        </div>
+                    </DropDown>
+                )}
             </SectionHeader>
             <PaginationItems
                 limit={5}
                 row={row}
                 showRowData={showRowData}
                 isLoading={isLoading}
-                list={expenseList}
+                list={list}
             />
-        </Fragment>
+        </Fragment >
     )
 }
 export default List

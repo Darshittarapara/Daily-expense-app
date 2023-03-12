@@ -9,11 +9,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  
-
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.search-container {
+  min-width: 600px;
+  display: flex;
+  
+  button {
+    margin: 0px 10px;
+  }
+}
+.add-form-loader {
+  top: 100%;
 }

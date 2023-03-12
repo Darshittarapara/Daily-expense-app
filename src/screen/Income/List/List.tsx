@@ -1,6 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
+import React, { BaseSyntheticEvent, Fragment, useState } from 'react';
 import './List.scss';
 import { SectionHeader } from 'components/SectionHeader/SectionHeader';
 import { Strings } from 'resource/Strings';
@@ -10,13 +8,34 @@ import PaginationItems from 'components/PaginationItems/PaginationItems';
 import { IncomeState, useIncomeContext } from 'context/IncomeContext/IncomeContext';
 import { formatDDMMYYYFormat } from 'helper/helper';
 import { DropDown } from 'components/DropDown/DropDown';
+import { useSearchItem } from 'hooks/useSearchItem';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 const List = () => {
+    let list;
     const navigator = useNavigate();
     const { incomeList, isLoading, onDelete } = useIncomeContext();
+    const [searchItems, setSearchItems] = useState<IncomeState[]>([]);
+    const [searchStatus, setSearchStatus] = useState("pending");
+    const [isSearch, setIsSearch] = useState<boolean>(false);
+    const inputElement = useSearchItem({
+        label: Strings.income,
+        list: incomeList,
+        setSearchItems,
+        setSearchStatus
+    });
     const row = ["No", "Title", "Category", "Amount", "Month", 'Date', "Time", "Action"];
-
-    const editCategory = (id: string) => {
+    if (searchStatus === "pending") {
+        list = incomeList
+    }
+    if (searchStatus === "success") {
+        list = searchItems
+    }
+    if (searchStatus === "error") {
+        list = [];
+    }
+    const editCategory = (id: string, e: BaseSyntheticEvent) => {
         navigator(`/income/${id}/edit`);
     }
 
@@ -40,20 +59,16 @@ const List = () => {
             <td>{new Date(date).toLocaleTimeString()}</td>
             <td>
                 <DropDown id='action' menuTitle='Action'>
-                    <div className='dropdown-item'>
-                        <span title='Edit' onClick={() => editCategory(item.id!)}>{Strings.edit}</span>
+                    <div className='dropdown-item' onClick={(e) => editCategory(item.id!, e)}>
+                        <span title='Edit'>{Strings.edit}</span>
                     </div>
-                    <div className='dropdown-item'>
-                        <span title='Delete' onClick={() =>deleteCategory(item.id || '')}>{Strings.delete}</span>
+                    <div className='dropdown-item' onClick={() => deleteCategory(item.id || '')}>
+                        <span title='Delete'>{Strings.delete}</span>
                     </div>
-                    <div className='dropdown-item'>
-                        <span title='View' onClick={() => viewCategory(item.id || '')}>{Strings.view}</span>
+                    <div className='dropdown-item' onClick={() => viewCategory(item.id || '')}>
+                        <span title='View'>{Strings.view}</span>
                     </div>
                 </DropDown>
-                {/* <span title='Edit' className='btn btn-outline-success actions-btn' onClick={() => editCategory(item.id!)}><FontAwesomeIcon icon={faEdit} /></span>
-                    <span title='Delete' className='btn btn-outline-danger actions-btn' onClick={() => deleteCategory(item.id!)}><FontAwesomeIcon icon={faTrash} /></span>
-                    <span title='View' className='btn btn-outline-primary actions-btn' onClick={() => viewCategory(item.id!)}><FontAwesomeIcon icon={faEye} /></span> */}
-
             </td>
         </tr>
     }
@@ -65,16 +80,30 @@ const List = () => {
                 col="6"
                 headerTitle={Strings.income}
             >
-                <Button type="button" classes="btn btn-warning" onClick={() => navigator('/income/add')} >
-                    {Strings.addIncome}
-                </Button>
+                {isSearch ? <>
+                    {inputElement}
+                    <FontAwesomeIcon className='close-icon' icon={faClose} onClick={() => setIsSearch(false)} />
+                </> : (
+                    <DropDown id='income-options' menuTitle={Strings.options}>
+                        <div className='dropdown-item'>
+                            <span onClick={() => setIsSearch(true)}>
+                                {Strings.search}
+                            </span>
+                        </div>
+                        <div className='dropdown-item'>
+                            <span onClick={() => navigator('/income/add')} >
+                                {Strings.addIncome}
+                            </span>
+                        </div>
+                    </DropDown>
+                )}
             </SectionHeader>
             <PaginationItems
                 limit={5}
                 row={row}
                 showRowData={showRowData}
                 isLoading={isLoading}
-                list={incomeList}
+                list={list}
             />
         </Fragment>
     )

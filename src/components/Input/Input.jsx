@@ -2,8 +2,15 @@ import React, { Fragment } from 'react';
 import './Input.css';
 
 const Input = (props) => {
-    const { type,
-        name, placeHolder, className, id, formilk, value } = props;
+    const { 
+        type,
+        name,
+        placeHolder,
+        className,
+        id,
+        formilk,
+        value 
+    } = props;
 
     return (
         <Fragment>
