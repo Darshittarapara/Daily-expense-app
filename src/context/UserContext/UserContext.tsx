@@ -37,6 +37,7 @@ alert(response.val())
 alert("No data")
             }
         }
+alert(userId)
     }, [userId]);
 
     useEffect(() => {
