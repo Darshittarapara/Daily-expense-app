@@ -30,14 +30,12 @@ export const UserContext: React.FC<UserContextProps> = (props) => {
             if (response.exists()) {
                 setUserData(response.val());
                 setIsStartUserProfileLoading(false);
-alert(response.val())
             } else {
                 setIsStartUserProfileLoading(false);
                 console.log("no data found");
-alert("No data")
+
             }
         }
-alert(userId)
     }, [userId]);
 
     useEffect(() => {
