@@ -51,7 +51,7 @@ const List = () => {
         return <tr key={`${index}`}>
             <td>{index + 1}</td>
             <td>
-                <img className='categoryImage' src={item.icon || dummyIcon} alt="category Name" />
+                {item?.name}
             </td>
             <td className={typeCellClasses}>
                 <FontAwesomeIcon icon={faIndianRupeeSign} />
