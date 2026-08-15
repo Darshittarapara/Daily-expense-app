@@ -1,0 +1,30 @@
+name: Expense Tracker
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Get project from GitHub
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install/configure Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Create node_modules
+      - name: Install dependencies
+        run: npm ci
+
+      # Build project
+      - name: Build
+        run: npm run build
