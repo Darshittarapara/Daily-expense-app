@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
 
+permissions:
+  id-token: write   # required to request the OIDC token from GitHub
+  contents: read    # required for actions/checkout
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,3 +32,14 @@ jobs:
       # Build project
       - name: Build
         run: npm run build
+
+      # Authenticate to AWS via OIDC — no stored secrets
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::905418162681:role/OIDC-dev
+          aws-region: ap-south-1   # change if your role/resources are in a different region
+
+      # Sanity check — confirms OIDC exchange worked
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity  
